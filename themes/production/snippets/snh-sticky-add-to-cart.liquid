@@ -1,0 +1,35 @@
+{%- comment -%}
+SnippetsHub
+Snippet: Sticky Add To Cart
+Version: 1.0.1
+License: Single Store License
+Support: support@snippetshub.com
+{%- endcomment -%}
+
+{%- assign snh_sticky_root_id = sticky_root_id -%}
+{%- if snh_sticky_root_id == blank -%}
+  {%- if section and section.id != blank -%}
+    {%- assign snh_sticky_root_id = 'snh-sticky-add-to-cart-' | append: section.id -%}
+  {%- elsif product and product.id != blank -%}
+    {%- assign snh_sticky_root_id = 'snh-sticky-add-to-cart-product-' | append: product.id -%}
+  {%- else -%}
+    {%- assign snh_sticky_root_id = 'snh-sticky-add-to-cart-global' -%}
+  {%- endif -%}
+{%- endif -%}
+
+{{ 'snh-sticky-add-to-cart.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="{{ snh_sticky_root_id }}"
+  class="SnippetsHub SNH-sticky-add-to-cart snh-sticky-add-to-cart"
+  data-snh="sticky-add-to-cart"
+  data-snh-version="1.0.1"
+  data-snh-owner="SnippetsHub"
+  data-snh-instance-id="{{ snh_sticky_root_id }}"
+>
+  <button class="snh-sticky-add-to-cart__button" type="button" data-snh-sticky-add-button>
+    {{ 'products.product.add_to_cart' | t }}
+  </button>
+</div>
+
+<script src="{{ 'snh-sticky-add-to-cart.js' | asset_url }}" defer="defer"></script>

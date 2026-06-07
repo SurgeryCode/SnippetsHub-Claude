@@ -1,0 +1,301 @@
+{% schema %}
+{
+  "name": "Developer Landing Page",
+  "tag": "section",
+  "class": "section-developer-landing",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Profile Header"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Cover Image",
+      "info": "Upload 'Background_LinkedIn.jpeg'"
+    },
+    {
+      "type": "image_picker",
+      "id": "profile_image",
+      "label": "Profile Image",
+      "info": "Upload 'My_profile_image_LinkedIn.jpeg'"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name",
+      "default": "Piotr Nowak"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Role Title",
+      "default": "IT&D Senior Analyst, D2C Full Stack Developer"
+    },
+    {
+      "type": "richtext",
+      "id": "bio",
+      "label": "Bio / Introduction",
+      "default": "<p>My passion is programming and E-commerce. I specialize in the Shopify platform and creating dedicated web solutions.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Book Consultation"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+        "type": "color",
+        "id": "page_bg",
+        "label": "Page Background",
+        "default": "#f8f9fa"
+    },
+    {
+        "type": "checkbox",
+        "id": "use_glassmorphism",
+        "label": "Use Glassmorphism Effect",
+        "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "skill",
+      "name": "Skill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Skill Name",
+          "default": "Shopify"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Badge Color",
+          "default": "#008060"
+        }
+      ]
+    },
+    {
+      "type": "experience",
+      "name": "Experience",
+      "settings": [
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Shopify Developer"
+        },
+        {
+          "type": "text",
+          "id": "company",
+          "label": "Company",
+          "default": "Company Name"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date Range",
+          "default": "2020 - Present"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Developer Landing Page",
+      "settings": {
+        "name": "Piotr Nowak",
+        "role": "IT&D Senior Analyst, D2C Full Stack Developer",
+        "bio": "<p>Programmer with many years of experience in Shopify, Web Development, and E-commerce. I specialize in creating efficient, modern online stores and dedicated web solutions.</p>"
+      },
+      "blocks": [
+        { "type": "skill", "settings": { "title": "Shopify Developer", "color": "#95BF47" } },
+        { "type": "skill", "settings": { "title": "Web Development", "color": "#204ECF" } },
+        { "type": "skill", "settings": { "title": "Software Development", "color": "#333333" } },
+        { "type": "skill", "settings": { "title": "PHP / Symfony", "color": "#000000" } },
+        { "type": "skill", "settings": { "title": "HTML/CSS/JS", "color": "#F7DF1E" } },
+        {
+            "type": "experience",
+            "settings": {
+                "role": "Shopify Developer",
+                "company": "Surgery Code",
+                "date": "May 2024 – Present",
+                "description": "<p>Programming services. Shopify store creation and development.</p>"
+            }
+        },
+        {
+             "type": "experience",
+             "settings": {
+                 "role": "IT&D Senior Analyst, D2C Full Stack Developer",
+                 "company": "Reckitt",
+                 "date": "Feb 2023 – May 2024",
+                 "description": "<p>Full-time. Warsaw (Hybrid). Development of D2C platforms and IT systems.</p>"
+             }
+         },
+        {
+             "type": "experience",
+             "settings": {
+                 "role": "D2C Shopify Developer",
+                 "company": "Euvic / Reckitt Benckiser",
+                 "date": "Jan 2022 – Jun 2023",
+                 "description": "<p>Contract. Shopify store development for Reckitt Benckiser.</p>"
+             }
+         },
+        {
+             "type": "experience",
+             "settings": {
+                 "role": "D2C Shopify Developer",
+                 "company": "New Gravity / Reckitt Benckiser",
+                 "date": "Aug 2020 – Jan 2022",
+                 "description": "<p>Contract. Implementation of e-commerce solutions.</p>"
+             }
+         },
+        {
+             "type": "experience",
+             "settings": {
+                 "role": "Shopify Developer",
+                 "company": "Surgery Code",
+                 "date": "Apr 2019 – Aug 2020",
+                 "description": "<p>Self-employed. Programming services and online stores.</p>"
+             }
+         },
+        {
+             "type": "experience",
+             "settings": {
+                 "role": "Shopify - Full stack Ecommerce developer",
+                 "company": "Primavera Parfum",
+                 "date": "Jul 2019 – Apr 2020",
+                 "description": "<p>Responsible for tagomago.pl and perfumeria.pl stores. Mobile optimization, SEO, integrations, landing pages.</p>"
+             }
+         },
+        {
+             "type": "experience",
+             "settings": {
+                 "role": "PHP Programmer",
+                 "company": "Supermedia",
+                 "date": "Sep 2017 – Jan 2019",
+                 "description": "<p>Maintenance of CMS applications (eskago.pl, voxfm.pl) and Symfony projects. UNIX/LINUX environment, GIT, SVN.</p>"
+             }
+         },
+        {
+             "type": "experience",
+             "settings": {
+                 "role": "Webmaster, Web Developer",
+                 "company": "Grupa ZPR Media",
+                 "date": "Apr 2014 – 2019",
+                 "description": "<p>Creation and development of eska.pl, polotv.pl, focus.tv services. HTML, CSS, JS, RWD coding. Graphic designs and landing pages.</p>"
+             }
+         }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{{ 'section-main-about-developer.css.liquid' | asset_url | stylesheet_tag }}
+
+<div class="dev-landing">
+  <div class="dev-grid">
+    
+    <!-- Sidebar: Profile Card -->
+    <aside class="profile-sidebar">
+      <div class="profile-card">
+        <div class="profile-cover" style="
+          {% if section.settings.cover_image != blank %}
+            background-image: url('{{ section.settings.cover_image | image_url: width: 800 }}');
+          {% else %}
+             background-image: url('{{ 'Background_LinkedIn.jpeg' | asset_url }}');
+          {% endif %}
+        "></div>
+        
+        <div class="profile-avatar-wrap">
+           {% if section.settings.profile_image != blank %}
+            {{ section.settings.profile_image | image_url: width: 400 | image_tag: class: 'profile-avatar', loading: 'eager', alt: section.settings.name }}
+          {% else %}
+             <img src="{{ 'My_profile_image_LinkedIn.jpeg' | asset_url }}" alt="{{ section.settings.name }}" class="profile-avatar">
+          {% endif %}
+        </div>
+        
+        <div class="profile-info">
+          <h1 class="profile-name">{{ section.settings.name }}</h1>
+          <span class="profile-role">{{ section.settings.role }}</span>
+          
+          {% if section.settings.cta_text != blank %}
+            <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="profile-btn">
+              {{ section.settings.cta_text }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="profile-content">
+      
+      <!-- Bio Block -->
+      <section class="content-block">
+        <div class="block-title">{{ 'snippetshub.about_developer.block_titles.about_me' | t }}</div>
+        <div class="dev-bio">
+           {{ section.settings.bio }}
+        </div>
+      </section>
+      
+      <!-- Skills Block -->
+      <section class="content-block">
+        <div class="block-title">{{ 'snippetshub.about_developer.block_titles.skills_technologies' | t }}</div>
+        <div class="skills-grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'skill' %}
+              <div class="skill-pill">
+                <span class="skill-marker" style="background-color: {{ block.settings.color }};"></span>
+                {{ block.settings.title }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+      
+      <!-- Experience Block -->
+      <section class="content-block">
+         <div class="block-title">{{ 'snippetshub.about_developer.block_titles.experience' | t }}</div>
+         <div class="timeline-minimal">
+            {% for block in section.blocks %}
+              {% if block.type == 'experience' %}
+                <div class="timeline-entry">
+                  <div class="timeline-dot-minimal"></div>
+                  <div class="entry-header">
+                    <div class="entry-role">{{ block.settings.role }}</div>
+                    <span class="entry-date">{{ block.settings.date }}</span>
+                  </div>
+                  <div class="entry-company">{{ block.settings.company }}</div>
+                  <div class="entry-desc">
+                    {{ block.settings.description }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+         </div>
+      </section>
+
+    </div>
+  </div>
+</div>

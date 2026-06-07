@@ -1,0 +1,7 @@
+🛒
+{%- if cart.item_count > 0 -%}
+  <span class="cart-count">{{ cart.item_count }}</span>
+{%- else -%}
+  <span class="cart-count">0</span>
+{%- endif -%}
+<span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>

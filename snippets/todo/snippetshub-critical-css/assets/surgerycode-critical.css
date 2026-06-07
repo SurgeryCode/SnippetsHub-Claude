@@ -1,0 +1,5 @@
+/* Minimal critical styles placeholder. Add above-the-fold essentials (header, nav, hero). */
+:root{--sc-text:#111;--sc-bg:#fff}
+body{background:var(--sc-bg);color:var(--sc-text);}
+img{max-width:100%;height:auto}
+button{cursor:pointer}

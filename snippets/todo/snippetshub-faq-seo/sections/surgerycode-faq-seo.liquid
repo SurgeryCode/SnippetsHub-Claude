@@ -1,0 +1,178 @@
+{%- comment -%}
+  🧩 Section: FAQ + SEO (v1.1)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode
+  Instalacja: dodaj sekcję w edytorze motywu na dowolnej stronie
+{%- endcomment -%}
+
+{%- assign qa_blocks = section.blocks | where: 'type', 'qa' -%}
+
+<section
+  class="surgerycode-faq"
+  id="surgerycode-faq-{{ section.id }}"
+  aria-labelledby="surgerycode-faq-title-{{ section.id }}"
+  data-style="{{ section.settings.style | default: 'bordered' }}"
+>
+  <div class="surgerycode-faq__container">
+
+    {%- if section.settings.title != blank -%}
+      <div class="surgerycode-faq__header">
+        <h2 id="surgerycode-faq-title-{{ section.id }}" class="surgerycode-faq__title">
+          {{ section.settings.title }}
+        </h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="surgerycode-faq__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if qa_blocks.size > 0 -%}
+      <div class="surgerycode-faq__list">
+        {%- for block in qa_blocks -%}
+          {%- if block.settings.question != blank -%}
+            <details
+              class="surgerycode-faq__item"
+              {{ block.shopify_attributes }}
+            >
+              <summary class="surgerycode-faq__question">
+                <span>{{ block.settings.question }}</span>
+                <span class="surgerycode-faq__icon" aria-hidden="true">
+                  <svg class="surgerycode-faq__icon-plus" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  <svg class="surgerycode-faq__icon-minus" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M3 9h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="surgerycode-faq__answer">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      {%- if request.design_mode -%}
+        <p class="surgerycode-faq__empty-hint">Add Question/Answer blocks in the Theme Editor.</p>
+      {%- endif -%}
+    {%- endif -%}
+
+  </div>
+</section>
+
+<link rel="stylesheet" href="{{ 'surgerycode-faq-seo.css' | asset_url }}">
+<script src="{{ 'surgerycode-faq-seo.js' | asset_url }}" defer></script>
+
+{%- comment -%} JSON-LD FAQPage — generowany tylko gdy są bloki {%- endcomment -%}
+{%- if qa_blocks.size > 0 -%}
+  {%- capture faq_jsonld -%}
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in qa_blocks -%}
+      {%- if block.settings.question != blank and block.settings.answer != blank -%}
+        {
+          "@type": "Question",
+          "name": {{ block.settings.question | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ block.settings.answer | strip_html | json }}
+          }
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+  {%- endcapture -%}
+  <script type="application/ld+json">{{ faq_jsonld | strip }}</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ + SEO",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "info": "Optional text below the title"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Item style",
+      "options": [
+        { "value": "bordered", "label": "Bordered (lines between)" },
+        { "value": "card", "label": "Cards (boxed)" }
+      ],
+      "default": "bordered"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We accept returns within 30 days of delivery. Item must be unused and in original packaging.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ + SEO",
+      "category": "Information",
+      "blocks": [
+        {
+          "type": "qa",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We accept returns within 30 days of delivery.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 3–5 business days. Express options are available at checkout.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes, we ship to over 40 countries. Duties and taxes may apply.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

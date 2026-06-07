@@ -1,0 +1,81 @@
+{%- comment -%}
+  🧩 Snippet: Counter (v1.1)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode
+
+  Parametry:
+    target      — data docelowa ISO 8601 (np. '2025-12-31T23:59:59') — WYMAGANE
+    type        — 'until' (odliczanie) | 'since' (zliczanie od daty)  [domyślnie: until]
+    label       — tekst nad licznikiem (opcjonalny)
+    show_days   — true/false: czy pokazywać dni (domyślnie: true)
+    prefix      — tekst przed wartościami (opcjonalny)
+    suffix      — tekst po wartościach (opcjonalny)
+
+  Przykład:
+    {% render 'surgerycode_counter',
+      target: '2025-12-31T23:59:59',
+      label: 'Sale ends in',
+      show_days: true
+    %}
+{%- endcomment -%}
+
+{%- liquid
+  assign _target     = target     | default: ''
+  assign _type       = type       | default: 'until'
+  assign _label      = label      | default: ''
+  assign _show_days  = show_days  | default: true
+  assign _prefix     = prefix     | default: ''
+  assign _suffix     = suffix     | default: ''
+-%}
+
+{%- if _target != blank -%}
+  <div
+    class="surgerycode-counter"
+    data-sc-counter
+    data-target="{{ _target | escape }}"
+    data-type="{{ _type | escape }}"
+    data-show-days="{{ _show_days }}"
+    aria-live="polite"
+    aria-label="{{ _label | default: 'Countdown timer' | escape }}"
+  >
+    {%- if _label != blank -%}
+      <div class="surgerycode-counter__label">{{ _label }}</div>
+    {%- endif -%}
+
+    {%- if _prefix != blank -%}
+      <span class="surgerycode-counter__prefix">{{ _prefix }}</span>
+    {%- endif -%}
+
+    <div class="surgerycode-counter__wrap">
+      {%- if _show_days -%}
+        <div class="surgerycode-segment">
+          <span class="surgerycode-value" data-key="days">00</span>
+          <span class="surgerycode-unit">{{ 'general.time.days' | t | default: 'days' }}</span>
+        </div>
+        <span class="surgerycode-counter__sep" aria-hidden="true">:</span>
+      {%- endif -%}
+      <div class="surgerycode-segment">
+        <span class="surgerycode-value" data-key="hours">00</span>
+        <span class="surgerycode-unit">{{ 'general.time.hours' | t | default: 'hrs' }}</span>
+      </div>
+      <span class="surgerycode-counter__sep" aria-hidden="true">:</span>
+      <div class="surgerycode-segment">
+        <span class="surgerycode-value" data-key="minutes">00</span>
+        <span class="surgerycode-unit">{{ 'general.time.minutes' | t | default: 'min' }}</span>
+      </div>
+      <span class="surgerycode-counter__sep" aria-hidden="true">:</span>
+      <div class="surgerycode-segment">
+        <span class="surgerycode-value" data-key="seconds">00</span>
+        <span class="surgerycode-unit">{{ 'general.time.seconds' | t | default: 'sec' }}</span>
+      </div>
+    </div>
+
+    {%- if _suffix != blank -%}
+      <span class="surgerycode-counter__suffix">{{ _suffix }}</span>
+    {%- endif -%}
+  </div>
+
+  {{ 'surgerycode_counter.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'surgerycode_counter.js' | asset_url }}" defer></script>
+{%- endif -%}

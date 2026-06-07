@@ -1,0 +1,483 @@
+{% comment %}
+  SnippetsHub Premium Product Page
+  Redesigned for "Glassmorphism" aesthetic.
+{% endcomment %}
+
+<section class="section-py container relative">
+  <!-- Decorative Orbs (Optional if not in global layout) -->
+  <div class="ambient-glow glow-3"></div>
+  <div class="ambient-glow glow-4"></div>
+
+  <div class="product-grid-layout" style="margin-top: 2rem;">
+    <!-- Left: Gallery -->
+    {% render 'snippetshub-product-gallery', product: product %}
+
+    <!-- Right: Product Info (Sticky) -->
+    <div class="product-info-sticky">
+      <div class="glass-card p-8">
+        {%- liquid
+          assign all_collection_url = routes.all_products_collection_url
+          assign current_collection = product.collections.first
+          assign show_collection_crumb = false
+          if current_collection and current_collection.url != blank and current_collection.url != all_collection_url
+            assign show_collection_crumb = true
+          endif
+        -%}
+        <nav class="breadcrumb mb-4" aria-label="{{ 'snippetshub.pdp_tabs.accessibility.breadcrumb' | t }}">
+          <a href="{{ routes.root_url }}" class="text-muted hover-primary">
+            {{- 'snippetshub.pdp_tabs.breadcrumb.home' | t -}}
+          </a>
+          <span class="text-muted">/</span>
+          <a href="{{ all_collection_url }}" class="text-muted hover-primary">
+            {{- 'snippetshub.pdp_tabs.breadcrumb.snippets' | t -}}
+          </a>
+          {% if show_collection_crumb %}
+            <span class="text-muted">/</span>
+            <a href="{{ current_collection.url }}" class="text-muted hover-primary">{{ current_collection.title }}</a>
+          {% endif %}
+          <span class="text-muted">/</span>
+          <span class="breadcrumb-current" aria-current="page" title="{{ product.title | escape }}">
+            {{- product.title | truncate: 20 -}}
+          </span>
+        </nav>
+
+        <h1 class="h2 mb-4">{{ product.title }}</h1>
+
+        {%- liquid
+          assign money_price = product.price | money
+          assign money_compare = product.compare_at_price | money
+          if settings.currency_code_enabled
+            assign money_price = product.price | money_with_currency
+            assign money_compare = product.compare_at_price | money_with_currency
+          endif
+        -%}
+
+        <div class="price-block">
+          <span class="current-price">{{ money_price }}</span>
+
+          {% if product.compare_at_price > product.price %}
+            <span class="price-original">{{ money_compare }}</span>
+            {%- assign discount = product.compare_at_price
+              | minus: product.price
+              | times: 100
+              | divided_by: product.compare_at_price
+              | round
+            -%}
+            <span class="discount-badge">-{{ discount }}%</span>
+          {% endif %}
+        </div>
+
+        <!-- Short Description -->
+        <div class="short-desc mb-6">
+          {{ product.metafields.descriptor.short_desc | default: product.description | strip_html | truncatewords: 30 }}
+        </div>
+
+        <!-- Live Demo Button -->
+        {% if product.metafields.custom.demo_url != blank %}
+          <a href="{{ product.metafields.custom.demo_url }}" target="_blank" class="btn btn-outline btn-demo">
+            👁 {{ 'snippetshub.pdp_tabs.actions.view_live_demo' | t }}
+          </a>
+        {% endif %}
+
+        {% form 'product', product, class: 'purchase-actions', data-expert-install-form: '' %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {% if product.variants.size > 1 %}
+            <div class="variant-selector">
+              <label class="variant-label">{{ 'snippetshub.pdp_tabs.product.license_type' | t }}</label>
+              <div class="variant-options">
+                {% for variant in product.variants %}
+                  {%- liquid
+                    assign variant_price = variant.price | money
+                    if settings.currency_code_enabled
+                      assign variant_price = variant.price | money_with_currency
+                    endif
+                  -%}
+                  <button
+                    type="button"
+                    class="variant-option {% if variant.id == product.selected_or_first_available_variant.id %}active{% endif %}"
+                    data-variant-id="{{ variant.id }}"
+                    data-price="{{ variant_price | strip_html | escape }}"
+                    data-featured-media-id="{{ variant.featured_media.id }}"
+                  >
+                    {{ variant.title }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+          <div class="product-qty-control mt-4 mb-2" data-product-qty-control>
+            <label class="variant-label" for="main-product-qty-{{ product.id }}">
+              {{- 'products.product.quantity.label' | t -}}
+            </label>
+            <div class="qty-selector product-qty-selector sticky-product-qty">
+              <button
+                type="button"
+                class="product-qty-btn sticky-product-qty__btn"
+                data-product-qty-minus
+                aria-label="{{ 'products.product.quantity.decrease' | t }}"
+              >
+                -
+              </button>
+              <input
+                id="main-product-qty-{{ product.id }}"
+                type="number"
+                name="quantity"
+                value="1"
+                min="1"
+                inputmode="numeric"
+                class="upsell-qty-input product-qty-input sticky-product-qty__input"
+                data-product-qty-input
+              >
+              <button
+                type="button"
+                class="product-qty-btn sticky-product-qty__btn"
+                data-product-qty-plus
+                aria-label="{{ 'products.product.quantity.increase' | t }}"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {% render 'expert-install-upsell',
+            title_key: 'snippetshub.expert_install.add_expert_install',
+            subtitle_key: 'snippetshub.expert_install.delivery_time',
+            qty_label_key: 'snippetshub.expert_install.need_more_hours',
+            show_qty: true,
+            show_info: false,
+            hours: product.metafields.custom.installation_hours,
+            hide_expert_install: product.metafields.custom.hide_expert_install
+          %}
+
+          <button type="submit" name="add" class="btn btn-primary btn-lg btn-glow w-full mt-4" aria-live="polite">
+            <span class="snh-add-to-cart-label">{{ 'products.product.add_to_cart' | t }}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="ml-2"
+            >
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            {%- render 'loading-spinner' -%}
+          </button>
+
+          {{ form | payment_terms }}
+        {% endform %}
+
+        <div class="trust-badges justify-center">
+          <div class="flex flex-col items-center gap-2">
+            <span>⚡ {{ 'snippetshub.pdp_tabs.trust.instant_download' | t }}</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <span>🔒 {{ 'snippetshub.pdp_tabs.trust.secure_payment' | t }}</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <span>✅ {{ 'snippetshub.pdp_tabs.trust.verified_code' | t }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container relative pdp-tabs">
+  <header class="pdp-tabs__header">
+    <div class="pdp-tabs__eyebrow">{{ 'snippetshub.pdp_tabs.main_product.header.eyebrow' | t }}</div>
+    <h2 class="pdp-tabs__title">{{ 'snippetshub.pdp_tabs.main_product.header.title' | t }}</h2>
+    <p class="pdp-tabs__subtitle">{{ 'snippetshub.pdp_tabs.main_product.header.subtitle' | t }}</p>
+  </header>
+
+  <nav class="tabs-nav tabs-nav--pdp" role="tablist">
+    <button class="tab-btn active" data-tab="description" role="tab" aria-selected="true">
+      <span class="tab-text">{{ 'snippetshub.pdp_tabs.tabs.description' | t }}</span>
+    </button>
+    {% if product.metafields.custom.code_preview != blank %}
+      <button class="tab-btn" data-tab="code" role="tab" aria-selected="false">
+        <span class="tab-text">{{ 'snippetshub.pdp_tabs.main_product.tabs.code_sample' | t }}</span>
+      </button>
+    {% endif %}
+    {% if product.metafields.custom.specifications != blank %}
+      <button class="tab-btn" data-tab="specs" role="tab" aria-selected="false">
+        <span class="tab-text">{{ 'snippetshub.pdp_tabs.tabs.specifications' | t }}</span>
+      </button>
+    {% endif %}
+    <button class="tab-btn" data-tab="reviews" role="tab" aria-selected="false">
+      <span class="tab-text">{{ 'snippetshub.pdp_tabs.tabs.reviews' | t }}</span>
+      <span class="tab-count">247</span>
+    </button>
+  </nav>
+
+  <div class="tab-content rte active" id="description" role="tabpanel">
+    <div class="description">
+      {{ product.description }}
+    </div>
+  </div>
+
+  {% if product.metafields.custom.code_preview != blank %}
+    <div class="tab-content rte" id="code" role="tabpanel">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-title">{{ 'snippetshub.pdp_tabs.main_product.code.source_preview' | t }}</span>
+          <button class="copy-btn" data-copy="code-sample">{{ 'snippetshub.pdp_tabs.actions.copy_code' | t }}</button>
+        </div>
+        <pre class="code-content" id="code-sample"><code>{{ product.metafields.custom.code_preview }}</code></pre>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if product.metafields.custom.specifications != blank %}
+    <div class="tab-content rte" id="specs" role="tabpanel">
+      {{ product.metafields.custom.specifications }}
+    </div>
+  {% endif %}
+
+  <div class="tab-content rte" id="reviews" role="tabpanel">
+    <div class="reviews-section">
+      <div class="review-summary">
+        <div class="review-score">
+          <div class="review-score-number">4.9</div>
+          <div class="review-score-stars">★★★★★</div>
+          <div class="review-score-count">{{ 'snippetshub.pdp_tabs.reviews.based_on_count' | t: count: 247 }}</div>
+        </div>
+        <div class="review-bars">
+          <div class="review-bar">
+            <span class="review-bar-label">{{ 'snippetshub.pdp_tabs.main_product.reviews.stars_5' | t }}</span>
+            <div class="review-bar-track">
+              <div class="review-bar-fill" style="width: 89%; display: block;"></div>
+            </div>
+            <span class="review-bar-count">220</span>
+          </div>
+          <div class="review-bar">
+            <span class="review-bar-label">{{ 'snippetshub.pdp_tabs.main_product.reviews.stars_4' | t }}</span>
+            <div class="review-bar-track">
+              <div class="review-bar-fill" style="width: 8%; display: block;"></div>
+            </div>
+            <span class="review-bar-count">19</span>
+          </div>
+          <div class="review-bar">
+            <span class="review-bar-label">{{ 'snippetshub.pdp_tabs.main_product.reviews.stars_3' | t }}</span>
+            <div class="review-bar-track">
+              <div class="review-bar-fill" style="width: 2%; display: block;"></div>
+            </div>
+            <span class="review-bar-count">5</span>
+          </div>
+          <div class="review-bar">
+            <span class="review-bar-label">{{ 'snippetshub.pdp_tabs.main_product.reviews.stars_2' | t }}</span>
+            <div class="review-bar-track">
+              <div class="review-bar-fill" style="width: 0.8%; display: block;"></div>
+            </div>
+            <span class="review-bar-count">2</span>
+          </div>
+          <div class="review-bar">
+            <span class="review-bar-label">{{ 'snippetshub.pdp_tabs.main_product.reviews.stars_1' | t }}</span>
+            <div class="review-bar-track">
+              <div class="review-bar-fill" style="width: 0.4%; display: block;"></div>
+            </div>
+            <span class="review-bar-count">1</span>
+          </div>
+        </div>
+        <div class="review-cta">
+          <div class="review-cta-title">{{ 'snippetshub.pdp_tabs.main_product.reviews.cta_title' | t }}</div>
+          <div class="review-cta-subtitle">{{ 'snippetshub.pdp_tabs.main_product.reviews.cta_subtitle' | t }}</div>
+          <button type="button" class="btn btn-outline btn-sm">
+            {{ 'snippetshub.pdp_tabs.main_product.reviews.write_review' | t }}
+          </button>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">
+            <div class="review-avatar">SM</div>
+            <div class="review-author-info">
+              <h4>{{ 'snippetshub.pdp_tabs.main_product.reviews.review_1_author' | t }}</h4>
+              <span class="review-date">{{ 'snippetshub.pdp_tabs.main_product.reviews.review_1_date' | t }}</span>
+            </div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-verified">{{ 'snippetshub.pdp_tabs.main_product.reviews.verified_purchase' | t }}</div>
+        <p class="review-text">
+          {{ 'snippetshub.pdp_tabs.main_product.reviews.review_1_text' | t }}
+        </p>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">
+            <div class="review-avatar">MJ</div>
+            <div class="review-author-info">
+              <h4>{{ 'snippetshub.pdp_tabs.main_product.reviews.review_2_author' | t }}</h4>
+              <span class="review-date">{{ 'snippetshub.pdp_tabs.main_product.reviews.review_2_date' | t }}</span>
+            </div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-verified">{{ 'snippetshub.pdp_tabs.main_product.reviews.verified_purchase' | t }}</div>
+        <p class="review-text">
+          {{ 'snippetshub.pdp_tabs.main_product.reviews.review_2_text' | t }}
+        </p>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">
+            <div class="review-avatar">EP</div>
+            <div class="review-author-info">
+              <h4>{{ 'snippetshub.pdp_tabs.main_product.reviews.review_3_author' | t }}</h4>
+              <span class="review-date">{{ 'snippetshub.pdp_tabs.main_product.reviews.review_3_date' | t }}</span>
+            </div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-verified">{{ 'snippetshub.pdp_tabs.main_product.reviews.verified_purchase' | t }}</div>
+        <p class="review-text">
+          {{ 'snippetshub.pdp_tabs.main_product.reviews.review_3_text' | t }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .breadcrumb .breadcrumb-current {
+    color: var(--primary);
+    font-weight: 600;
+  }
+</style>
+
+{% render 'sticky-add-to-cart', product: product %}
+{{ 'snippetshub-product-gallery.js' | asset_url | script_tag }}
+<script>
+  // Variant Switching Logic
+  const variantOptions = document.querySelectorAll('.variant-option');
+  const mainPrice = document.querySelector('.current-price');
+  const variantInput = document.querySelector('input[name="id"]');
+  const productGallery = document.querySelector('[data-product-gallery]');
+
+  variantOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      // Update UI
+      variantOptions.forEach((opt) => opt.classList.remove('active'));
+      option.classList.add('active');
+
+      // Update Form and Price
+      const variantId = option.getAttribute('data-variant-id');
+      const price = option.getAttribute('data-price');
+      const featuredMediaId = option.getAttribute('data-featured-media-id');
+
+      if (variantInput) variantInput.value = variantId;
+      if (mainPrice) mainPrice.textContent = price;
+      if (featuredMediaId) productGallery?.activateMediaById?.(featuredMediaId);
+    });
+  });
+
+  // Product quantity counter (+/-)
+  document.querySelectorAll('[data-product-qty-control]').forEach((control) => {
+    const input = control.querySelector('[data-product-qty-input]');
+    const minus = control.querySelector('[data-product-qty-minus]');
+    const plus = control.querySelector('[data-product-qty-plus]');
+
+    if (!input || !minus || !plus) return;
+
+    const normalizeQty = () => {
+      const min = parseInt(input.getAttribute('min') || '1', 10);
+      const value = parseInt(input.value, 10);
+      const safeValue = Number.isNaN(value) || value < min ? min : value;
+      input.value = safeValue;
+      minus.disabled = safeValue <= min;
+    };
+
+    minus.addEventListener('click', () => {
+      normalizeQty();
+      input.value = Math.max(parseInt(input.getAttribute('min') || '1', 10), parseInt(input.value, 10) - 1);
+      normalizeQty();
+    });
+
+    plus.addEventListener('click', () => {
+      normalizeQty();
+      input.value = parseInt(input.value, 10) + 1;
+      normalizeQty();
+    });
+
+    input.addEventListener('input', normalizeQty);
+    normalizeQty();
+  });
+
+  // Tab Switching Logic
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-tab');
+
+      // Active button
+      tabBtns.forEach((b) => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      // Active content
+      tabContents.forEach((content) => {
+        content.classList.remove('active');
+        if (content.id === target) {
+          content.classList.add('active');
+        }
+      });
+    });
+  });
+
+  window.SnippetsHubProductGallery?.initAll?.();
+
+  // Theme toggle (if needed)
+  const themeToggle = document.querySelector('.theme-toggle');
+  const htmlElement = document.documentElement;
+
+  themeToggle?.addEventListener('click', () => {
+    const currentTheme = htmlElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    htmlElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+  });
+
+  // Copy Code Logic
+  const copyBtn = document.querySelector('.copy-btn');
+  const codeSample = document.getElementById('code-sample');
+
+  copyBtn?.addEventListener('click', () => {
+    if (!codeSample) return;
+    navigator.clipboard.writeText(codeSample.innerText).then(() => {
+      const originalText = copyBtn.textContent;
+      copyBtn.textContent = {{ 'snippetshub.pdp_tabs.actions.copied' | t | json }};
+      setTimeout(() => {
+        copyBtn.textContent = originalText;
+      }, 2000);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Main Product (Redesign)",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Main Product (Redesign)"
+    }
+  ]
+}
+{% endschema %}

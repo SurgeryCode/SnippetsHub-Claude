@@ -1,0 +1,222 @@
+{% comment %}
+  Explore Catalog Section with Filtering from Collection
+{% endcomment %}
+
+<section id="explore" class="section-py container" data-filtering-section>
+  <header class="text-center">
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+    {% if section.settings.subtitle != blank %}
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+
+    <div class="category-filters" role="tablist">
+      <button class="filter-btn active" data-filter="all">{{ 'snippetshub.catalog.filters.all' | t | default: 'All' }}</button>
+      {% comment %} Collect all unique tags from product in the collection {% endcomment %}
+      {% assign all_tags = '' %}
+      {% if section.settings.collection != blank %}
+        {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+          {% for tag in product.tags %}
+            {% assign tag_clean = tag | strip %}
+            {% if tag_clean != blank %}
+              {% assign check_tag = tag_clean | prepend: '||' | append: '||' %}
+              {% unless all_tags contains check_tag %}
+                {% assign all_tags = all_tags | append: check_tag %}
+              {% endunless %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+
+      {% assign tags_array = all_tags | split: '||' | uniq | sort %}
+      {% for tag in tags_array %}
+        {% if tag != blank %}
+          <button class="filter-btn" data-filter="{{ tag | downcase | handle }}">{{ tag }}</button>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </header>
+
+  <div class="snippet-grid">
+    {% if section.settings.collection != blank %}
+      {% assign collection = section.settings.collection %}
+      {% assign product_limit = section.settings.products_per_page
+        | default: section.settings.products_to_show
+        | default: 12
+      %}
+      {% assign featured_id_str = section.settings.featured_product_id | strip %}
+      {% assign featured_handle = section.settings.featured_product_handle | strip %}
+      {% assign rendered_count = 0 %}
+      {% assign featured_product_found = blank %}
+
+      {% comment %} 1. Identify Featured Product {% endcomment %}
+      {% if featured_handle != blank %}
+        {% assign featured_product_found = all_products[featured_handle] %}
+      {% endif %}
+
+      {% if featured_product_found == blank and featured_id_str != blank %}
+        {% for product in collection.products %}
+          {% assign p_id_str = product.id | append: '' %}
+          {% if p_id_str == featured_id_str %}
+            {% assign featured_product_found = product %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% comment %} 2. Render Featured Product First {% endcomment %}
+      {% if featured_product_found != blank %}
+        {% comment %} Calculate category for filtering {% endcomment %}
+        {% assign featured_category = '' %}
+        {% for tag in featured_product_found.tags %}
+          {% assign tag_handle = tag | strip | downcase | handle %}
+          {% if tag_handle != blank %}
+            {% assign featured_category = featured_category | append: tag_handle | append: ' ' %}
+          {% endif %}
+        {% endfor %}
+
+        <div class="grid__item">
+          {% render 'featured-product-card',
+            product: featured_product_found,
+            product_category: featured_category,
+            show_badge: section.settings.show_badge,
+            demo_link: section.settings.demo_link,
+            install_price: section.settings.install_price,
+            show_expert_qty: section.settings.enable_expert_qty
+          %}
+        </div>
+        {% assign rendered_count = rendered_count | plus: 1 %}
+      {% endif %}
+
+      {% comment %} 3. Render remaining products up to limit {% endcomment %}
+      {% for product in collection.products %}
+        {% if featured_product_found != blank and product.id == featured_product_found.id %}
+          {% continue %}
+        {% endif %}
+        {% if rendered_count >= product_limit %}
+          {% break %}
+        {% endif %}
+
+        {% comment %} Try to get category from product tags {% endcomment %}
+        {% assign product_category = '' %}
+        {% for tag in product.tags %}
+          {% assign tag_handle = tag | strip | downcase | handle %}
+          {% if tag_handle != blank %}
+            {% assign product_category = product_category | append: tag_handle | append: ' ' %}
+          {% endif %}
+        {% endfor %}
+
+        <div class="grid__item">
+          {% render 'snippetshub-card',
+            product: product,
+            product_category: product_category,
+            show_badge: section.settings.show_badge,
+            demo_link: section.settings.demo_link,
+            install_price: section.settings.install_price,
+            show_expert_qty: section.settings.enable_expert_qty
+          %}
+        </div>
+        {% assign rendered_count = rendered_count | plus: 1 %}
+      {% endfor %}
+    {% else %}
+      <p style="text-align:center;">{{ 'snippetshub.catalog.select_collection' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Explore Catalog",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Explore Our Catalog"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Premium snippets and layouts for every project."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Product Collection"
+    },
+    {
+      "type": "text",
+      "id": "featured_product_id",
+      "label": "Featured Product ID",
+      "info": "Paste ID (e.g., 57028676518213)"
+    },
+    {
+      "type": "text",
+      "id": "featured_product_handle",
+      "label": "Featured Product Handle",
+      "info": "Alternative to ID. Paste handle from URL (e.g., shopify-developer-hour)."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "label": "Number of products to show",
+      "default": 12
+    },
+    {
+      "type": "paragraph",
+      "content": "To assign categories to products, add tags like 'category:liquid', 'category:html-css', 'category:js', 'category:banners', or 'category:landing' to your products."
+    },
+    {
+      "type": "text",
+      "id": "default_icon",
+      "label": "Default Icon (Emoji)",
+      "default": "💧"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show Badge for Tagged Products",
+      "default": true,
+      "info": "Will show badge for products tagged with 'badge'"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "New"
+    },
+    {
+      "type": "text",
+      "id": "badge_class",
+      "label": "Badge Class",
+      "default": "badge-masterminds badge-SurgeruCode"
+    },
+    {
+      "type": "url",
+      "id": "demo_link",
+      "label": "Demo Link (optional)"
+    },
+    {
+      "type": "text",
+      "id": "install_price",
+      "label": "Expert Install Price",
+      "default": "+49 PLN"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_expert_qty",
+      "label": "Enable Quantity Selection",
+      "default": true,
+      "info": "Allow users to change hours. Defaults to metafield 'custom.installation_hours'."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Explore Catalog"
+    }
+  ]
+}
+{% endschema %}

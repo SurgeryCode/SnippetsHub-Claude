@@ -1,0 +1,210 @@
+/*
+ * SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+ */
+
+.SnippetsHub.SNH-snh-exit-intent-popup {
+  --snh-ep-bg: #ffffff;
+  --snh-ep-text: #111111;
+  --snh-ep-subtext: #555555;
+  --snh-ep-btn-bg: #111111;
+  --snh-ep-btn-text: #ffffff;
+  --snh-ep-code-bg: #f5f5f5;
+  --snh-ep-code-text: #111111;
+  --snh-ep-overlay: #000000;
+  --snh-ep-accent: #f4b400;
+}
+
+/* Hidden by default */
+.SnippetsHub.SNH-snh-exit-intent-popup[aria-hidden="true"] {
+  pointer-events: none;
+}
+
+/* Overlay */
+.SnippetsHub .SNH-ExitPopup__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--snh-ep-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.SnippetsHub.SNH-snh-exit-intent-popup.is-open[aria-hidden="false"] .SNH-ExitPopup__overlay {
+  opacity: 0.55;
+  visibility: visible;
+}
+
+/* Modal */
+.SnippetsHub .SNH-ExitPopup__modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+  transform: translate(-50%, -50%) scale(0.94);
+  width: min(480px, calc(100vw - 2rem));
+  background: var(--snh-ep-bg);
+  border-radius: 20px;
+  padding: 2rem 2rem 1.75rem;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.3s ease;
+  text-align: center;
+}
+
+.SnippetsHub.SNH-snh-exit-intent-popup.is-open[aria-hidden="false"] .SNH-ExitPopup__modal {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Close button */
+.SnippetsHub .SNH-ExitPopup__close {
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--snh-ep-subtext);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.SnippetsHub .SNH-ExitPopup__close:hover {
+  background: #f0f0f0;
+  color: var(--snh-ep-text);
+}
+
+.SnippetsHub .SNH-ExitPopup__close svg { width: 16px; height: 16px; }
+
+/* Badge */
+.SnippetsHub .SNH-ExitPopup__badge {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.3rem 0.875rem;
+  background: var(--snh-ep-accent);
+  color: #111111;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border-radius: 999px;
+}
+
+/* Headline */
+.SnippetsHub .SNH-ExitPopup__headline {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--snh-ep-text);
+}
+
+/* Subtext */
+.SnippetsHub .SNH-ExitPopup__subtext {
+  margin: 0 0 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--snh-ep-subtext);
+}
+
+/* Discount code block */
+.SnippetsHub .SNH-ExitPopup__code-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.SnippetsHub .SNH-ExitPopup__code-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--snh-ep-subtext);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.SnippetsHub .SNH-ExitPopup__code {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--snh-ep-code-bg);
+  color: var(--snh-ep-code-text);
+  border: 2px dashed currentColor;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-family: monospace;
+  transition: background 0.18s ease;
+  position: relative;
+}
+
+.SnippetsHub .SNH-ExitPopup__code:hover { background: #ebebeb; }
+
+.SnippetsHub .SNH-ExitPopup__copy-icon svg { width: 16px; height: 16px; opacity: 0.6; }
+
+.SnippetsHub .SNH-ExitPopup__copy-feedback {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  font-family: inherit;
+  letter-spacing: normal;
+}
+
+.SnippetsHub .SNH-ExitPopup__copy-feedback.is-visible { opacity: 1; }
+
+/* CTA */
+.SnippetsHub .SNH-ExitPopup__cta {
+  display: block;
+  padding: 0.9375rem 1.25rem;
+  background: var(--snh-ep-btn-bg);
+  color: var(--snh-ep-btn-text);
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border-radius: 10px;
+  margin-bottom: 0.875rem;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.SnippetsHub .SNH-ExitPopup__cta:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* Dismiss */
+.SnippetsHub .SNH-ExitPopup__dismiss {
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--snh-ep-subtext);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.15s ease;
+}
+
+.SnippetsHub .SNH-ExitPopup__dismiss:hover { color: var(--snh-ep-text); }

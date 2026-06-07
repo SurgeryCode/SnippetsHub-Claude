@@ -1,0 +1,295 @@
+{% comment %}
+  SnippetsHub Footer
+  Matches the original project design with newsletter and payment icons
+{% endcomment %}
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Brand Column -->
+      <div class="footer-brand">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 300 | image_tag: alt: shop.name, loading: 'lazy' }}
+        {% else %}
+          {% render 'logo-light-no-padding' %}
+        {% endif %}
+        <p class="footer-brand-text">
+          {{
+            section.settings.brand_text
+            | default: 'Professional, ready-made code solutions for Shopify store owners. Increase sales without technical knowledge.'
+          }}
+        </p>
+      </div>
+
+      <!-- Shop Column -->
+      <div class="footer-col footer-col-shop">
+        <h4>{{ section.settings.column_1_title | default: 'Shop' }}</h4>
+        <ul>
+          {% for block in section.blocks %}
+            {% if block.type == 'link_shop' %}
+              <li>
+                <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Company Column -->
+      <div class="footer-col footer-col-company">
+        <h4>{{ section.settings.column_2_title | default: 'Company' }}</h4>
+        <ul>
+          {% for block in section.blocks %}
+            {% if block.type == 'link_company' %}
+              <li>
+                <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Newsletter Column -->
+      <div class="footer-col footer-newsletter">
+        <h4>{{ section.settings.newsletter_title | default: 'Stay Updated' }}</h4>
+        <p class="footer-text">{{ section.settings.newsletter_text | default: 'Get the latest snippets by email.' }}</p>
+        {% form 'customer', class: 'newsletter-form' %}
+          {% if form.posted_successfully? %}
+            <p class="form-success">{{ 'newsletter.success' | t }}</p>
+          {% endif %}
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="{% if section.settings.newsletter_placeholder != blank %}{{ section.settings.newsletter_placeholder }}{% else %}{{ 'newsletter.label' | t }}{% endif %}"
+            aria-label="{{ 'snippetshub.footer.email_address' | t }}"
+            required
+          >
+          <button type="submit" class="btn btn-primary">
+            {% if section.settings.newsletter_button != blank %}
+              {{ section.settings.newsletter_button }}
+            {% else %}
+              {{ 'newsletter.button_label' | t }}
+            {% endif %}
+          </button>
+        {% endform %}
+      </div>
+    </div>
+
+    {% assign show_footer_country_selector = false %}
+    {% if section.settings.enable_country_selector
+      and localization.available_countries
+      and localization.available_countries.size > 1
+    %}
+      {% assign show_footer_country_selector = true %}
+    {% endif %}
+
+    {% assign show_footer_language_selector = false %}
+    {% if localization.available_languages and localization.available_languages.size > 0 %}
+      {% assign show_footer_language_selector = true %}
+    {% endif %}
+
+    {% assign show_footer_localization = false %}
+    {% if show_footer_country_selector or show_footer_language_selector %}
+      {% assign show_footer_localization = true %}
+    {% endif %}
+    {% if show_footer_localization or section.settings.show_payment_icons %}
+      <div class="footer-meta-row">
+        {% if show_footer_localization %}
+          <div class="footer-meta-localization">
+            {% if show_footer_country_selector %}
+              <div class="footer-localization">
+                <localization-form>
+                  {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
+                    <div class="no-js-hidden">
+                      <h2 class="visually-hidden" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                      {%- render 'country-localization', localPosition: 'FooterCountry' -%}
+                    </div>
+                  {%- endform -%}
+                </localization-form>
+              </div>
+            {% endif %}
+
+            {% if show_footer_language_selector %}
+              <div class="footer-localization">
+                <localization-form>
+                  {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
+                    <div class="no-js-hidden">
+                      <h2 class="visually-hidden" id="FooterLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                      {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
+                    </div>
+                  {%- endform -%}
+                </localization-form>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <!-- Payment Icons -->
+        {% if section.settings.show_payment_icons %}
+          {% comment %} {{ 'component-rte.css' | asset_url | stylesheet_tag }} {% endcomment %}
+          <div class="footer__payment">
+            <span class="visually-hidden">{{ 'snippetshub.footer.payment_methods' | t }}</span>
+            <ul class="list list-payment" role="list">
+              {%- for type in shop.enabled_payment_types -%}
+                <li class="list-payment__item">
+                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center">
+      {{ section.settings.copyright | default: '&copy; 2025 SnippetsHub. All rights reserved.' }}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer SnippetsHub",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer Logo"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Brand Description",
+      "default": "Professional, ready-made code solutions for Shopify store owners. Increase sales without technical knowledge."
+    },
+    {
+      "type": "text",
+      "id": "column_1_title",
+      "label": "Column 1 Title",
+      "default": "Shop"
+    },
+    {
+      "type": "text",
+      "id": "column_2_title",
+      "label": "Column 2 Title",
+      "default": "Company"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter Title",
+      "default": "Stay Updated"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Newsletter Description",
+      "default": "Get the latest snippets by email."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Newsletter Placeholder",
+      "default": "Your email"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button",
+      "label": "Newsletter Button Text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show Payment Icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Enable country selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "Enable language selector",
+      "default": false
+    },
+    {
+      "type": "html",
+      "id": "copyright",
+      "label": "Copyright Text",
+      "default": "&copy; 2025 SnippetsHub. All rights reserved."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_shop",
+      "name": "Shop Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Link Text",
+          "default": "All Snippets"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    },
+    {
+      "type": "link_company",
+      "name": "Company Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Link Text",
+          "default": "About Us"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer SnippetsHub",
+      "blocks": [
+        {
+          "type": "link_shop",
+          "settings": {
+            "text": "All Snippets"
+          }
+        },
+        {
+          "type": "link_shop",
+          "settings": {
+            "text": "Bestsellers"
+          }
+        },
+        {
+          "type": "link_company",
+          "settings": {
+            "text": "About Us"
+          }
+        },
+        {
+          "type": "link_company",
+          "settings": {
+            "text": "Contact"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

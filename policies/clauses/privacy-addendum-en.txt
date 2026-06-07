@@ -1,0 +1,5 @@
+## Shopify Admin access (no passwords)
+SnippetsHub does not request store passwords. Shopify admin access is provided only via Collaborator invite or a dedicated staff account created by the customer.
+
+## Data scope
+We collect only the data required to deliver the requested service: store URL, name, email, and scope of work. This data is not shared with third parties and is deleted after completion (unless legal obligations require longer retention).

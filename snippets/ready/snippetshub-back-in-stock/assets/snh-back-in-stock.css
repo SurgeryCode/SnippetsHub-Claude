@@ -1,0 +1,119 @@
+/* SnippetsHub — Back in Stock v1.1.0 | support@snippetshub.com */
+
+.snh-bis {
+  --snh-bis-border: #E8E8E8;
+  --snh-bis-btn-bg: #111111;
+  --snh-bis-btn-text: #FFFFFF;
+  --snh-bis-input-border: #DDDDDD;
+  --snh-bis-label: #111111;
+
+  border: 1px solid var(--snh-bis-border);
+  border-radius: 10px;
+  padding: 1rem;
+  font-family: inherit;
+}
+
+.snh-bis__heading {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--snh-bis-label);
+  margin: 0 0 0.75rem;
+}
+
+.snh-bis__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--snh-bis-label);
+  margin-bottom: 0.5rem;
+}
+
+.snh-bis__row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.snh-bis__input {
+  flex: 1 1 auto;
+  padding: 0.6rem 0.875rem;
+  border: 1px solid var(--snh-bis-input-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #111;
+  background: #fff;
+  transition: border-color 0.2s;
+  min-width: 0;
+  font-family: inherit;
+}
+
+.snh-bis__input:focus {
+  outline: none;
+  border-color: var(--snh-bis-btn-bg);
+}
+
+.snh-bis__input::placeholder {
+  color: #aaa;
+}
+
+.snh-bis__btn {
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--snh-bis-btn-bg);
+  color: var(--snh-bis-btn-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.snh-bis__btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.snh-bis__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.snh-bis__msg {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  min-height: 1.2em;
+}
+
+.snh-bis__msg[data-type="error"] { color: #c0392b; }
+.snh-bis__msg[data-type="success"] { color: #27ae60; }
+
+.snh-bis__success {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: #27ae60;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.snh-bis__success[hidden] { display: none; }
+
+.snh-bis__success svg { flex-shrink: 0; margin-top: 2px; }
+
+.snh-bis--done { border-color: #27ae60; }
+
+.snh-bis__empty-state {
+  padding: 20px;
+  text-align: center;
+  background: #f8f8f8;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  color: #888;
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .snh-bis__row { flex-direction: column; }
+  .snh-bis__btn { width: 100%; }
+}

@@ -1,0 +1,41 @@
+{%- comment -%}
+  🧩 Snippet: Counter Web Component (v1.0)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode
+
+  Parametry:
+    target     — data docelowa ISO 8601 (np. '2025-12-31T23:59:59') — WYMAGANE
+    type       — 'until' (odliczanie) | 'since' (zliczanie od daty)  [domyślnie: until]
+    label      — tekst nad licznikiem (opcjonalny)
+    show_days  — true/false: czy pokazywać dni (domyślnie: true)
+
+  Przykład:
+    {% render 'surgerycode_counter',
+      target: '2025-12-31T23:59:59',
+      label: 'Sale ends in'
+    %}
+{%- endcomment -%}
+
+{%- liquid
+  assign _target    = target    | default: ''
+  assign _type      = type      | default: 'until'
+  assign _label     = label     | default: ''
+  assign _show_days = show_days | default: true
+-%}
+
+{%- if _target != blank -%}
+  <surgerycode-counter
+    target="{{ _target | escape }}"
+    type="{{ _type }}"
+    show-days="{{ _show_days }}"
+    aria-label="{{ _label | default: 'Countdown timer' | escape }}"
+  >
+    {%- if _label != blank -%}
+      <span slot="label">{{ _label }}</span>
+    {%- endif -%}
+    <noscript>JavaScript is required for the countdown timer.</noscript>
+  </surgerycode-counter>
+
+  <script src="{{ 'surgerycode_counter.js' | asset_url }}" defer></script>
+{%- endif -%}

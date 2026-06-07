@@ -1,0 +1,12 @@
+{%- assign current_locale = request.locale.iso_code -%}
+{%- assign locales = shop.published_locales -%}
+{%- assign locales_json = locales | json -%}
+<div class="surgerycode-locale" data-locales='{{ locales_json }}' data-current="{{ current_locale }}">
+  <div class="surgerycode-locale__bar" hidden>
+    <span class="surgerycode-locale__text"></span>
+    <button type="button" class="surgerycode-locale__apply"></button>
+    <button type="button" class="surgerycode-locale__close" aria-label="Close">×</button>
+  </div>
+</div>
+<link rel="stylesheet" href="{{ 'surgerycode-locale-recommender.css' | asset_url }}">
+<script src="{{ 'surgerycode-locale-recommender.js' | asset_url }}" defer></script>

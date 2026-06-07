@@ -1,0 +1,30 @@
+{
+  "standardVersion": "1.0",
+  "name": "SnippetsHub Countdown Bar",
+  "slug": "snippetshub-countdown-bar",
+  "version": "1.0.0",
+  "owner": "SnippetsHub",
+  "license": "License depends on the purchased plan. Default: Single Store License unless the purchased variant states otherwise.",
+  "supportEmail": "support@snippetshub.com",
+  "homepage": "https://snippetshub.com",
+  "minTheme": "Online Store 2.0",
+  "type": "section",
+  "entry": {
+    "section": "sections/snippetshub-countdown-bar.liquid",
+    "assets": [
+      "assets/snippetshub-countdown-bar--cyber_monday.png",
+      "assets/snippetshub-countdown-bar--halloween.png",
+      "assets/snippetshub-countdown-bar--new_year.png",
+      "assets/snippetshub-countdown-bar--valentines.png",
+      "assets/snippetshub-countdown-bar-back_to_school.png",
+      "assets/snippetshub-countdown-bar-black_friday.png",
+      "assets/snippetshub-countdown-bar-childrens_day.png",
+      "assets/snippetshub-countdown-bar-easter.png",
+      "assets/snippetshub-countdown-bar-fathers_day.png",
+      "assets/snippetshub-countdown-bar-hallowen-small.png",
+      "assets/snippetshub-countdown-bar-hallowen.png",
+      "assets/snippetshub-countdown-bar-mothers_day.png",
+      "assets/snippetshub-countdown-bar-womens_day.png"
+    ]
+  }
+}

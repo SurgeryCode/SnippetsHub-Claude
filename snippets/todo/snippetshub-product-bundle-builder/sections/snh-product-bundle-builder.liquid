@@ -1,0 +1,292 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-product-bundle-builder.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-product-bundle-builder.js' | asset_url }}" defer="defer"></script>
+
+{%- assign bundle_products = section.blocks | where: 'type', 'product' -%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-Bundle {
+    --snh-bb-bg: {{ section.settings.background_color }};
+    --snh-bb-border: {{ section.settings.border_color }};
+    --snh-bb-text: {{ section.settings.text_color }};
+    --snh-bb-subtext: {{ section.settings.subtext_color }};
+    --snh-bb-accent: {{ section.settings.accent_color }};
+    --snh-bb-btn-bg: {{ section.settings.button_color }};
+    --snh-bb-btn-text: {{ section.settings.button_text_color }};
+    --snh-bb-check-bg: {{ section.settings.accent_color }};
+    --snh-bb-savings-bg: {{ section.settings.savings_badge_color }};
+  }
+{% endstyle %}
+
+<div
+  class="SnippetsHub SNH-snh-product-bundle-builder"
+  data-snh="snippetshub-product-bundle-builder"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-routes-root="{{ routes.root }}"
+  data-cta-label="{{ section.settings.cta_label | escape }}"
+  data-adding-label="{{ section.settings.adding_label | escape }}"
+  data-added-label="{{ section.settings.added_label | escape }}"
+>
+
+  {%- if bundle_products.size > 0 -%}
+    <div class="SNH-Bundle">
+
+      {%- unless section.settings.title == blank -%}
+        <h2 class="SNH-Bundle__title">{{ section.settings.title }}</h2>
+        {%- unless section.settings.subtitle == blank -%}
+          <p class="SNH-Bundle__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endunless -%}
+      {%- endunless -%}
+
+      {%- comment %} Product rows {%- endcomment -%}
+      <ul class="SNH-Bundle__list" role="list" data-snh-list>
+        {%- for block in bundle_products -%}
+          {%- assign bp = block.settings.product -%}
+          {%- if bp != blank -%}
+            {%- assign bv = bp.first_available_variant | default: bp.variants.first -%}
+            {%- assign checked = forloop.first | default: block.settings.preselected -%}
+            <li
+              class="SNH-Bundle__item{% if checked %} is-checked{% endif %}"
+              data-snh-item
+              data-variant-id="{{ bv.id }}"
+              data-price="{{ bv.price }}"
+              data-compare-price="{{ bv.compare_at_price | default: 0 }}"
+              data-available="{{ bv.available }}"
+              {{ block.shopify_attributes }}
+            >
+              <label class="SNH-Bundle__row" for="snh-bb-{{ block.id }}">
+
+                <input
+                  class="SNH-Bundle__checkbox"
+                  type="checkbox"
+                  id="snh-bb-{{ block.id }}"
+                  data-snh-check
+                  {% if checked %}checked{% endif %}
+                  {% unless bv.available %}disabled{% endunless %}
+                  aria-label="Include {{ bp.title | escape }} in bundle"
+                >
+
+                <span class="SNH-Bundle__check-indicator" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+
+                {%- if bp.featured_image -%}
+                  <img
+                    class="SNH-Bundle__img"
+                    src="{{ bp.featured_image | image_url: width: 120 }}"
+                    alt="{{ bp.featured_image.alt | escape }}"
+                    width="60"
+                    height="60"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+
+                <div class="SNH-Bundle__details">
+                  <span class="SNH-Bundle__name">{{ bp.title }}</span>
+                  {%- unless bv.title == 'Default Title' -%}
+                    <span class="SNH-Bundle__variant">{{ bv.title }}</span>
+                  {%- endunless -%}
+                  {%- unless block.settings.note == blank -%}
+                    <span class="SNH-Bundle__note">{{ block.settings.note }}</span>
+                  {%- endunless -%}
+                </div>
+
+                <div class="SNH-Bundle__price-col">
+                  {%- if bv.compare_at_price > bv.price -%}
+                    <s class="SNH-Bundle__compare">{{ bv.compare_at_price | money }}</s>
+                  {%- endif -%}
+                  <span class="SNH-Bundle__price">
+                    {%- if bv.available -%}{{ bv.price | money }}{%- else -%}Sold out{%- endif -%}
+                  </span>
+                </div>
+
+              </label>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+
+      {%- comment %} Total + CTA footer {%- endcomment -%}
+      <div class="SNH-Bundle__footer" data-snh-footer>
+        <div class="SNH-Bundle__total-row">
+          <div class="SNH-Bundle__total-labels">
+            <span class="SNH-Bundle__total-title">Bundle total</span>
+            {%- if section.settings.show_item_count -%}
+              <span class="SNH-Bundle__item-count" data-snh-count></span>
+            {%- endif -%}
+          </div>
+          <div class="SNH-Bundle__total-prices">
+            <span class="SNH-Bundle__total-compare" data-snh-total-compare></span>
+            <span class="SNH-Bundle__total-value" data-snh-total></span>
+          </div>
+        </div>
+
+        <button
+          class="SNH-Bundle__cta"
+          data-snh-cta
+          aria-live="polite"
+        >
+          {{ section.settings.cta_label }}
+        </button>
+
+        {%- unless section.settings.guarantee_text == blank -%}
+          <p class="SNH-Bundle__guarantee">{{ section.settings.guarantee_text }}</p>
+        {%- endunless -%}
+      </div>
+
+    </div>
+
+  {%- elsif request.design_mode -%}
+    <div class="SNH-Bundle SNH-Bundle--empty">
+      <p>Add products using the "+" button in the Theme Editor to build your bundle.</p>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "SNH Bundle Builder",
+  "tag": "section",
+  "class": "section section-snh-product-bundle-builder",
+  "enabled_on": {
+    "templates": ["product", "page"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently bought together"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle (optional)",
+      "default": "Save when you buy together"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_item_count",
+      "label": "Show selected item count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "CTA button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Add bundle label",
+      "default": "Add bundle to cart"
+    },
+    {
+      "type": "text",
+      "id": "adding_label",
+      "label": "Adding…",
+      "default": "Adding to cart…"
+    },
+    {
+      "type": "text",
+      "id": "added_label",
+      "label": "Added!",
+      "default": "Bundle added!"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee note",
+      "default": "14-day money-back guarantee. No questions asked."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / checkbox",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "CTA button background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "CTA button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "savings_badge_color",
+      "label": "Savings badge",
+      "default": "#F4B400"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Bundle product",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "preselected",
+          "label": "Pre-selected",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Short note (optional)",
+          "placeholder": "Most popular add-on"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Bundle Builder"
+    }
+  ]
+}
+{% endschema %}

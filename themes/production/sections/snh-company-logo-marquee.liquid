@@ -1,0 +1,515 @@
+{% comment %}
+  SnippetsHub | Single Store License | v1.0.0
+  Support: support@snippetshub.com
+{% endcomment %}
+
+<section
+  class="SnippetsHub SNH-company-logo-marquee sh-company-marquee"
+  id="sh-company-marquee-{{ section.id }}"
+  data-snh="company-logo-marquee"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+>
+  <div class="page-width">
+    <div class="sh-company-marquee__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="sh-company-marquee__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <h2 class="sh-company-marquee__title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <p class="sh-company-marquee__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    {% assign logo_blocks = section.blocks | where: 'type', 'company' %}
+
+    {% if logo_blocks.size > 0 %}
+      <div class="sh-company-marquee__viewport" aria-label="{% if section.settings.title != blank %}{{ section.settings.title | escape }}{% else %}{{ 'snippetshub.company_marquee.companies' | t }}{% endif %}">
+        <div
+          class="sh-company-marquee__track"
+          style="--sh-marquee-speed: {{ section.settings.scroll_speed }}s; --sh-logo-gap: {{ section.settings.logo_gap }}px;"
+        >
+          {% for i in (1..2) %}
+            <ul class="sh-company-marquee__list" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+              {% for block in logo_blocks -%}
+                <li class="sh-company-marquee__item" {{ block.shopify_attributes }}>
+                  {% if block.settings.company_url != blank %}
+                    <a
+                      class="sh-company-marquee__logo-link"
+                      href="{{ block.settings.company_url }}"
+                      {% if section.settings.open_links_in_new_tab %}
+                        target="_blank" rel="noopener noreferrer"
+                      {% endif %}
+                    >
+                  {% else %}
+                    <span class="sh-company-marquee__logo-link">
+                  {% endif %}
+
+                  {% if block.settings.logo != blank %}
+                    {{
+                      block.settings.logo
+                      | image_url: width: 360
+                      | image_tag: class: 'sh-company-marquee__logo', loading: 'lazy', alt: block.settings.company_name
+                    }}
+                  {% elsif block.settings.company_name != blank %}
+                    <span class="sh-company-marquee__text-logo">{{ block.settings.company_name }}</span>
+                  {% else %}
+                    <span class="sh-company-marquee__text-logo">{{ 'snippetshub.company_marquee.company' | t }}</span>
+                  {% endif %}
+
+                  {% if block.settings.company_url != blank %}
+                    </a>
+                  {% else %}
+                    </span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.settings.enable_linkedin_spotlight and section.settings.linkedin_profile_url != blank %}
+      <details class="sh-linkedin-spotlight">
+        <summary class="sh-linkedin-spotlight__summary">
+          <span class="sh-linkedin-spotlight__dot"></span>
+          {{ section.settings.linkedin_toggle_label }}
+        </summary>
+        <div class="sh-linkedin-spotlight__content">
+          {% if section.settings.linkedin_title != blank %}
+            <h3>{{ section.settings.linkedin_title }}</h3>
+          {% endif %}
+          {% if section.settings.linkedin_description != blank %}
+            <div class="rte">{{ section.settings.linkedin_description }}</div>
+          {% endif %}
+          <a
+            href="{{ section.settings.linkedin_profile_url }}"
+            class="sh-linkedin-spotlight__button"
+            {% if section.settings.open_links_in_new_tab %}
+              target="_blank" rel="noopener noreferrer"
+            {% endif %}
+          >
+            {{ section.settings.linkedin_button_text }}
+          </a>
+        </div>
+      </details>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .SnippetsHub#sh-company-marquee-{{ section.id }} {
+    --sh-marquee-border: color-mix(in srgb, var(--border-color), transparent 18%);
+    --sh-marquee-muted: var(--text-muted);
+    --sh-marquee-bg: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--bg-body), var(--bg-surface) 32%),
+      var(--bg-surface)
+    );
+    --sh-logo-gap: 20px;
+    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
+    background: var(--sh-marquee-bg);
+    border-top: 1px solid var(--sh-marquee-border);
+    border-bottom: 1px solid var(--sh-marquee-border);
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__header {
+    text-align: center;
+    margin-bottom: 1.6rem;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__eyebrow {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    margin: 0 0 0.45rem;
+    color: var(--sh-marquee-muted);
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__title {
+    font-family: var(--font-display);
+    color: var(--text-heading);
+    margin: 0;
+    letter-spacing: -0.01em;
+    font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+    line-height: 1.15;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__subtitle {
+    margin: 0.6rem auto 0;
+    max-width: 70ch;
+    font-family: var(--font-body);
+    color: var(--sh-marquee-muted);
+    font-size: clamp(1rem, 1.25vw, 1.125rem);
+    line-height: 1.55;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__viewport {
+    overflow: hidden;
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    padding: 0.5rem 0;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: sh-company-marquee-scroll var(--sh-marquee-speed, 26s) linear infinite;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__viewport:hover .sh-company-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__list {
+    display: flex;
+    align-items: center;
+    gap: var(--sh-logo-gap);
+    margin: 0;
+    padding: 0 var(--sh-logo-gap) 0 0;
+    list-style: none;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__item {
+    flex: 0 0 auto;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 6.8rem;
+    min-width: 17rem;
+    border: 1px solid var(--sh-marquee-border);
+    border-radius: 0.9rem;
+    padding: 0.9rem 1.5rem;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--bg-surface), #fff 8%), var(--bg-surface));
+    text-decoration: none;
+    box-shadow: 0 2px 10px color-mix(in srgb, var(--text-heading), transparent 95%);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__logo-link:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--primary-light), transparent 56%);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--text-heading), transparent 88%);
+    background: color-mix(in srgb, var(--bg-surface), #fff 14%);
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__logo {
+    width: auto;
+    height: 3.3rem;
+    max-width: 16rem;
+    object-fit: contain;
+    filter: grayscale(1) contrast(1.05);
+    opacity: 0.85;
+    transition: filter 0.25s ease, opacity 0.25s ease;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__logo-link:hover .sh-company-marquee__logo {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__text-logo {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-main);
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-linkedin-spotlight {
+    margin: 1.6rem auto 0;
+    max-width: 70rem;
+    border: 1px solid var(--sh-marquee-border);
+    border-radius: 0.9rem;
+    background: var(--bg-surface);
+    overflow: hidden;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-linkedin-spotlight__summary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.2rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-heading);
+    user-select: none;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-linkedin-spotlight__dot {
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 999px;
+    background: #0a66c2;
+    box-shadow: 0 0 0 0 rgba(10, 102, 194, 0.45);
+    animation: sh-linkedin-pulse 1.8s infinite;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-linkedin-spotlight__content {
+    padding: 0 1.2rem 1.2rem;
+    color: var(--text-main);
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-linkedin-spotlight__content h3 {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    color: var(--text-heading);
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-linkedin-spotlight__button {
+    display: inline-flex;
+    margin-top: 0.7rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--primary-light), transparent 30%);
+    color: var(--primary-light);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.62rem 1.05rem;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-linkedin-spotlight__button:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-light);
+    color: var(--bg-surface);
+  }
+
+  @keyframes sh-company-marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes sh-linkedin-pulse {
+    70% {
+      box-shadow: 0 0 0 0.9rem rgba(10, 102, 194, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(10, 102, 194, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__track,
+    .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-linkedin-spotlight__dot {
+      animation: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__header {
+      margin-bottom: 1.25rem;
+    }
+
+    .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__logo-link {
+      min-width: 13.6rem;
+      height: 5.6rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__logo {
+      height: 2.2rem;
+      max-width: 10.8rem;
+    }
+
+    .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__subtitle {
+      font-size: 0.95rem;
+    }
+
+    .SnippetsHub#sh-company-marquee-{{ section.id }} .sh-company-marquee__text-logo {
+      font-size: 0.92rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Company Logo Marquee",
+  "tag": "section",
+  "class": "section-company-logo-marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Trusted by teams"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "We worked with companies like"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Logos are monochrome by default and become colorful on hover for a subtle, premium effect."
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed (seconds)",
+      "min": 12,
+      "max": 60,
+      "step": 2,
+      "unit": "s",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "logo_gap",
+      "label": "Logo spacing",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "open_links_in_new_tab",
+      "label": "Open links in new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "LinkedIn Spotlight"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_linkedin_spotlight",
+      "label": "Enable LinkedIn info panel",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "linkedin_toggle_label",
+      "label": "Toggle label",
+      "default": "Open LinkedIn Spotlight"
+    },
+    {
+      "type": "text",
+      "id": "linkedin_title",
+      "label": "Panel title",
+      "default": "Want to verify who builds this?"
+    },
+    {
+      "type": "richtext",
+      "id": "linkedin_description",
+      "label": "Panel description",
+      "default": "<p>See real project background, recommendations, and ongoing Shopify work on LinkedIn.</p>"
+    },
+    {
+      "type": "text",
+      "id": "linkedin_button_text",
+      "label": "Button text",
+      "default": "Visit LinkedIn profile"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_profile_url",
+      "label": "LinkedIn profile URL"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Padding top",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Padding bottom",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "company",
+      "name": "Company",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+        {
+          "type": "text",
+          "id": "company_name",
+          "label": "Company name",
+          "default": "Company"
+        },
+        {
+          "type": "url",
+          "id": "company_url",
+          "label": "Company URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Company Logo Marquee",
+      "blocks": [
+        {
+          "type": "company",
+          "settings": {
+            "company_name": "Reckitt"
+          }
+        },
+        {
+          "type": "company",
+          "settings": {
+            "company_name": "Primavera"
+          }
+        },
+        {
+          "type": "company",
+          "settings": {
+            "company_name": "Surgery Code"
+          }
+        },
+        {
+          "type": "company",
+          "settings": {
+            "company_name": "Euvic"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

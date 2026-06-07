@@ -1,0 +1,42 @@
+{% comment %}
+  PDP Gallery (SnippetsHub)
+  Params:
+  - include_video_thumb: boolean
+  - video_thumb_url: string
+{% endcomment %}
+
+<aside class="product-gallery">
+  <div class="gallery-main" id="mainGallery">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 1200 | image_tag: id: 'mainImage', loading: 'eager' }}
+    {%- else -%}
+      <img
+        src="https://images.unsplash.com/photo-1555421689-d68471e189f2?w=1200&h=750&fit=crop"
+        alt="{{ product.title }}"
+        id="mainImage"
+      >
+    {%- endif -%}
+    <div class="gallery-tag">{{ 'snippetshub.pdp_gallery.best_seller' | t }}</div>
+  </div>
+  {%- if product.media.size > 1 -%}
+    <div class="gallery-thumbnails">
+      {%- for media in product.media -%}
+        <div
+          class="thumbnail {% if forloop.first %}active{% endif %}"
+          data-image="{{ media | image_url: width: 1200 }}"
+        >
+          {{ media | image_url: width: 300 | image_tag: loading: 'lazy' }}
+        </div>
+      {%- endfor -%}
+      {%- if include_video_thumb -%}
+        <div class="thumbnail" data-video="true">
+          <img
+            src="{{ video_thumb_url | default: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=300&h=188&fit=crop' }}"
+            alt="{{ 'snippetshub.pdp_gallery.video_demo' | t }}"
+          >
+          <div class="thumbnail-play">▶</div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</aside>

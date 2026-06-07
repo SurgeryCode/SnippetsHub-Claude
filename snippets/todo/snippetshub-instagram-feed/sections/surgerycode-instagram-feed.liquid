@@ -1,0 +1,16 @@
+<section class="surgerycode-ig" data-endpoint="{{ section.settings.endpoint }}" data-limit="{{ section.settings.limit }}">
+  <div class="surgerycode-ig__grid" aria-live="polite"></div>
+</section>
+<link rel="stylesheet" href="{{ 'surgerycode-instagram-feed.css' | asset_url }}">
+<script src="{{ 'surgerycode-instagram-feed.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "SurgeryCode Instagram Feed",
+  "settings": [
+    { "type": "url", "id": "endpoint", "label": "JSON endpoint (App Proxy or CDN)", "default": "" },
+    { "type": "range", "id": "limit", "label": "Items limit", "default": 8, "min": 1, "max": 24, "step": 1 }
+  ],
+  "presets": [ { "name": "Instagram Feed", "category": "Social" } ]
+}
+{% endschema %}

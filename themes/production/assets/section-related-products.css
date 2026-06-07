@@ -1,0 +1,13 @@
+.related-products {
+  display: block;
+}
+
+product-recommendations.related-products.container {
+  max-width: 96rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 3rem);
+}
+
+/* .related-products__heading {
+  margin: 0 0 3rem;
+} */

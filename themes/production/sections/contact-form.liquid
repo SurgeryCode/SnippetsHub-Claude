@@ -1,0 +1,383 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Contact Page Styles based on Developer Profile */
+  .contact-section-wrapper {
+    position: relative;
+    background: {{ section.settings.page_bg | default: "#f8f9fa" }};
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 7.75rem;
+    padding-bottom: 5rem;
+    overflow: hidden;
+  }
+
+  /* Decorative Orbs */
+  .contact-section-wrapper::before,
+  .contact-section-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .contact-section-wrapper::before {
+    background: var(--primary-light);
+    top: -100px;
+    right: -100px;
+  }
+  .contact-section-wrapper::after {
+    background: var(--secondary);
+    bottom: -100px;
+    left: -100px;
+  }
+
+  .contact-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    /* padding: 20px; */
+  }
+
+  .contact-card {
+    background: {% if section.settings.use_glassmorphism %}rgba(255, 255, 255, 0.8){% else %}#ffffff{% endif %};
+    backdrop-filter: {% if section.settings.use_glassmorphism %}blur(20px){% else %}none{% endif %};
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    padding: 40px;
+    border: 1px solid var(--border-color);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .contact-card:hover {
+    /* box-shadow: var(--shadow-soft); */
+    /* border-color: color-mix(in srgb, var(--primary-light), transparent 50%); */
+  }
+
+  .contact-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .contact-title {
+    color: var(--text-heading, #111);
+    margin-bottom: 15px;
+  }
+
+  .contact-description {
+    color: var(--text-muted, #555);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Form Fields */
+  .contact-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-group {
+    position: relative;
+  }
+
+  .form-input, .form-textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--primary, #005bd3);
+    box-shadow: 0 0 0 4px rgba(0,91,211,0.1);
+    background: #fff;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 150px;
+  }
+
+  .contact-submit-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    background: var(--primary, #005bd3);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(0, 91, 211, 0.3);
+  }
+
+  .contact-submit-btn:hover {
+    background: var(--primary-dark, #0046a3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 91, 211, 0.4);
+  }
+
+  .form-status {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .form-status-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .form__message {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .form__message--success {
+    color: #008060;
+    background: #e3f1df;
+  }
+  .form__message--error {
+    color: #d82c0d;
+    background: #fbeae5;
+  }
+
+  /* Dark mode support */
+
+
+  [data-theme="dark"] .contact-section-wrapper { background: #121212; }
+  [data-theme="dark"] .contact-card { background: rgba(30,30,30,0.7); border-color: rgba(255,255,255,0.1); }
+  [data-theme="dark"] .contact-title { color: #fff; }
+  [data-theme="dark"] .contact-description { color: #ccc; }
+  [data-theme="dark"] .form-input,
+  [data-theme="dark"] .form-textarea { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.1); color: #fff; }
+  [data-theme="dark"] .form-input:focus,
+  [data-theme="dark"] .form-textarea:focus { border-color: var(--primary, #005bd3); background: rgba(0,0,0,0.4); }
+
+  @media screen and (max-width: 749px) {
+    .contact-section-wrapper {
+      min-height: auto;
+      padding-top: 6rem;
+      padding-bottom: 3rem;
+    }
+
+    .contact-section-wrapper::before,
+    .contact-section-wrapper::after {
+      width: 360px;
+      height: 360px;
+      filter: blur(56px);
+      opacity: 0.22;
+    }
+
+    .contact-card {
+      padding: 24px 18px;
+      border-radius: 18px;
+    }
+
+    .contact-header {
+      margin-bottom: 22px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="contact-section-wrapper section-{{ section.id }}-padding">
+  <div class="contact-container">
+    <div class="contact-card">
+      <div class="contact-header">
+        {%- if section.settings.heading != blank -%}
+          <h1 class="contact-title h1">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="text-muted">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="form-status form__message--success" tabindex="-1" autofocus>
+            <span class="form__message">
+              {{ 'templates.contact.form.post_success' | t }}
+            </span>
+          </div>
+        {%- elsif form.errors -%}
+          <div class="form-status form__message--error">
+            <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+              {{ 'templates.contact.form.error_heading' | t }}
+            </h2>
+            <ul class="form-status-list caption-large" role="list">
+              <li>
+                <a href="#ContactForm-email" class="link">
+                  {{ form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="contact-form-fields">
+          <div class="form-group">
+            <input
+              class="form-input"
+              autocomplete="name"
+              type="text"
+              id="ContactForm-name"
+              name="contact[{{ 'templates.contact.form.name' | t }}]"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="{{ 'templates.contact.form.name' | t }}"
+              aria-label="{{ 'templates.contact.form.name' | t }}"
+            >
+          </div>
+
+          <div class="form-group">
+            <input
+              autocomplete="email"
+              type="email"
+              id="ContactForm-email"
+              class="form-input"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="ContactForm-email-error"
+              {% endif %}
+              placeholder="{{ 'templates.contact.form.email' | t }}"
+              aria-label="{{ 'templates.contact.form.email' | t }}"
+            >
+          </div>
+
+          <div class="form-group">
+            <input
+              type="tel"
+              id="ContactForm-phone"
+              class="form-input"
+              autocomplete="tel"
+              name="contact[{{ 'templates.contact.form.phone' | t }}]"
+              pattern="[0-9\-]*"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              placeholder="{{ 'templates.contact.form.phone_optional' | t }}"
+              aria-label="{{ 'templates.contact.form.phone' | t }}"
+            >
+          </div>
+
+          <div class="form-group">
+            <textarea
+              rows="6"
+              id="ContactForm-body"
+              class="form-textarea"
+              name="contact[{{ 'templates.contact.form.comment' | t }}]"
+              placeholder="{{ 'templates.contact.form.comment' | t }}"
+              aria-label="{{ 'templates.contact.form.comment' | t }}"
+            >
+              {{- form.body -}}
+            </textarea>
+          </div>
+
+          <div class="contact-button-wrapper">
+            <button type="submit" class="contact-submit-btn">
+              {{ 'templates.contact.form.send' | t }}
+            </button>
+          </div>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.contact-form.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Contact Us",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "default": "Have a question or want to work together? Send us a message.",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "page_bg",
+      "label": "Background Color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_glassmorphism",
+      "label": "Use Glassmorphism Effect",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.contact-form.presets.name"
+    }
+  ]
+}
+{% endschema %}

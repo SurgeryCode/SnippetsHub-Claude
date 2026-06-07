@@ -1,0 +1,101 @@
+{% comment %}
+  Features Technical Section
+{% endcomment %}
+
+{{ 'section-features.css' | asset_url | stylesheet_tag }}
+
+<section id="features" class="section-py container">
+  <div class="text-center">
+    <h2>{{ section.settings.title }}</h2>
+    {% if section.settings.subtitle != blank %}
+      <p class="lead">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+
+  <div class="features-grid grid">
+    {% for block in section.blocks %}
+      <article class="glass-panel" {{ block.shopify_attributes }}>
+        <div class="feature-icon">{{ block.settings.icon }}</div>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.description }}</p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Features Technical",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Why Technical Quality Matters?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "High-quality code that directly impacts your store's performance."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (Emoji)",
+          "default": "⚡"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Performance First"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Lightweight, optimized code. Zero redundant libraries. Pure HTML, CSS, and Vanilla JS only."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features Technical",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "⚡",
+            "title": "Performance First",
+            "description": "Lightweight, optimized code. Zero redundant libraries. Pure HTML, CSS, and Vanilla JS only."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "📱",
+            "title": "Mobile First",
+            "description": "Every element designed with mobile users in mind from the start."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🛠️",
+            "title": "Easy Integration",
+            "description": "Snippets ready to paste into Shopify. Clear documentation and Liquid support included."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

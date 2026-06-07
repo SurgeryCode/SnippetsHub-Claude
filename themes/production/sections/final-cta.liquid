@@ -1,0 +1,59 @@
+{% comment %}
+  Final CTA Section
+{% endcomment %}
+
+<section class="final-cta section-py">
+  <div class="container">
+    <h2 style="margin-bottom: 20px;">{{ section.settings.title }}</h2>
+    <p style="max-width: 600px; margin: 0 auto 30px;">{{ section.settings.description }}</p>
+    
+    <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+      <a href="{{ section.settings.button_link }}" class="btn btn-lg btn-white">
+        {{ section.settings.button_text }}
+      </a>
+      <p class="cta-guarantee">{{ section.settings.guarantee_text }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Final CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Ready for a better Shopify store?"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Invest in a professional store look for a fraction of agency prices."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View All Snippets"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee Text",
+      "default": "14-Day Satisfaction Guarantee"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Final CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+{%- capture sc_perf_lite_config -%}
+  {%- if config -%}
+    {{ config | json }}
+  {%- else -%}
+    {"mode":"idle","selectors":["script[data-lite-src]","link[data-lite-href]","iframe[data-lite-src]"]}
+  {%- endif -%}
+{%- endcapture -%}
+
+<script id="surgerycode-performance-lite-config" type="application/json" data-surgerycode="performance-lite-config">{{ sc_perf_lite_config | strip }}</script>
+
+<script src="{{ 'performance-lite-loader.js' | asset_url }}" defer></script>
+

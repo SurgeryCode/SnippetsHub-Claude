@@ -1,0 +1,109 @@
+{% comment %}
+  Benefits Section - Why SnippetsHub?
+{% endcomment %}
+
+<section class="section-py bg-light">
+  <div class="container">
+    <div class="text-center">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="text-muted">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+    
+    <div class="benefits-grid">
+      {% for block in section.blocks %}
+        <article class="benefit-card" {{ block.shopify_attributes }}>
+          <div class="benefit-icon">{{ block.settings.icon }}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.description }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits SnippetsHub",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Why SnippetsHub?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Designed for non-technical store owners. Increase sales instantly."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (Emoji)",
+          "default": "💻"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "No Coding"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "\"Copy and paste\" solutions. Each snippet includes a step-by-step video tutorial for beginners."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits SnippetsHub",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "💻",
+            "title": "No Coding",
+            "description": "\"Copy and paste\" solutions. Each snippet includes a step-by-step video tutorial for beginners."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "⚡",
+            "title": "Instant Access",
+            "description": "Get files immediately after purchase. Start improving store conversion in minutes."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🎨",
+            "title": "Theme Compatibility",
+            "description": "Tested on all major Shopify 2.0 themes. Works seamlessly without breaking design."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🛠️",
+            "title": "Expert Support",
+            "description": "Stuck? We offer implementation packages if you need developer help."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

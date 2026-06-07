@@ -1,0 +1,84 @@
+{
+  "snippet": "snippetshub-sticky-add-to-cart-bar",
+  "title": "Sticky Add to Cart for Product Page",
+  "version": "1.0.6",
+  "status": "in_progress",
+  "current_goal": "Domknąć dynamiczną synchronizację sticky bara z wariantem i potwierdzić zachowanie add to cart na demo theme",
+  "current_iteration": "v1.0.6",
+  "completed": [
+    "Przeczytano PRD i przygotowano architekturę section + snippet + assets",
+    "Zaimplementowano MVP sticky add to cart dla product page",
+    "Przygotowano README, LICENSE i manifest",
+    "Dodano Shopify Product Listing Data do README",
+    "Zweryfikowano zachowania na demo theme, Dawn_SnippetsHub-Demo",
+    "Przetestowano snippet na wybranym demo theme produktowym",
+    "Zdiagnozowano różnice integracyjne między demo theme Publisher, Taste, Savor i Horizon",
+    "Ustawiono domyślnie widoczność miniatury produktu w schema",
+    "Przebudowano logikę add to cart, aby preferować natywny submit głównego formularza produktu",
+    "Rozszerzono obsługę eventów wariantu o integracje theme-specific",
+    "Poprawiono logikę pokazywania sticky bara względem głównego obszaru zakupu i stopki",
+    "Naprawiono serializację JSON wariantów dla produktów bez przypisanego obrazu wariantu",
+    "Dodano ustawienie schema do chowania sticky bara przy stopce",
+    "Dodano ustawienie schema określające zachowanie po add to cart",
+    "Ujednolicono domyślne zachowanie po add to cart tak, aby preferować pozostanie na stronie produktu",
+    "Dodano fallback obrazu wariantu do głównego obrazu produktu",
+    "Przetestowane demo theme Publisher, Taste, Savor i Horizon",
+    "Rozszerzono synchronizację sticky bara o normalizację danych wariantu z eventów motywu",
+    "Dodano do PRD sekcję instalacji i użycia rozwiązania",
+    "Uporządkowano stałe założenia projektu między PRD.md oraz STATE.json",
+    "Wzmocniono wybór głównego formularza produktu, aby ograniczyć błędne podpięcia do quick add i ukrytych formularzy",
+    "Dodano próg scrolla przed pokazaniem sticky bara oraz uproszczono sukces add to cart do stanu przycisku",
+    "Dodano fallback obrazu wariantu pobierany z aktualnego DOM produktu po zmianie wariantu",
+    "Zawężono wykrywanie obrazu wariantu do kontekstu głównego produktu i aktywnego media",
+    "Rozszerzono stay_on_page o zgodne z theme eventy cart:update po AJAX add to cart",
+    "Doprecyzowano warunek pokazania sticky bara tak, aby nie aktywował się dla pustych lub błędnych triggerów"
+  ],
+  "in_progress": [
+    "Zweryfikować czy obraz wariantu w sticky barze aktualizuje się dynamicznie bez odświeżania strony",
+    "Sprawdzić czy add to cart pozostaje na stronie produktu przy ustawieniu stay_on_page",
+    "Potwierdzić że sticky bar nie pojawia się od razu po wejściu na PDP w Savor"
+  ],
+  "next_steps": [
+    "Zweryfikować aktualizację obrazu, ceny, compare at price i dostępności po zmianie wariantu",
+    "Sprawdzić czy po add to cart wszystkie demo theme zachowują się jednolicie z nowym ustawieniem schema",
+    "Po testach zaktualizować status iteracji do implemented lub validated"
+  ],
+  "out_of_scope": [
+    "Zaawansowane animacje",
+    "Bundle logic",
+    "Upsell w sticky barze",
+    "Integracje z aplikacjami zewnętrznymi"
+  ],
+  "blocked_by": [],
+  "files_touched": [
+    "sections/snh-sticky-add-to-cart-for-product-page.liquid",
+    "snippets/snh-sticky-add-to-cart-for-product-page.liquid",
+    "assets/snh-sticky-add-to-cart-for-product-page.css",
+    "assets/snh-sticky-add-to-cart-for-product-page.js",
+    "README.md",
+    "LICENSE.md",
+    "manifest.json",
+    "PRD/PRD.md",
+    "PRD/STATE.json",
+    "PRD/ITERATIONS.md"
+  ],
+  "acceptance_criteria": [
+    "Sticky bar pojawia się po wyjściu poza główny obszar zakupu",
+    "Sticky bar poprawnie dodaje do koszyka aktualnie wybrany wariant",
+    "Komponent działa poprawnie na mobile i desktop",
+    "Merchant może zarządzać podstawowymi ustawieniami przez schema",
+    "Rozwiązanie nie używa inline CSS i pozostaje zgodne ze standardem SnippetsHub"
+  ],
+  "assumptions": [
+    "Produkt korzysta ze standardowego formularza produktu Shopify",
+    "Motyw ma dostęp do danych wariantu w sposób zgodny z OS 2.0",
+    "Wersja MVP nie obsługuje niestandardowych bundle builderów"
+  ],
+  "notes": [
+    "Teksty interfejsu przygotowujemy w języku angielskim jako bazowe",
+    "Foldery theme z dopiskiem Demo służą jako środowisko testowe",
+    "Szersze założenia wdrożeniowe i podejście Shopify-first zostały zapisane w PRD.md"
+  ],
+  "updated_at": "2026-03-30",
+  "owner": "SnippetsHub"
+}

@@ -1,0 +1,78 @@
+/*
+ * SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+ */
+
+.SnippetsHub.SNH-snh-free-shipping-bar {
+  --snh-fs-bar-color: #111111;
+  --snh-fs-bar-bg: #e5e5e5;
+  --snh-fs-text: #111111;
+  --snh-fs-bg: #ffffff;
+}
+
+.SnippetsHub .SNH-FreeShipping {
+  padding: 0.875rem 1rem;
+  background: var(--snh-fs-bg);
+  color: var(--snh-fs-text);
+}
+
+.SnippetsHub .SNH-FreeShipping__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.625rem;
+}
+
+.SnippetsHub .SNH-FreeShipping__icon {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.SnippetsHub .SNH-FreeShipping__message {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Progress track */
+.SnippetsHub .SNH-FreeShipping__track {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--snh-fs-bar-bg);
+  overflow: hidden;
+}
+
+/* Progress fill */
+.SnippetsHub .SNH-FreeShipping__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--snh-fs-bar-color);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
+}
+
+.SnippetsHub .SNH-FreeShipping__fill--complete {
+  background: var(--snh-fs-bar-color);
+}
+
+/* Celebration pulse when threshold reached */
+@keyframes snh-fs-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.SnippetsHub .SNH-FreeShipping__fill--complete {
+  animation: snh-fs-pulse 1.2s ease-in-out 1;
+}
+
+/* Theme editor empty state */
+.SnippetsHub .SNH-FreeShipping__empty-state {
+  padding: 1rem 1.25rem;
+  border: 1px dashed #d0d0d0;
+  border-radius: 8px;
+  color: #333333;
+  background: #fafafa;
+  font-size: 0.875rem;
+}

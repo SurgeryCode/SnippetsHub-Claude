@@ -1,0 +1,258 @@
+/* TYLKO DLA WYRÓŻNIONEGO PIERWSZEGO PRODUKTU */
+.snippet-card-featured {
+    position: relative;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1),
+                0 20px 50px rgba(0, 0, 0, 0.3);
+    transform: translateZ(0);
+    z-index: 10;
+    backface-visibility: hidden;
+}
+.snippet-card-featured.product-card, .snippet-card-featured.snippet-card {
+    overflow: inherit;
+}
+
+.snippet-card-featured::before {
+    content: '⚡ EXPERT AVAILABLE NOW';
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: #3b82f6;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.snippet-card-featured .p-image {
+    border: 3px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+}
+.snippet-card-featured .p-image a img {
+    object-position: top;
+}
+
+.snippet-card-featured .p-title {
+    font-size: 1.4rem;
+    color: white;
+}
+
+.snippet-card-featured .p-title a {
+    color: white;
+    text-shadow: none;
+}
+
+.snippet-card-featured .p-desc {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+}
+
+.snippet-card-featured .demo-link {
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.snippet-card-featured .upsell-box {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    backdrop-filter: none;
+}
+
+.snippet-card-featured .price {
+    color: #22c55e;
+    font-size: 2rem;
+    text-shadow: none;
+}
+
+.snippet-card-featured .btn {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+    font-size: 1.1rem;
+    padding: 12px 36px;
+}
+
+.snippet-card-featured .btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+
+.snippet-card-featured:hover {
+    transform: translateY(-0.35rem);
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.15),
+                0 25px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Dodatkowy visual hook */
+.snippet-card-featured .badge-SurgeruCode {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.8); }
+}
+
+/* EXTRACTED STYLES FROM LIQUID */
+.snippet-card-featured .p-image a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.snippet-card-featured .product-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+}
+
+.snippet-card-featured .p-title a {
+    color: white; /* Already in file, but ensuring consistency */
+    text-decoration: none;
+}
+
+.snippet-card-featured .upsell-box {
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    backdrop-filter: none;
+}
+
+.snippet-card-featured .upsell-check {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    width: 100%;
+}
+
+.snippet-card-featured .upsell-check-left {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+.snippet-card-featured .upsell-price {
+    color: #ffffff;
+}
+.snippet-card-featured .upsell-info-text {
+    text-align: left;
+}
+
+.snippet-card-featured .upsell-info-title {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.9rem;
+    display: block;
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+.snippet-card-featured .upsell-info-subtitle {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    display: block;
+    margin-top: 2px;
+}
+
+.snippet-card-featured .btn {
+    border-radius: 30px;
+}
+
+.snippet-card-featured .discount-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ef4444;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+.snippet-card-featured .price-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.snippet-card-featured .snippet-card-variant-option {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(148, 163, 184, 0.35);
+    color: #e2e8f0;
+}
+
+.snippet-card-featured .snippet-card-variant-option:hover {
+    border-color: rgba(96, 165, 250, 0.8);
+    color: #ffffff;
+}
+
+.snippet-card-featured .snippet-card-variant-option.is-active {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #0f172a;
+}
+
+@media (max-width: 640px) {
+    .snippet-card-featured::before {
+        font-size: 0.62rem;
+        padding: 5px 10px;
+        left: 12px;
+        top: -10px;
+        letter-spacing: 0.2px;
+    }
+
+    .snippet-card-featured .price {
+        font-size: 1.4rem;
+    }
+
+    .snippet-card-featured .price-row {
+        gap: 0.55rem;
+        align-items: flex-end;
+    }
+
+    .snippet-card-featured .price-stack {
+        gap: 0.3rem;
+    }
+
+    .snippet-card-featured .snippet-card-add-form {
+        width: min(100%, 8.15rem) !important;
+        gap: 0.35rem !important;
+    }
+
+    .snippet-card-featured .snippet-card-qty-selector .sticky-product-qty__btn {
+        min-width: 1.95rem;
+        min-height: 1.95rem;
+        width: 1.95rem;
+        height: 1.95rem;
+        font-size: 0.95rem;
+    }
+
+    .snippet-card-featured .snippet-card-qty-selector .sticky-product-qty__input {
+        min-height: 1.95rem;
+        width: 2.2rem;
+        padding: 0 0.25rem;
+        font-size: 0.8rem;
+    }
+
+    .snippet-card-featured .snippet-card-add-form .btn {
+        min-height: 1.95rem;
+        font-size: 0.78rem;
+        padding: 0.45rem 0.55rem;
+        letter-spacing: 0;
+    }
+}

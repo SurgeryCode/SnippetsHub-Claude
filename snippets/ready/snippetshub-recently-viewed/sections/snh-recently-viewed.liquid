@@ -1,0 +1,119 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-recently-viewed.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-recently-viewed.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-RecentlyViewed {
+    --snh-rv-bg: {{ section.settings.background_color }};
+    --snh-rv-card-bg: {{ section.settings.card_background }};
+    --snh-rv-border: {{ section.settings.border_color }};
+    --snh-rv-text: {{ section.settings.text_color }};
+    --snh-rv-subtext: {{ section.settings.subtext_color }};
+    --snh-rv-btn-bg: {{ section.settings.button_color }};
+    --snh-rv-btn-text: {{ section.settings.button_text_color }};
+  }
+{% endstyle %}
+
+<div
+  class="SnippetsHub SNH-snh-recently-viewed"
+  data-snh="snippetshub-recently-viewed"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+  data-limit="{{ section.settings.limit }}"
+  data-title="{{ section.settings.title | escape }}"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-exclude-handle="{% if product %}{{ product.handle }}{% endif %}"
+  data-storage-key="snh-rv-products"
+  {% if product %}
+  data-current-product='{
+    "handle": {{ product.handle | json }},
+    "title": {{ product.title | json }},
+    "url": {{ product.url | json }},
+    "image": {{ product.featured_image | image_url: width: 400 | json }},
+    "image_alt": {{ product.featured_image.alt | default: product.title | json }},
+    "price": {{ product.price }},
+    "compare_at_price": {{ product.compare_at_price | default: 0 }}
+  }'
+  {% endif %}
+>
+  {{- comment -}} JS renders the section content here {{- endcomment -}}
+</div>
+
+{% schema %}
+{
+  "name": "SNH Recently Viewed",
+  "tag": "section",
+  "class": "section section-snh-recently-viewed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Recently viewed"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Max products to show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card border",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Product title",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Price / meta",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Recently Viewed"
+    }
+  ]
+}
+{% endschema %}

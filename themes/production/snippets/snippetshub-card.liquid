@@ -1,0 +1,14 @@
+{% comment %}
+  SnippetsHub Product Card (thin wrapper)
+  Usage: {% render 'snippetshub-card', product: product, show_badge: true %}
+{% endcomment %}
+
+{% render 'product-card-base',
+  product: product,
+  description_limit: 150,
+  show_badge: show_badge,
+  demo_link: demo_link,
+  show_expert_qty: show_expert_qty,
+  product_category: product_category,
+  card_class: card_class
+%} 

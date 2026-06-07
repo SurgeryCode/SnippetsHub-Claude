@@ -1,0 +1,105 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "community_board_fancy_kVCKiF": {
+      "type": "community-board-fancy",
+      "blocks": {
+        "task_maqDAV": {
+          "type": "task",
+          "settings": {
+            "task_title": "Fix Checkout Lag",
+            "status": "progress",
+            "code": "BUG-CRIT"
+          }
+        },
+        "task_hh7MmN": {
+          "type": "task",
+          "settings": {
+            "task_title": "Dark Mode Toggle",
+            "status": "done",
+            "code": "FEAT-UI"
+          }
+        },
+        "task_LRnXUe": {
+          "type": "task",
+          "settings": {
+            "task_title": "AI Search",
+            "status": "queue",
+            "code": "REQ-AI"
+          }
+        }
+      },
+      "block_order": [
+        "task_maqDAV",
+        "task_hh7MmN",
+        "task_LRnXUe"
+      ],
+      "disabled": true,
+      "name": "Community Board (Fancy)",
+      "settings": {
+        "title": "THE LAB // WORKSHOP",
+        "subtitle": "INITIATE PROTOCOL: REQUEST_FEATURE. VIEW STATUS: ACTIVE."
+      }
+    },
+    "community_board_standard_wWQFCM": {
+      "type": "community-board-standard",
+      "blocks": {
+        "task_mx7m8q": {
+          "type": "task",
+          "settings": {
+            "task_title": "Sticky Add to Cart",
+            "status": "done",
+            "submitter": "Anonymous"
+          }
+        },
+        "task_A4tKxX": {
+          "type": "task",
+          "settings": {
+            "task_title": "Mobile Filter Drawer",
+            "status": "progress",
+            "submitter": "Anonymous"
+          }
+        },
+        "task_TWVRUg": {
+          "type": "task",
+          "settings": {
+            "task_title": "AJAX Search",
+            "status": "queue",
+            "submitter": "Anonymous"
+          }
+        }
+      },
+      "block_order": [
+        "task_mx7m8q",
+        "task_A4tKxX",
+        "task_TWVRUg"
+      ],
+      "name": "Community Board (Standard)",
+      "settings": {
+        "title": "Community Requests",
+        "subtitle": "Help us improve common Shopify issues. Submit a request or vote on existing ones."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "community_board_fancy_kVCKiF",
+    "community_board_standard_wWQFCM"
+  ]
+}

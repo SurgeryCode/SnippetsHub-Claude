@@ -1,0 +1,162 @@
+{% comment %}
+  Expert Install Upsell (Reusable)
+  Usage examples:
+  {% render 'expert-install-upsell',
+    title: 'Add Expert Install',
+    subtitle: "We'll implement it (24h)",
+    hours: product.metafields.custom.installation_hours,
+    show_qty: true
+  %}
+
+  Optional params:
+  - variant: 'default' | 'sticky'
+  - form_id: 'product-form-...'
+  - checkbox_class: extra classes for checkbox input
+  - wrapper_class, label_class, left_class, price_class
+  - qty_wrapper_class, qty_label_class, qty_selector_class, qty_btn_class, qty_input_class
+  - show_info: true/false (renders expert-install-info)
+  - price_content: custom price markup (if blank, JS fills via data-expert-price-placeholder)
+{% endcomment %}
+
+{%- assign variant = variant | default: 'default' -%}
+{%- assign title_text = title | default: 'Add Expert Install' -%}
+{%- assign subtitle_text = subtitle | default: "We'll implement it (24h)" -%}
+{%- assign qty_label_text = qty_label | default: 'Do you need more hours?' -%}
+
+{%- if title_key -%}
+  {%- assign title_text = title_key | t -%}
+{%- endif -%}
+{%- if subtitle_key -%}
+  {%- assign subtitle_text = subtitle_key | t -%}
+{%- endif -%}
+{%- if qty_label_key -%}
+  {%- assign qty_label_text = qty_label_key | t -%}
+{%- endif -%}
+
+{%- comment -%}
+  Guard against unresolved translation keys rendered to UI.
+  If translation returns a raw key like "snippetshub....", fallback to human-readable text.
+{%- endcomment -%}
+{%- if title_text contains 'snippetshub.' or title_text contains 'translation missing:' -%}
+  {%- assign title_text = 'Add Expert Install' -%}
+{%- endif -%}
+{%- if subtitle_text contains 'snippetshub.' or subtitle_text contains 'translation missing:' -%}
+  {%- assign subtitle_text = "We'll implement it (24h)" -%}
+{%- endif -%}
+{%- if qty_label_text contains 'snippetshub.' or qty_label_text contains 'translation missing:' -%}
+  {%- assign qty_label_text = 'Do you need more hours?' -%}
+{%- endif -%}
+{%- assign show_info = show_info | default: true -%}
+{%- assign hours_value = hours | default: 1 -%}
+{%- assign checkbox_name = checkbox_name | default: 'properties[_Expert Install]' -%}
+{%- assign info_text_class = info_text_class | default: 'upsell-info-text' -%}
+{%- assign hide_expert_install_value = hide_expert_install.value
+  | default: hide_expert_install
+  | append: ''
+  | downcase
+  | strip
+-%}
+{%- assign hide_expert_install = false -%}
+{%- if hide_expert_install_value == 'true' or hide_expert_install_value == '1' -%}
+  {%- assign hide_expert_install = true -%}
+{%- endif -%}
+
+{%- unless hide_expert_install -%}
+  {%- if variant == 'sticky' -%}
+    <div class="{{ wrapper_class | default: 'sticky-upsell-box' }}">
+      <label class="{{ label_class | default: 'upsell-check' }}">
+        <input
+          type="checkbox"
+          class="{{ checkbox_class | default: 'w-4 h-4 accent-primary' }}"
+          data-expert-install-checkbox
+          {% if checkbox_id %}
+            id="{{ checkbox_id }}"
+          {% endif %}
+          {% if form_id %}
+            form="{{ form_id }}"
+          {% endif %}
+        >
+        <div class="{{ left_class | default: 'upsell-text' }}">
+          <span class="upsell-title">{{ title_text }}</span>
+          <span class="upsell-desc">{{ subtitle_text }}</span>
+        </div>
+        <span class="{{ price_class | default: 'upsell-price-tag' }}" data-expert-price-placeholder>
+          {%- if price_content != blank -%}
+            {{ price_content }}
+          {%- endif -%}
+        </span>
+      </label>
+      {%- if show_qty -%}
+        <div class="{{ qty_wrapper_class | default: 'upsell-qty-wrapper' }}" style="display: none;">
+          <span class="{{ qty_label_class | default: 'upsell-qty-label' }}">{{ qty_label_text }}</span>
+          <div class="{{ qty_selector_class | default: 'qty-selector' }}">
+            <button type="button" class="{{ qty_btn_class | default: 'qty-btn qty-minus' }}">-</button>
+            <input
+              type="number"
+              class="{{ qty_input_class | default: 'upsell-qty-input' }}"
+              data-expert-install-quantity
+              value="{{ hours_value }}"
+              min="{{ hours_value }}"
+            >
+            <button type="button" class="{{ qty_btn_class | default: 'qty-btn qty-plus' }}">+</button>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <div class="{{ wrapper_class | default: 'upsell-box' }}">
+      <label class="{{ label_class | default: 'upsell-check' }}">
+        <div class="{{ left_class | default: 'upsell-check-left' }}">
+          <input
+            type="checkbox"
+            class="{{ checkbox_class | default: '' }}"
+            name="{{ checkbox_name }}"
+            data-expert-install-checkbox
+            {% if checkbox_id %}
+              id="{{ checkbox_id }}"
+            {% endif %}
+            {% if form_id %}
+              form="{{ form_id }}"
+            {% endif %}
+          >
+          <div class="{{ info_text_class }}">
+            <span class="upsell-info-title">
+              {{ title_text }}
+              {%- if show_info -%}
+                {% render 'expert-install-info', hours: hours_value %}
+              {%- endif -%}
+            </span>
+            <span class="upsell-info-subtitle">{{ subtitle_text }}</span>
+          </div>
+        </div>
+        <span class="{{ price_class | default: 'upsell-price fw-600' }}" data-expert-price-placeholder>
+          {%- if price_content != blank -%}
+            {{ price_content }}
+          {%- endif -%}
+        </span>
+      </label>
+
+      {%- if show_qty -%}
+        <div class="{{ qty_wrapper_class | default: 'upsell-qty-wrapper' }}" style="display: none;">
+          <span class="{{ qty_label_class | default: 'upsell-qty-label' }}">
+            {{ qty_label_text }}
+            {%- if show_info -%}
+              {% render 'expert-install-info', hours: hours_value %}
+            {%- endif -%}
+          </span>
+          <div class="{{ qty_selector_class | default: 'qty-selector' }}">
+            <button type="button" class="{{ qty_btn_class | default: 'qty-btn qty-minus' }}">-</button>
+            <input
+              type="number"
+              class="{{ qty_input_class | default: 'upsell-qty-input' }}"
+              data-expert-install-quantity
+              value="{{ hours_value }}"
+              min="{{ hours_value }}"
+            >
+            <button type="button" class="{{ qty_btn_class | default: 'qty-btn qty-plus' }}">+</button>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endunless -%}

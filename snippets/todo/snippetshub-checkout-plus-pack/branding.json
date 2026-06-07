@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schema.shopify.com/checkout/branding/2024-04",
+  "customizations": {
+    "global": {
+      "cornerRadius": "base",
+      "typography": {
+        "size": {
+          "base": 14,
+          "ratio": 1.2
+        }
+      }
+    },
+    "header": {
+      "banner": {
+        "image": {
+          "mediaImageId": ""
+        }
+      },
+      "logo": {
+        "image": {
+          "mediaImageId": ""
+        },
+        "maxWidth": 200
+      },
+      "position": "start"
+    },
+    "control": {
+      "border": "full",
+      "color": "default",
+      "cornerRadius": "base",
+      "labelPosition": "outside"
+    },
+    "primaryButton": {
+      "background": "solid",
+      "blockPadding": "base",
+      "border": "none",
+      "cornerRadius": "base",
+      "inlinePadding": "base",
+      "typography": {
+        "font": "primary",
+        "kerning": "base",
+        "letterCase": "none",
+        "size": "base",
+        "weight": "bold"
+      }
+    },
+    "checkbox": {
+      "cornerRadius": "base"
+    },
+    "select": {
+      "border": "full",
+      "typography": {
+        "letterCase": "none"
+      }
+    },
+    "textField": {
+      "border": "full",
+      "typography": {
+        "letterCase": "none"
+      }
+    },
+    "orderSummary": {
+      "background": "subdued",
+      "borderStyle": "none",
+      "cornerRadius": "base"
+    }
+  }
+}

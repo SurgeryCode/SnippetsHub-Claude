@@ -1,0 +1,21 @@
+{%- comment -%}
+  🧩 Snippet: B2B Price Badge (v1.1)
+  Parametry:
+    product   — obiekt produktu (wymagane)
+    show_vat  — true/false, czy pokazywać "excl. VAT" (domyślnie: true)
+    vat_label — etykieta VAT (domyślnie: 'excl. VAT')
+{%- endcomment -%}
+
+{%- liquid
+  assign _show_vat  = show_vat  | default: true
+  assign _vat_label = vat_label | default: 'excl. VAT'
+  assign _variant   = product.selected_or_first_available_variant
+-%}
+
+<link rel="stylesheet" href="{{ 'surgerycode-b2b-pack.css' | asset_url }}">
+<span class="surgerycode-price-badge">
+  {{ _variant.price | money }}
+  {%- if _show_vat -%}
+    <small class="surgerycode-price-badge__vat">{{ _vat_label }}</small>
+  {%- endif -%}
+</span>

@@ -1,0 +1,19 @@
+{
+  "name": "SurgeryCode-ScriptHub",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "create-snippet": "node ./tools/create-snippet.js",
+    "build": "node ./tools/build-snippet.js",
+    "build:all": "node ./tools/build-all.js",
+    "deploy:themes": "node ./tools/deploy-snippet-to-themes.js",
+    "lint": "echo 'dodaj lintery'",
+    "test": "echo 'dodaj testy'"
+  },
+  "dependencies": {
+    "archiver": "^5.3.1",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {}
+} 

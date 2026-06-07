@@ -1,0 +1,123 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.6 | Support: support@snippetshub.com
+{% endcomment %}
+
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign root_class = 'SnippetsHub SNH-snh-sticky-add-to-cart-for-product-page'
+
+  if section.settings.show_on_mobile == false
+    assign root_class = root_class | append: ' SNH-StickyAtc--hide-mobile'
+  endif
+
+  if section.settings.show_on_desktop == false
+    assign root_class = root_class | append: ' SNH-StickyAtc--hide-desktop'
+  endif
+
+  assign variant_title = selected_variant.title
+  if variant_title == blank or variant_title == 'Default Title'
+    assign variant_title = ''
+  endif
+
+  assign featured_media = selected_variant.featured_media | default: product.featured_media
+%}
+
+<div
+  class="SnippetsHub {{ root_class | remove: 'SnippetsHub ' }}"
+  data-snh="snippetshub-sticky-add-to-cart-bar"
+  data-snh-version="1.0.6"
+  data-snh-owner="SnippetsHub"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-product-title="{{ product.title | escape }}"
+  data-position="{{ section.settings.position }}"
+  data-enabled="{{ section.settings.enabled }}"
+  data-hide-on-footer-hover="{{ section.settings.hide_on_footer_hover }}"
+  data-post-add-behavior="{{ section.settings.post_add_behavior }}"
+  data-fallback-image-src="{% if product.featured_media %}{{ product.featured_media | image_url: width: 160 }}{% endif %}"
+  data-fallback-image-alt="{{ product.title | escape }}"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-default-cta="{{ section.settings.cta_label | escape }}"
+  data-adding-label="Adding..."
+  data-sold-out-label="Sold out"
+  data-error-label="Failed to add product to cart"
+  data-added-label="Added to cart"
+>
+  <div class="SNH-StickyAtc{% if section.settings.position == 'top' %} SNH-StickyAtc--top{% else %} SNH-StickyAtc--bottom{% endif %}" aria-hidden="true">
+    <div class="SNH-StickyAtc__inner">
+      <div class="SNH-StickyAtc__summary">
+        {% if section.settings.show_image %}
+          <div class="SNH-StickyAtc__media-wrapper">
+            {% if featured_media %}
+              {{ featured_media | image_url: width: 160 | image_tag: class: 'SNH-StickyAtc__media', loading: 'lazy', widths: '80,120,160', alt: product.title }}
+            {% else %}
+              <div class="SNH-StickyAtc__media SNH-StickyAtc__media--placeholder" aria-hidden="true"></div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <div class="SNH-StickyAtc__text">
+          {% if section.settings.show_product_title %}
+            <p class="SNH-StickyAtc__title" data-snh-title>{{ product.title }}</p>
+          {% endif %}
+
+          {% if section.settings.show_variant_title %}
+            <p class="SNH-StickyAtc__variant{% if variant_title == blank %} is-hidden{% endif %}" data-snh-variant>{{ variant_title }}</p>
+          {% endif %}
+
+          {% if section.settings.show_price %}
+            <div class="SNH-StickyAtc__price" data-snh-price>
+              <span class="SNH-StickyAtc__price-current">{{ selected_variant.price | money }}</span>
+              <span class="SNH-StickyAtc__price-compare{% if selected_variant.compare_at_price <= selected_variant.price or selected_variant.compare_at_price == blank %} is-hidden{% endif %}" data-snh-compare-price>
+                {{ selected_variant.compare_at_price | money }}
+              </span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="SNH-StickyAtc__actions">
+        <button
+          class="SNH-StickyAtc__button"
+          type="button"
+          data-snh-add-to-cart
+          {% unless selected_variant.available %}disabled{% endunless %}
+        >
+          {% if selected_variant.available %}
+            {{ section.settings.cta_label }}
+          {% else %}
+            Sold out
+          {% endif %}
+        </button>
+      </div>
+    </div>
+
+    <p class="SNH-StickyAtc__status" data-snh-status aria-live="polite"></p>
+  </div>
+
+  <script type="application/json" data-snh-variants>
+    [
+      {% for variant in product.variants %}
+        {% liquid
+          assign variant_featured_image = null
+          if variant.featured_media
+            assign variant_featured_image = variant.featured_media | image_url: width: 160
+          elsif product.featured_media
+            assign variant_featured_image = product.featured_media | image_url: width: 160
+          endif
+        %}
+        {
+          "id": {{ variant.id | json }},
+          "available": {{ variant.available | json }},
+          "title": {{ variant.title | json }},
+          "price": {{ variant.price | json }},
+          "compare_at_price": {{ variant.compare_at_price | default: 0 | json }},
+          "price_formatted": {{ variant.price | money | json }},
+          "compare_at_price_formatted": {{ variant.compare_at_price | money | json }},
+          "featured_image": {{ variant_featured_image | json }},
+          "featured_image_alt": {{ variant.featured_media.alt | default: product.title | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  </script>
+</div>

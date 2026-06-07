@@ -1,0 +1,19 @@
+{
+  "name": "SnippetsHub Cart Drawer",
+  "slug": "snippetshub-cart-drawer",
+  "version": "1.2.0",
+  "owner": "SnippetsHub",
+  "license": "License depends on the purchased plan. Default: Single Store License unless the purchased variant states otherwise.",
+  "supportEmail": "support@snippetshub.com",
+  "type": "section",
+  "category": "carts",
+  "technologies": ["CSS", "HTML", "JS", "Liquid"],
+  "shopify_os2": true,
+  "entry": {
+    "section": "sections/snh-cart-drawer.liquid",
+    "assets": [
+      "assets/snh-cart-drawer.css",
+      "assets/snh-cart-drawer.js"
+    ]
+  }
+}

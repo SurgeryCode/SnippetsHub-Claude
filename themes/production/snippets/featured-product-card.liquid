@@ -1,0 +1,17 @@
+{% comment %}
+  Featured SnippetsHub Product Card
+  Premium version matching structure 1:1 with snippetshub-card.liquid
+{% endcomment %}
+
+{{ 'featured-product-card.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'featured-product-card.js' | asset_url }}" defer="defer"></script>
+
+{% render 'product-card-base',
+  product: product,
+  featured: true,
+  description_limit: 170,
+  show_badge: show_badge,
+  demo_link: demo_link,
+  show_expert_qty: show_expert_qty,
+  product_category: product_category
+%}

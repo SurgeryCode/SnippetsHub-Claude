@@ -1,0 +1,86 @@
+{% comment %}
+  Testimonials / Social Proof Section
+{% endcomment %}
+
+<section class="social-proof-section container">
+  <h2 class="section-title-sm text-center">{{ section.settings.title }}</h2>
+  
+  <div class="testimonial-grid">
+    {% for block in section.blocks %}
+      <article class="testimonial-card" {{ block.shopify_attributes }}>
+        <div class="stars">★★★★★</div>
+        <p class="quote">{{ block.settings.quote }}</p>
+        <div class="author">{{ block.settings.author }}</div>
+        <div class="author-role">{{ block.settings.role }}</div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials SnippetsHub",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Trusted by 500+ store owners"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Author Role"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials SnippetsHub",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "This Hero section instantly reduced our bounce rate by 15%. The code was so clean my developer didn't even complain.",
+            "author": "Sarah Jenkins",
+            "role": "Owner, GlowCosmetics"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I bought the Bundle Builder and expert install. They had it up in 6 hours. Absolutely worth the price.",
+            "author": "Mike Ross",
+            "role": "Founder, GearUp"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I usually hire agencies for this stuff, but these snippets are agency quality for a fraction of the price.",
+            "author": "Elena Rodriguez",
+            "role": "CTO, FashionNova"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

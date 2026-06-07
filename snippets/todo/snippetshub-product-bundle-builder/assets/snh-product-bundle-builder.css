@@ -1,0 +1,256 @@
+/*
+ * SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+ */
+
+.SnippetsHub.SNH-snh-product-bundle-builder {
+  --snh-bb-bg: #ffffff;
+  --snh-bb-border: #e5e5e5;
+  --snh-bb-text: #111111;
+  --snh-bb-subtext: #6b6b6b;
+  --snh-bb-accent: #111111;
+  --snh-bb-btn-bg: #111111;
+  --snh-bb-btn-text: #ffffff;
+  --snh-bb-savings-bg: #f4b400;
+}
+
+.SnippetsHub .SNH-Bundle {
+  background: var(--snh-bb-bg);
+  border: 1px solid var(--snh-bb-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  color: var(--snh-bb-text);
+}
+
+.SnippetsHub .SNH-Bundle__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.SnippetsHub .SNH-Bundle__subtitle {
+  margin: 0 0 1.25rem;
+  font-size: 0.875rem;
+  color: var(--snh-bb-subtext);
+}
+
+/* List */
+.SnippetsHub .SNH-Bundle__list {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Item row */
+.SnippetsHub .SNH-Bundle__item {
+  border-bottom: 1px solid var(--snh-bb-border);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.SnippetsHub .SNH-Bundle__item:last-child { border-bottom: none; }
+.SnippetsHub .SNH-Bundle__item:not(.is-checked) { opacity: 0.55; }
+
+.SnippetsHub .SNH-Bundle__row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hide native checkbox */
+.SnippetsHub .SNH-Bundle__checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Custom checkbox indicator */
+.SnippetsHub .SNH-Bundle__check-indicator {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--snh-bb-border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease, border-color 0.18s ease;
+  background: transparent;
+}
+
+.SnippetsHub .SNH-Bundle__check-indicator svg {
+  width: 12px;
+  height: 12px;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.SnippetsHub .SNH-Bundle__item.is-checked .SNH-Bundle__check-indicator {
+  background: var(--snh-bb-accent);
+  border-color: var(--snh-bb-accent);
+}
+
+.SnippetsHub .SNH-Bundle__item.is-checked .SNH-Bundle__check-indicator svg { opacity: 1; }
+
+.SnippetsHub .SNH-Bundle__row:hover .SNH-Bundle__check-indicator {
+  border-color: var(--snh-bb-accent);
+}
+
+/* Image */
+.SnippetsHub .SNH-Bundle__img {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--snh-bb-border);
+}
+
+/* Details */
+.SnippetsHub .SNH-Bundle__details {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.SnippetsHub .SNH-Bundle__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--snh-bb-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.SnippetsHub .SNH-Bundle__variant,
+.SnippetsHub .SNH-Bundle__note {
+  font-size: 0.75rem;
+  color: var(--snh-bb-subtext);
+  line-height: 1.3;
+}
+
+/* Price column */
+.SnippetsHub .SNH-Bundle__price-col {
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.SnippetsHub .SNH-Bundle__compare {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--snh-bb-subtext);
+  text-decoration: line-through;
+}
+
+.SnippetsHub .SNH-Bundle__price {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--snh-bb-text);
+}
+
+/* Footer */
+.SnippetsHub .SNH-Bundle__footer { margin-top: 0.25rem; }
+
+.SnippetsHub .SNH-Bundle__total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 0;
+  border-top: 2px solid var(--snh-bb-border);
+  margin-bottom: 1rem;
+}
+
+.SnippetsHub .SNH-Bundle__total-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.SnippetsHub .SNH-Bundle__total-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--snh-bb-text);
+}
+
+.SnippetsHub .SNH-Bundle__item-count {
+  font-size: 0.8125rem;
+  color: var(--snh-bb-subtext);
+}
+
+.SnippetsHub .SNH-Bundle__total-prices {
+  text-align: right;
+}
+
+.SnippetsHub .SNH-Bundle__total-compare {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--snh-bb-subtext);
+  text-decoration: line-through;
+  min-height: 1.2em;
+}
+
+.SnippetsHub .SNH-Bundle__total-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--snh-bb-text);
+}
+
+/* CTA */
+.SnippetsHub .SNH-Bundle__cta {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: var(--snh-bb-btn-bg);
+  color: var(--snh-bb-btn-text);
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  margin-bottom: 0.75rem;
+}
+
+.SnippetsHub .SNH-Bundle__cta:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.SnippetsHub .SNH-Bundle__cta:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.SnippetsHub .SNH-Bundle__cta.is-added { background: #2a9d3f; }
+
+/* Guarantee */
+.SnippetsHub .SNH-Bundle__guarantee {
+  margin: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--snh-bb-subtext);
+}
+
+/* Empty state */
+.SnippetsHub .SNH-Bundle--empty {
+  padding: 1rem 1.25rem;
+  border: 1px dashed #d0d0d0;
+  border-radius: 8px;
+  color: #555;
+  background: #fafafa;
+  font-size: 0.875rem;
+}

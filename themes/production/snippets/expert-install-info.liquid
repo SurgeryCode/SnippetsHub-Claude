@@ -1,0 +1,27 @@
+{% comment %}
+  Renders an info icon with a popup explaining Expert Install minimum hours.
+  Usage: {% render 'expert-install-info', hours: product.metafields.custom.installation_hours %}
+{% endcomment %}
+
+{% assign total_hours = hours | plus: 0 %}
+{% if total_hours > 0 %}
+  <span class="expert-info-trigger">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    </svg>
+    <span class="expert-info-popup">
+      <strong>{{ 'snippetshub.expert_install.min_hours_required' | t: hours: hours }}</strong>
+      {{ 'snippetshub.expert_install.expert_info_text' | t: hours: hours }}
+    </span>
+  </span>
+{% endif %}

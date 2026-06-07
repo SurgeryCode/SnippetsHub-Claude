@@ -1,0 +1,96 @@
+/*
+  🧩 Locale Recommender Styles (v1.1)
+  Developed by SurgeryCode | https://SurgeryCode.com
+  © 2025 SnippetsHub & SurgeryCode
+*/
+
+/* ─── Bar ─── */
+.surgerycode-locale__bar {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(calc(100% + 1.5rem));
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+
+  background: #fff;
+  color: #111;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 0.875rem 1rem;
+  max-width: min(480px, calc(100vw - 2rem));
+  width: 100%;
+}
+
+.surgerycode-locale__bar.is-visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.surgerycode-locale__bar[hidden] {
+  display: none;
+}
+
+/* ─── Text ─── */
+.surgerycode-locale__text {
+  flex: 1;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  min-width: 0;
+}
+
+/* ─── Buttons ─── */
+.surgerycode-locale__apply {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.875rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.surgerycode-locale__apply:hover {
+  background: #333;
+}
+
+.surgerycode-locale__close {
+  background: transparent;
+  border: none;
+  color: #999;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.surgerycode-locale__close:hover {
+  color: #111;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 480px) {
+  .surgerycode-locale__bar {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(100%);
+    border-radius: 12px 12px 0 0;
+    max-width: 100%;
+  }
+
+  .surgerycode-locale__bar.is-visible {
+    transform: translateY(0);
+  }
+}

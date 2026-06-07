@@ -1,0 +1,160 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-free-shipping-bar.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-free-shipping-bar.js' | asset_url }}" defer="defer"></script>
+
+{% liquid
+  assign threshold_cents = section.settings.threshold | times: 100
+  assign cart_total = cart.total_price
+  if threshold_cents > 0
+    assign progress = cart_total | times: 100 | divided_by: threshold_cents
+  else
+    assign progress = 100
+  endif
+  if progress > 100
+    assign progress = 100
+  endif
+  assign amount_remaining_cents = threshold_cents | minus: cart_total
+  if amount_remaining_cents < 0
+    assign amount_remaining_cents = 0
+  endif
+  assign threshold_reached = false
+  if cart_total >= threshold_cents
+    assign threshold_reached = true
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-FreeShipping {
+    --snh-fs-bar-color: {{ section.settings.bar_color }};
+    --snh-fs-bar-bg: {{ section.settings.bar_background_color }};
+    --snh-fs-text: {{ section.settings.text_color }};
+    --snh-fs-bg: {{ section.settings.background_color }};
+  }
+{% endstyle %}
+
+<div
+  class="SnippetsHub SNH-snh-free-shipping-bar"
+  data-snh="snippetshub-free-shipping-bar"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+  data-threshold="{{ threshold_cents }}"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-message-before="{{ section.settings.message_before | escape }}"
+  data-message-after="{{ section.settings.message_after | escape }}"
+  data-show-icon="{{ section.settings.show_icon }}"
+>
+  <div class="SNH-FreeShipping">
+
+    <div class="SNH-FreeShipping__header">
+      {%- if section.settings.show_icon -%}
+        <span class="SNH-FreeShipping__icon{% unless threshold_reached %} SNH-FreeShipping__icon--truck{% endunless %}" data-snh-icon aria-hidden="true">
+          {%- if threshold_reached -%}✓{%- else -%}🚚{%- endif -%}
+        </span>
+      {%- endif -%}
+      <p class="SNH-FreeShipping__message" data-snh-message>
+        {%- if threshold_reached -%}
+          {{ section.settings.message_after }}
+        {%- else -%}
+          {{ section.settings.message_before | replace: '{amount}', amount_remaining_cents | money }}
+        {%- endif -%}
+      </p>
+    </div>
+
+    <div
+      class="SNH-FreeShipping__track"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ progress }}"
+      aria-label="Free shipping progress"
+      data-snh-track
+    >
+      <div
+        class="SNH-FreeShipping__fill{% if threshold_reached %} SNH-FreeShipping__fill--complete{% endif %}"
+        data-snh-fill
+        style="width: {{ progress }}%"
+      ></div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SNH Free Shipping Bar",
+  "tag": "section",
+  "class": "section section-snh-free-shipping-bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Threshold"
+    },
+    {
+      "type": "number",
+      "id": "threshold",
+      "label": "Free shipping threshold",
+      "default": 200,
+      "info": "Enter the cart total needed for free shipping in whole currency units (e.g. 200 for 200 PLN / €200 / $200)."
+    },
+    {
+      "type": "header",
+      "content": "Messages"
+    },
+    {
+      "type": "text",
+      "id": "message_before",
+      "label": "Message — below threshold",
+      "default": "Add {amount} more for FREE shipping!",
+      "info": "Use {amount} as a placeholder — it will be replaced with the remaining amount."
+    },
+    {
+      "type": "text",
+      "id": "message_after",
+      "label": "Message — threshold reached",
+      "default": "You've unlocked FREE shipping!"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "bar_color",
+      "label": "Progress bar fill",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "bar_background_color",
+      "label": "Progress bar track",
+      "default": "#E5E5E5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Free Shipping Bar"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,5 @@
+## Dostęp do panelu Shopify (bez haseł)
+SnippetsHub nie prosi o hasła do sklepu. Dostęp do panelu Shopify uzyskujemy wyłącznie poprzez zaproszenie Collaborator lub dedykowane konto pracownika utworzone przez Klienta.
+
+## Zakres danych
+Zbieramy wyłącznie dane niezbędne do realizacji zlecenia: adres sklepu, imię i nazwisko, adres e‑mail oraz zakres prac. Dane te nie są udostępniane osobom trzecim i są usuwane po zakończeniu realizacji (o ile przepisy prawa nie wymagają dłuższego przechowywania).

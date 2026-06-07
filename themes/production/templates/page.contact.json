@@ -1,0 +1,17 @@
+
+{
+  "sections": {
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Contact Us",
+        "description": "Ready to take your Shopify store to the next level? Drop me a message.",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "form"
+  ]
+}

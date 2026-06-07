@@ -1,0 +1,260 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-trust-badges.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-TrustBadges {
+    --snh-tb-bg: {{ section.settings.background_color }};
+    --snh-tb-icon: {{ section.settings.icon_color }};
+    --snh-tb-text: {{ section.settings.text_color }};
+    --snh-tb-sublabel: {{ section.settings.sublabel_color }};
+    --snh-tb-divider: {{ section.settings.divider_color }};
+    --snh-tb-icon-size: {% if section.settings.icon_size == 'small' %}20px{% elsif section.settings.icon_size == 'large' %}32px{% else %}24px{% endif %};
+  }
+{% endstyle %}
+
+<div
+  class="SnippetsHub SNH-snh-trust-badges"
+  data-snh="snippetshub-trust-badges"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+>
+  {%- if section.blocks.size > 0 -%}
+    <ul
+      class="SNH-TrustBadges SNH-TrustBadges--{{ section.settings.layout }} SNH-TrustBadges--align-{{ section.settings.alignment }}{% if section.settings.show_dividers %} SNH-TrustBadges--dividers{% endif %}"
+      role="list"
+      aria-label="Trust badges"
+    >
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'badge' -%}
+          <li class="SNH-TrustBadges__item" {{ block.shopify_attributes }}>
+
+            {%- comment %} Icon — SVG preset or custom text {%- endcomment -%}
+            {%- assign icon = block.settings.icon_preset -%}
+            {%- unless block.settings.icon_custom == blank -%}
+              {%- assign icon = 'custom' -%}
+            {%- endunless -%}
+
+            <span class="SNH-TrustBadges__icon" aria-hidden="true">
+              {%- case icon -%}
+                {%- when 'lock' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                {%- when 'truck' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                {%- when 'refresh' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                {%- when 'shield' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                {%- when 'star' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                {%- when 'check' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                {%- when 'heart' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                {%- when 'phone' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.37 2 2 0 0 1 3.55 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                {%- when 'tag' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                {%- when 'custom' -%}
+                  <span class="SNH-TrustBadges__icon-custom">{{ block.settings.icon_custom }}</span>
+                {%- else -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {%- endcase -%}
+            </span>
+
+            <span class="SNH-TrustBadges__text">
+              {%- unless block.settings.label == blank -%}
+                <span class="SNH-TrustBadges__label">{{ block.settings.label }}</span>
+              {%- endunless -%}
+              {%- unless block.settings.sublabel == blank -%}
+                <span class="SNH-TrustBadges__sublabel">{{ block.settings.sublabel }}</span>
+              {%- endunless -%}
+            </span>
+
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- elsif request.design_mode -%}
+    <div class="SNH-TrustBadges__empty-state">
+      Add badges using the "+" button in the Theme Editor.
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "SNH Trust Badges",
+  "tag": "section",
+  "class": "section section-snh-trust-badges",
+  "enabled_on": {
+    "templates": ["product", "index", "collection", "page"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "row",
+      "options": [
+        { "value": "row", "label": "Row (horizontal)" },
+        { "value": "grid", "label": "Grid (wrap)" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "icon_size",
+      "label": "Icon size",
+      "default": "medium",
+      "options": [
+        { "value": "small", "label": "Small (20px)" },
+        { "value": "medium", "label": "Medium (24px)" },
+        { "value": "large", "label": "Large (32px)" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dividers",
+      "label": "Show dividers between badges",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Label text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "sublabel_color",
+      "label": "Sublabel text",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#E5E5E5"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_preset",
+          "label": "Icon",
+          "default": "shield",
+          "options": [
+            { "value": "lock",    "label": "Lock — Secure Checkout" },
+            { "value": "truck",   "label": "Truck — Shipping" },
+            { "value": "refresh", "label": "Refresh — Returns" },
+            { "value": "shield",  "label": "Shield — Guarantee" },
+            { "value": "star",    "label": "Star — Reviews" },
+            { "value": "check",   "label": "Check — Verified" },
+            { "value": "heart",   "label": "Heart — Made with care" },
+            { "value": "phone",   "label": "Phone — Support" },
+            { "value": "tag",     "label": "Tag — Best Price" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "icon_custom",
+          "label": "Custom icon (emoji or text)",
+          "info": "If filled, overrides the preset icon above. You can use any emoji: 🔒 🚚 ✅"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Secure Checkout"
+        },
+        {
+          "type": "text",
+          "id": "sublabel",
+          "label": "Sublabel (optional)",
+          "info": "A short supporting line below the label."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Trust Badges",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "icon_preset": "lock",
+            "label": "Secure Checkout",
+            "sublabel": "SSL encrypted"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon_preset": "truck",
+            "label": "Free Shipping",
+            "sublabel": "On orders over 200 PLN"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon_preset": "refresh",
+            "label": "Easy Returns",
+            "sublabel": "14-day guarantee"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon_preset": "shield",
+            "label": "Money-Back Guarantee",
+            "sublabel": "No questions asked"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon_preset": "star",
+            "label": "5-Star Reviews",
+            "sublabel": "Trusted by thousands"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

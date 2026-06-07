@@ -1,0 +1,18 @@
+{
+  "name": "surgerycode-checkout-trust-badge",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "shopify app dev",
+    "build": "shopify app build"
+  },
+  "dependencies": {
+    "@shopify/ui-extensions": "^2024.4.0",
+    "@shopify/ui-extensions-react": "^2024.4.0",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "typescript": "^5.0.0"
+  }
+}

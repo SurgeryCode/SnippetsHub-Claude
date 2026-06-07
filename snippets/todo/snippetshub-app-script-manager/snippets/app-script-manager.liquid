@@ -1,0 +1,37 @@
+{%- comment -%}
+/*
+  🧩 Snippet: App Script Manager (v1.0)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode – Licensed for single Shopify store use only.
+  Fingerprint: SURGERYCODE-ASM-001
+
+  Usage:
+  - Preferred: {% render 'app-script-manager', scripts: scripts_array %}
+    scripts_array is an array of objects, e.g.:
+    [
+      {"id":"ga4","src":"https://example.com/ga4.js","mode":"afterLoad","consent":["analytics"]},
+      {"id":"chat","src":"https://example.com/chat.js","mode":"interaction","consent":["marketing"]}
+    ]
+  - Fallback: shop metafield shop.metafields.surgerycode.app_scripts (list of json)
+*/
+{%- endcomment -%}
+
+{%- capture sc_asm_scripts -%}
+  {%- if scripts -%}
+    {{ scripts | json }}
+  {%- elsif shop.metafields.surgerycode.app_scripts != blank -%}
+    {{ shop.metafields.surgerycode.app_scripts | json }}
+  {%- else -%}
+    []
+  {%- endif -%}
+{%- endcapture -%}
+
+<script
+  id="surgerycode-app-script-manager"
+  type="application/json"
+  data-surgerycode="app-script-manager-config"
+>{{ sc_asm_scripts | strip }}</script>
+
+<script src="{{ 'app-script-manager.js' | asset_url }}" defer></script>
+

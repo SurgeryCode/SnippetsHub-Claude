@@ -1,0 +1,19 @@
+{
+  "standardVersion": "1.0",
+  "name": "SnippetsHub Announcement Bar",
+  "slug": "snippetshub-announcement-bar",
+  "version": "1.0.0",
+  "owner": "SnippetsHub",
+  "license": "License depends on the purchased plan. Default: Single Store License unless the purchased variant states otherwise.",
+  "supportEmail": "support@snippetshub.com",
+  "homepage": "https://snippetshub.com",
+  "minTheme": "Online Store 2.0",
+  "type": "section",
+  "entry": {
+    "section": "sections/snh-announcement-bar.liquid",
+    "assets": [
+      "assets/snh-announcement-bar.css",
+      "assets/snh-announcement-bar.js"
+    ]
+  }
+}

@@ -1,0 +1,329 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-cart-drawer-recommendations.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-cart-drawer-recommendations.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-CartDrawer {
+    --snh-cd-bg: {{ section.settings.background_color }};
+    --snh-cd-border: {{ section.settings.border_color }};
+    --snh-cd-text: {{ section.settings.text_color }};
+    --snh-cd-subtext: {{ section.settings.subtext_color }};
+    --snh-cd-btn-bg: {{ section.settings.button_color }};
+    --snh-cd-btn-text: {{ section.settings.button_text_color }};
+    --snh-cd-overlay: {{ section.settings.overlay_color }};
+    --snh-cd-rec-bg: {{ section.settings.recommendations_bg }};
+    --snh-cd-bar-color: {{ section.settings.bar_color }};
+    --snh-cd-bar-track: {{ section.settings.bar_track_color }};
+  }
+{% endstyle %}
+
+<div
+  class="SnippetsHub SNH-snh-cart-drawer-recommendations"
+  data-snh="snippetshub-cart-drawer-recommendations"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-routes-root="{{ routes.root }}"
+  data-show-free-shipping="{{ section.settings.show_free_shipping }}"
+  data-shipping-threshold="{{ section.settings.shipping_threshold | times: 100 }}"
+  data-shipping-message-before="{{ section.settings.shipping_message_before | escape }}"
+  data-shipping-message-after="{{ section.settings.shipping_message_after | escape }}"
+  data-show-recommendations="{{ section.settings.show_recommendations }}"
+  data-recommendations-limit="{{ section.settings.recommendations_limit }}"
+  data-recommendations-title="{{ section.settings.recommendations_title | escape }}"
+  data-empty-message="{{ section.settings.empty_message | escape }}"
+  data-checkout-label="{{ section.settings.checkout_label | escape }}"
+>
+  {%- comment %} Overlay {%- endcomment -%}
+  <div class="SNH-CartDrawer__overlay" data-snh-overlay aria-hidden="true"></div>
+
+  {%- comment %} Drawer panel {%- endcomment -%}
+  <div
+    class="SNH-CartDrawer"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Shopping cart"
+    aria-hidden="true"
+    tabindex="-1"
+    data-snh-drawer
+  >
+    {%- comment %} Header {%- endcomment -%}
+    <div class="SNH-CartDrawer__header">
+      <h2 class="SNH-CartDrawer__title">
+        {{ section.settings.title }}
+        <span class="SNH-CartDrawer__count" data-snh-count aria-live="polite">
+          ({{ cart.item_count }})
+        </span>
+      </h2>
+      <button class="SNH-CartDrawer__close" data-snh-close aria-label="Close cart">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    {%- comment %} Free shipping progress bar {%- endcomment -%}
+    {%- if section.settings.show_free_shipping -%}
+      {%- liquid
+        assign threshold_cents = section.settings.shipping_threshold | times: 100
+        assign progress = cart.total_price | times: 100 | divided_by: threshold_cents
+        if progress > 100
+          assign progress = 100
+        endif
+        assign remaining_cents = threshold_cents | minus: cart.total_price
+        if remaining_cents < 0
+          assign remaining_cents = 0
+        endif
+        assign threshold_reached = false
+        if cart.total_price >= threshold_cents
+          assign threshold_reached = true
+        endif
+      -%}
+      <div class="SNH-CartDrawer__shipping" data-snh-shipping>
+        <p class="SNH-CartDrawer__shipping-message" data-snh-shipping-message>
+          {%- if threshold_reached -%}
+            {{ section.settings.shipping_message_after }}
+          {%- else -%}
+            {{ section.settings.shipping_message_before | replace: '{amount}', remaining_cents | money }}
+          {%- endif -%}
+        </p>
+        <div class="SNH-CartDrawer__shipping-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress }}" data-snh-shipping-track>
+          <div class="SNH-CartDrawer__shipping-fill" style="width: {{ progress }}%" data-snh-shipping-fill></div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment %} Scrollable body {%- endcomment -%}
+    <div class="SNH-CartDrawer__body" data-snh-body>
+
+      {%- comment %} Cart items — initial server-side render {%- endcomment -%}
+      <ul class="SNH-CartDrawer__items" data-snh-items role="list" aria-label="Cart items">
+        {%- if cart.item_count > 0 -%}
+          {%- for item in cart.line_items -%}
+            <li class="SNH-CartDrawer__item" data-snh-item data-key="{{ item.key }}">
+              <a class="SNH-CartDrawer__item-image-link" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                {%- if item.image -%}
+                  <img
+                    class="SNH-CartDrawer__item-image"
+                    src="{{ item.image | image_url: width: 120 }}"
+                    alt="{{ item.image.alt | escape }}"
+                    width="60"
+                    height="60"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </a>
+              <div class="SNH-CartDrawer__item-details">
+                <a class="SNH-CartDrawer__item-title" href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- unless item.variant.title == 'Default Title' -%}
+                  <p class="SNH-CartDrawer__item-variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <div class="SNH-CartDrawer__item-footer">
+                  <div class="SNH-CartDrawer__qty" role="group" aria-label="Quantity for {{ item.product.title | escape }}">
+                    <button class="SNH-CartDrawer__qty-btn" data-snh-qty-change="-1" aria-label="Decrease quantity">−</button>
+                    <span class="SNH-CartDrawer__qty-value" data-snh-qty>{{ item.quantity }}</span>
+                    <button class="SNH-CartDrawer__qty-btn" data-snh-qty-change="1" aria-label="Increase quantity">+</button>
+                  </div>
+                  <div class="SNH-CartDrawer__item-price">
+                    {%- if item.original_line_price != item.final_line_price -%}
+                      <s class="SNH-CartDrawer__price-compare">{{ item.original_line_price | money }}</s>
+                    {%- endif -%}
+                    <span class="SNH-CartDrawer__price">{{ item.final_line_price | money }}</span>
+                  </div>
+                  <button class="SNH-CartDrawer__remove" data-snh-remove aria-label="Remove {{ item.product.title | escape }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                  </button>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          <li class="SNH-CartDrawer__empty" data-snh-empty>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <p>{{ section.settings.empty_message }}</p>
+          </li>
+        {%- endif -%}
+      </ul>
+
+      {%- comment %} Recommendations — populated by JS {%- endcomment -%}
+      {%- if section.settings.show_recommendations -%}
+        <div class="SNH-CartDrawer__recommendations" data-snh-recommendations aria-live="polite"></div>
+      {%- endif -%}
+
+    </div>
+
+    {%- comment %} Footer — subtotal + checkout {%- endcomment -%}
+    <div class="SNH-CartDrawer__footer" data-snh-footer>
+      <div class="SNH-CartDrawer__subtotal">
+        <span class="SNH-CartDrawer__subtotal-label">Subtotal</span>
+        <span class="SNH-CartDrawer__subtotal-value" data-snh-subtotal>{{ cart.total_price | money }}</span>
+      </div>
+      <p class="SNH-CartDrawer__tax-note">Taxes and shipping calculated at checkout</p>
+      <a
+        href="{{ routes.cart_url }}/checkout"
+        class="SNH-CartDrawer__checkout"
+        data-snh-checkout
+        {% if cart.item_count == 0 %}aria-disabled="true"{% endif %}
+      >
+        {{ section.settings.checkout_label }}
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SNH Cart Drawer + Recs",
+  "tag": "section",
+  "class": "section section-snh-cart-drawer-recommendations",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Cart"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Drawer title",
+      "default": "Your cart"
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty cart message",
+      "default": "Your cart is empty"
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Checkout button label",
+      "default": "Checkout"
+    },
+    {
+      "type": "header",
+      "content": "Free shipping bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping",
+      "label": "Show free shipping progress bar",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "shipping_threshold",
+      "label": "Free shipping threshold",
+      "default": 200,
+      "info": "Whole currency units (e.g. 200 for 200 PLN)."
+    },
+    {
+      "type": "text",
+      "id": "shipping_message_before",
+      "label": "Message — below threshold",
+      "default": "Add {amount} more for FREE shipping!"
+    },
+    {
+      "type": "text",
+      "id": "shipping_message_after",
+      "label": "Message — threshold reached",
+      "default": "You've unlocked FREE shipping!"
+    },
+    {
+      "type": "header",
+      "content": "Recommendations"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_recommendations",
+      "label": "Show product recommendations",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "recommendations_title",
+      "label": "Recommendations section title",
+      "default": "You might also like"
+    },
+    {
+      "type": "range",
+      "id": "recommendations_limit",
+      "label": "Number of recommendations",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Drawer background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border / divider",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext / meta",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Checkout button background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Checkout button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "recommendations_bg",
+      "label": "Recommendations background",
+      "default": "#F7F7F7"
+    },
+    {
+      "type": "color",
+      "id": "bar_color",
+      "label": "Shipping bar fill",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "bar_track_color",
+      "label": "Shipping bar track",
+      "default": "#E5E5E5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Cart Drawer + Recommendations"
+    }
+  ]
+}
+{% endschema %}

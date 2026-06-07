@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nike — Just Do It</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="assets/Logo_NIKE.svg" class="nav-logo-img" alt="Nike" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">MEN</a></li>
+      <li><a href="#">WOMEN</a></li>
+      <li><a href="#">KIDS</a></li>
+      <li><a href="#">CUSTOMIZE</a></li>
+      <li><a href="#">FAVORITES</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-icon btn-search" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+      <button class="btn-icon btn-cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <span class="hero-watermark" aria-hidden="true">NIKE</span>
+
+    <div class="hero-left">
+      <h1 class="hero-headline">
+        <span>JUST</span>
+        <span>DO</span>
+        <span>IT</span>
+      </h1>
+      <p class="hero-desc">
+        With all of the biggest names in fashion, you'll be
+        amazed to find the best designer shoes.
+      </p>
+    </div>
+
+    <div class="hero-shoe-wrap">
+      <div class="shoe-ring shoe-ring--dashed"></div>
+      <div class="shoe-ring shoe-ring--solid"></div>
+      <div class="shoe-display">
+        <span class="shoe-display__emoji" id="shoeEmoji">👟</span>
+      </div>
+      <div class="shoe-shadow"></div>
+    </div>
+
+    <div class="hero-right">
+      <p class="product-label" id="heroLabel">NIKE ZOOM AIR</p>
+      <p class="product-price" id="heroPrice">$260</p>
+      <a href="#" class="btn-get">
+        GET IT NOW
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="slide-counter">
+      <span class="counter-current" id="counterCurrent">01</span>
+      <span class="counter-sep">/</span>
+      <span class="counter-total">05</span>
+    </div>
+
+  </section>
+
+  <!-- PRODUCTS STRIP -->
+  <section class="products-strip">
+
+    <div class="strip-controls">
+      <button class="slider-arrow slider-arrow--prev" id="sliderPrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <button class="slider-arrow slider-arrow--next" id="sliderNext" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+      <div class="strip-count">
+        <span class="strip-count__current" id="stripCountCurrent">01</span>
+        <span class="strip-count__sep">/</span>
+        <span class="strip-count__total">05</span>
+      </div>
+    </div>
+
+    <div class="products-viewport">
+      <div class="products-track" id="productsTrack">
+
+        <div class="product-card active" data-slide="0">
+          <div class="card-img">
+            <span class="card-shoe-emoji">👟</span>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Huarnie Premium</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span>
+            </div>
+            <p class="card-colors">5 COLORS</p>
+            <p class="card-price">$485</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+        <div class="product-card" data-slide="1">
+          <div class="card-img">
+            <span class="card-shoe-emoji card-shoe-emoji--1">👟</span>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Force 1 High</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star">★</span>
+            </div>
+            <p class="card-colors">5 COLORS</p>
+            <p class="card-price">$225</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+        <div class="product-card" data-slide="2">
+          <div class="card-img">
+            <span class="card-shoe-emoji card-shoe-emoji--2">👟</span>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Span II Premium</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star">★</span>
+              <span class="star">★</span>
+            </div>
+            <p class="card-colors">5 COLORS</p>
+            <p class="card-price">$48</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+        <div class="product-card" data-slide="3">
+          <div class="card-img">
+            <span class="card-shoe-emoji card-shoe-emoji--3">👟</span>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Huarnie Premium</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star">★</span>
+            </div>
+            <p class="card-colors">3 COLORS</p>
+            <p class="card-price">$165</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+        <div class="product-card" data-slide="4">
+          <div class="card-img">
+            <span class="card-shoe-emoji card-shoe-emoji--4">👟</span>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Max 270</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span>
+            </div>
+            <p class="card-colors">4 COLORS</p>
+            <p class="card-price">$310</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+/*
+  🧩 Predictive Search Styles (v1.1)
+  Developed by SurgeryCode | https://SurgeryCode.com
+  © 2025 SnippetsHub & SurgeryCode
+*/
+
+/* ─── Container ─── */
+.surgerycode-search {
+  position: relative;
+  max-width: 520px;
+}
+
+/* ─── Input ─── */
+.surgerycode-search__input {
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #111;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.surgerycode-search__input:focus {
+  outline: none;
+  border-color: #111;
+}
+
+/* ─── Dropdown ─── */
+.surgerycode-search__results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  z-index: 20;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.surgerycode-search__results[hidden] {
+  display: none;
+}
+
+/* ─── Item ─── */
+.surgerycode-search__item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.6rem 0.875rem;
+  text-decoration: none;
+  color: #111;
+  transition: background 0.15s;
+}
+
+.surgerycode-search__item:hover,
+.surgerycode-search__item.is-active {
+  background: #f5f5f5;
+}
+
+/* ─── Thumbnail ─── */
+.surgerycode-search__thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  border: 1px solid #eee;
+}
+
+/* ─── Meta (title + price) ─── */
+.surgerycode-search__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.surgerycode-search__title {
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.surgerycode-search__price {
+  font-size: 0.8rem;
+  color: #555;
+  font-weight: 600;
+}

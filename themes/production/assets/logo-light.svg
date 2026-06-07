@@ -1,0 +1,42 @@
+<svg width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes colorFill {
+      from { fill: #cbd5e1; }
+      to { fill: var(--final-color); }
+    }
+    @keyframes subtlePulse {
+      0%, 10%, 100% { filter: brightness(1); }
+      5% { filter: brightness(1.3); }
+    }
+    .logo-text { font-family: 'Inter', sans-serif; font-weight: 300; }
+    .logo-bold { font-weight: 600; }
+    .subtext { font-family: 'Inter', sans-serif; font-size: 18px; fill: #64748b; opacity: 0; animation: fadeIn 0.5s ease forwards 1.2s; }
+    @keyframes fadeIn { to { opacity: 1; } }
+    
+    .block { 
+      animation: colorFill 1s ease forwards, subtlePulse 15s ease-in-out infinite; 
+      fill: #cbd5e1; 
+    }
+    .p-1 { --final-color: #8b5cf6; animation-delay: 0.1s, 15s; }
+    .b-1 { --final-color: #1e40af; animation-delay: 0.3s, 15.2s; }
+    .c-1 { --final-color: #06b6d4; animation-delay: 0.5s, 15.4s; }
+    .b-2 { --final-color: #3b82f6; animation-delay: 0.9s, 15.6s; }
+    .p-2 { --final-color: #a78bfa; animation-delay: 0.7s, 15.8s; }
+    .c-2 { --final-color: #22d3ee; animation-delay: 1.1s, 16s; }
+    
+    .text-anim { animation: colorFill 1s ease forwards; fill: #cbd5e1; }
+    .sh-text { --final-color: #0f172a; animation-delay: 0s; }
+  </style>
+
+  <text x="40" y="80" class="logo-text sh-text text-anim" font-size="60">Snippets<tspan class="logo-bold">Hub</tspan></text>
+  <text x="40" y="115" class="subtext">Solutions for your business</text>
+
+  <rect x="400" y="45" width="80" height="20" rx="4" class="block p-1" />
+  <rect x="490" y="45" width="70" height="20" rx="4" class="block b-1" />
+
+  <rect x="400" y="75" width="160" height="20" rx="4" class="block c-1" />
+
+  <rect x="400" y="105" width="40" height="20" rx="4" class="block b-2" />
+  <rect x="450" y="105" width="60" height="20" rx="4" class="block p-2" />
+  <rect x="520" y="105" width="40" height="20" rx="4" class="block c-2" />
+</svg>

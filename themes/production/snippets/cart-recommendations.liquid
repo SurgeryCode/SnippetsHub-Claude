@@ -1,0 +1,20 @@
+{% comment %}
+  Cart Recommendations Snippet
+  Usage: {% render 'cart-recommendations' %}
+{% endcomment %}
+
+<div class="cart__recommendations">
+  <h2 class="cart__recommendations-title">{{ 'snippetshub.cart.recommended_for_you' | t }}</h2>
+  <div class="vertical-recommendations-wrapper">
+    <div class="vertical-recommendations">
+      {%- for product in collections.all.products limit: 10 -%}
+        {% render 'snippetshub-card',
+          product: product,
+          show_badge: false,
+          show_expert_qty: true,
+          card_class: 'recommendation-item'
+        %}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>

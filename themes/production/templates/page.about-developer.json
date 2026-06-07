@@ -1,0 +1,58 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-about-developer",
+      "blocks": {
+        "skill_GBMpLN": {
+          "type": "skill",
+          "settings": {
+            "title": "Shopify",
+            "color": "#008060"
+          }
+        },
+        "skill_jMDqqz": {
+          "type": "skill",
+          "settings": {
+            "title": "Shopify",
+            "color": "#008060"
+          }
+        },
+        "experience_KYDEAB": {
+          "type": "experience",
+          "settings": {
+            "role": "Shopify Developer",
+            "company": "Company Name",
+            "date": "2020 - Present",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "skill_GBMpLN",
+        "skill_jMDqqz",
+        "experience_KYDEAB"
+      ],
+      "settings": {
+        "name": "Piotr Nowak",
+        "role": "IT&D Senior Analyst, D2C Full Stack Developer",
+        "bio": "<p>My passion is programming and E-commerce. I specialize in the Shopify platform and creating dedicated web solutions.</p>",
+        "cta_text": "Book Consultation",
+        "cta_url": "",
+        "page_bg": "#f8f9fa",
+        "use_glassmorphism": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

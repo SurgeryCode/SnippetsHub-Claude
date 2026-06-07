@@ -1,0 +1,23 @@
+{%- comment -%}
+  🧩 Snippet: B2B Minimum Order Quantity Hint (v1.1)
+  Parametry:
+    product    — obiekt produktu (wymagane)
+    moq_label  — etykieta (domyślnie: 'Minimum order:')
+    unit_label — jednostka (domyślnie: 'pcs')
+
+  Wymaga metafield: product.metafields.custom.moq (number / single_line_text_field)
+{%- endcomment -%}
+
+{%- liquid
+  assign _moq       = product.selected_or_first_available_variant.metafields.custom.moq | default: product.metafields.custom.moq
+  assign _moq_label = moq_label  | default: 'Minimum order:'
+  assign _unit      = unit_label | default: 'pcs'
+-%}
+
+<link rel="stylesheet" href="{{ 'surgerycode-b2b-pack.css' | asset_url }}">
+{%- if _moq != blank -%}
+  <p class="surgerycode-moq">
+    <span class="surgerycode-moq__label">{{ _moq_label }}</span>
+    <strong class="surgerycode-moq__value">{{ _moq }} {{ _unit }}</strong>
+  </p>
+{%- endif -%}

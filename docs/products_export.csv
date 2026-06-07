@@ -1,0 +1,298 @@
+Handle,Title,Body (HTML),Vendor,Product Category,Type,Tags,Published,Option1 Name,Option1 Value,Option1 Linked To,Option2 Name,Option2 Value,Option2 Linked To,Option3 Name,Option3 Value,Option3 Linked To,Variant SKU,Variant Grams,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Unit Price Total Measure,Unit Price Total Measure Unit,Unit Price Base Measure,Unit Price Base Measure Unit,Variant Barcode,Image Src,Image Position,Image Alt Text,Gift Card,SEO Title,SEO Description,Code preview (product.metafields.custom.code_preview),Demo URL (product.metafields.custom.demo_url),Faq list (product.metafields.custom.faq_list),Hide expert install (product.metafields.custom.hide_expert_install),Installation hours (product.metafields.custom.installation_hours),Variant Image,Variant Weight Unit,Variant Tax Code,Cost per item,Status
+countdown-bar-for-shopify-urgency-banner-for-higher-sales,Countdown Bar for Shopify - Urgency Banner for Higher Sales,"<div>
+<div>
+<span>Increase</span><span> </span><span>urgency</span><span> </span><span>with</span><span> </span><span>a</span><span> </span><span>customizable</span><span> </span><span>countdown</span><span> </span><span>bar</span><span> </span><span>for</span><span> </span><span>promotions,</span><span> </span><span>drops,</span><span> </span><span>and</span><span> </span><span>limited-time</span><span> </span><span>offers.</span><span> </span><span>Built</span><span> </span><span>for</span><span> </span><span>Shopify</span><span> </span><span>Online</span><span> </span><span>Store</span><span> </span><span>2.0</span><span> </span><span>with</span><span> </span><span>theme-safe</span><span> </span><span>styling.</span>
+</div>
+</div>",SnippetsHub Solutions for your business,Software > Computer Software > Multimedia & Design Software > Web Design Software,Announcement Bar,"",false,Title,Default Title,,,,,,,,,0.0,,0,deny,manual,29.99,49.99,false,true,,,,,"",https://cdn.shopify.com/s/files/1/0950/3906/2389/files/ChatGPT_Image_27_lis_2025_16_23_07.png?v=1770904351,1,"",false,,,,,,,,,kg,,,draft
+announcement-bar-gradient,Animated Gradient Announcement Bar,<p>Stylowy pasek ogłoszeń z animowanym gradientem i responsywnym układem. Idealny do promocji lub ogłoszeń w sklepie Shopify.</p>,SnippetsHub,,Announcement Bar,"Announcement, CSS, HTML, JS, UI",false,Title,Default Title,,,,,,,,SH-AB-001,0.0,,100,deny,manual,9.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF.svg?v=1772778071,1,"",false,,,,,,,,,kg,,,draft
+announcement-bar-timer,Countdown Promo Bar,"<p>Pasek ogłoszeń z wbudowanym timerem odliczającym do końca promocji. Łatwy w konfiguracji, działa bez frameworków.</p>",SnippetsHub,,Announcement Bar,"Countdown, CSS, HTML, JS, Promo",false,Title,Default Title,,,,,,,,SH-AB-002,0.0,,100,deny,manual,12.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_f500a4c9-9572-486d-88d5-b199fbcff951.svg?v=1770904368,1,"",false,,,,,,,,,kg,,,draft
+announcement-bar-scroll,Smart Scroll Bar,"<p>Inteligentny pasek ogłoszeń, który zmienia wygląd po przewinięciu strony. Doskonały UX i lekki kod.</p>",SnippetsHub,,Announcement Bar,"CSS, HTML, Scroll, UX",false,Title,Default Title,,,,,,,,SH-AB-003,0.0,,99,deny,manual,8.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_dc76aff8-11f8-432c-ac50-2654b0bceb10.svg?v=1770904367,1,"",false,,,,,,,,,kg,,,draft
+cta-liquid-button,Animated Liquid CTA Button,<p>Nowoczesny przycisk CTA z animacją efektu cieczy. Świetny do landing page’y i sekcji sprzedażowych.</p>,SnippetsHub,,CTA Button,"Animation, Button, CSS, CTA, GSAP, HTML",false,Title,Default Title,,,,,,,,SH-CTA-001,0.0,,100,deny,manual,7.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/000000.svg?v=1770904367,1,"",false,,,,,,,,,kg,,,draft
+cta-floating-banner,Floating Sticky CTA Banner,<p>Pływający baner z przyciskiem CTA widoczny podczas scrollowania. Idealny do zachęcenia użytkownika do akcji.</p>,SnippetsHub,,CTA Banner,"CSS, CTA, HTML, JS, Sticky",false,Title,Default Title,,,,,,,,SH-CTA-002,0.0,,100,deny,manual,10.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/000000_ba19f91b-c97b-4e4a-b168-b538d6f9b15e.svg?v=1770904365,1,"",false,,,,,,,,,kg,,,draft
+product-card-3d,3D Product Card,<p>Karta produktu z efektem 3D i animowanym cieniem reagującym na ruch myszy. Świetny wizualnie dodatek do galerii.</p>,SnippetsHub,,Product Card,"3D, Card, CSS, HTML, JS, Product",false,Title,Default Title,,,,,,,,SH-PC-001,0.0,,100,deny,manual,11.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_17009cc9-8578-4365-865d-2a8e750143f3.svg?v=1770904364,1,"",false,,,,,,,,,kg,,,draft
+product-card-glass,Glassmorphism Product Card,"<p>Minimalistyczna karta z efektem rozmycia (glassmorphism). Lekka, nowoczesna i bardzo estetyczna.</p>",SnippetsHub,,Product Card,"Card, CSS, Glassmorphism, HTML",false,Title,Default Title,,,,,,,,SH-PC-002,0.0,,100,deny,manual,9.49,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_fe4bce2d-c552-4791-b875-0dea229c8792.svg?v=1770904364,1,"",false,,,,,,,,,kg,,,draft
+loader-progress,Animated Page Loader,"<p>Elegancki loader strony inspirowany stylem Apple. Animacja CSS + JS, możliwość personalizacji kolorów.</p>",SnippetsHub,,Loader,"CSS, HTML, JS, Loader, Progress",false,Title,Default Title,,,,,,,,SH-LD-001,0.0,,100,deny,manual,6.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_398a519c-1415-4498-a225-813304183e80.svg?v=1770904362,1,"",false,,,,,,,,,kg,,,draft
+scroll-progress-bar,Scroll Progress Bar,<p>Pasek postępu przewijania u góry strony. Dodaje nowoczesny akcent i poprawia UX użytkownika.</p>,SnippetsHub,,Loader,"JS, Progress, Scroll, UX",false,Title,Default Title,,,,,,,,SH-LD-002,0.0,,100,deny,manual,5.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_809a12b9-475f-4ae3-8f12-8b184058ff28.svg?v=1770904361,1,"",false,,,,,,,,,kg,,,draft
+header-glass,Glass Header Navbar,<p>Responsywny nagłówek z efektem rozmycia i animacją pojawiania się po scrollu. Idealny do sklepów premium.</p>,SnippetsHub,,Navbar,"CSS, Glassmorphism, Header, HTML, JS, Navbar",false,Title,Default Title,,,,,,,,SH-HDR-001,0.0,,100,deny,manual,10.49,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_365e3f43-c26d-4129-aef0-fb17be7df315.svg?v=1770904360,1,"",false,,,,,,,,,kg,,,draft
+header-megamenu,Mega Menu with Animation,<p>Mega menu z animacjami GSAP i pełną responsywnością. Idealne dla większych sklepów z kategoriami.</p>,SnippetsHub,,Navbar,"CSS, GSAP, HTML, JS, Mega Menu",false,Title,Default Title,,,,,,,,SH-HDR-002,0.0,,100,deny,manual,13.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_d9d2afb6-c156-425d-9a02-6d18f2d04cc1.svg?v=1770904360,1,"",false,,,,,,,,,kg,,,draft
+testimonials-slider,Animated Testimonials Slider,<p>Karuzela opinii klientów z płynnymi animacjami GSAP. Działa z dowolnymi zdjęciami i treścią.</p>,SnippetsHub,,Testimonials,"CSS, GSAP, HTML, Slider, Testimonials",false,Title,Default Title,,,,,,,,SH-TM-001,0.0,,100,deny,manual,8.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/000000_6f7e549a-36d4-47a0-aa3e-ab6ae304308a.svg?v=1770904359,1,"",false,,,,,,,,,kg,,,draft
+popup-exit-intent,Exit Intent Popup,<p>Popup aktywujący się przy próbie opuszczenia strony. Idealny do zwiększenia konwersji newslettera lub sprzedaży.</p>,SnippetsHub,,Popup,"Conversion, CSS, Exit Intent, HTML, JS, Popup",false,Title,Default Title,,,,,,,,SH-PP-001,0.0,,100,deny,manual,12.49,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_bcfb6965-925c-4325-867c-7643ca53f64d.svg?v=1770904358,1,"",false,,,,,,,,,kg,,,draft
+popup-newsletter,Glassmorphism Newsletter Popup,<p>Nowoczesny popup do zapisu na newsletter z efektem glassmorphism. W pełni responsywny i lekki.</p>,SnippetsHub,,Popup,"CSS, Glassmorphism, HTML, Newsletter, Popup",false,Title,Default Title,,,,,,,,SH-PP-002,0.0,,100,deny,manual,9.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/000000_ff4f9a32-47a6-4b42-8502-bfac1691463e.svg?v=1770904356,1,"",false,,,,,,,,,kg,,,draft
+hover-image-effects,Advanced Hover Effects,"<p>Zbiór efektów hover dla obrazów – powiększanie, fade, reveal. Idealne do galerii produktów.</p>",SnippetsHub,,Effects,"Animation, CSS, Hover, HTML, Image",false,Title,Default Title,,,,,,,,SH-EF-001,0.0,,100,deny,manual,7.49,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_6922123e-8aaf-429e-b592-6b63e58aec16.svg?v=1770904356,1,"",false,,,,,,,,,kg,,,draft
+cursor-magnetic,Magnetic Cursor Effect,"<p>Efekt magnetycznego kursora, który przyciąga elementy UI. Działa bez bibliotek, czysty JS + CSS.</p>",SnippetsHub,Software > Computer Software > Multimedia & Design Software > Web Design Software,Effects,"Cursor, Interaction, JS, UX",false,Title,Default Title,,,,,,,,SH-EF-002,0.0,,99,deny,manual,6.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_02edbf09-b729-4f42-aa0e-bfc9a58052ae.svg?v=1770904354,1,"",false,,,,,,,,,kg,,,draft
+pricing-toggle-table,Toggle Pricing Table,<p>Tabela cenowa z przełącznikiem miesięczny / roczny. Animowana i kompatybilna z dowolnym systemem.</p>,SnippetsHub,Software > Digital Goods & Currency > Document Templates,Pricing,"Animation, CSS, JS, Pricing, Table",false,Title,Default Title,,,,,,,,SH-PR-001,0.0,,100,deny,manual,10.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_a851e788-1be1-4ab9-aab4-1fb899c36c16.svg?v=1770904354,1,"",false,,,,,,,,,kg,,,draft
+scroll-to-top,Scroll to Top Button,"<p>Przycisk powrotu do góry strony z elegancką animacją SVG. Łatwy do wdrożenia, lekki i wydajny.</p>",SnippetsHub,Software > Computer Software > Multimedia & Design Software > Web Design Software,Utility,"Button, CSS, HTML, JS, Scroll, UX",false,Title,Default Title,,,,,,,,SH-UT-001,0.0,,100,deny,manual,4.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/000000_6c62c86b-0d7c-48c1-ac9e-4cf6946035e6.svg?v=1770904352,1,"",false,,,,,,,,,kg,,,draft
+darkmode-toggle,Dark Mode Toggle,<p>Przełącznik trybu jasny/ciemny z animowanym efektem słońce/księżyc. Działa bez bibliotek JS.</p>,SnippetsHub,Software > Computer Software > Multimedia & Design Software > Web Design Software,Utility,"CSS, Dark Mode, JS, Toggle, UX",false,Title,Default Title,,,,,,,,SH-UT-002,0.0,,100,deny,manual,5.99,,false,false,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/FFFFFF_cecffed5-561c-4883-8b86-5bcb20a63290.svg?v=1770904350,1,"",false,,,,,,,,,kg,,,draft
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,Countdown Bar for Shopify That Creates Urgency and Boosts Sales,"<h2>Countdown Bar for Shopify That Creates Urgency and Boosts Sales</h2>
+<p>SnippetsHub Countdown Bar is a customizable promotional bar with a real-time countdown timer for Shopify, designed to create urgency and turn more visitors into buyers. It is perfect for flash sales, product launches, seasonal campaigns, limited-time offers, and high-converting promotional messages with strong calls to action.</p>
+<p>With flexible customization options, you can easily adjust the design, messaging, buttons, colors, timer labels, and campaign dates to match your store’s branding. The snippet supports multiple seasonal styles, stays lightweight without adding app bloat, and integrates smoothly with modern Shopify Online Store 2.0 themes.</p>
+<p>This solution is built to support real ecommerce growth by making important offers more visible, increasing promotional impact, and giving shoppers a clear reason to act before time runs out. If you want a polished conversion-focused feature that looks professional, works reliably, and gives you full control over the customer experience, Countdown Bar is a confident choice for your Shopify store.<br><br><br></p>","SnippetsHub, SurgeryCode",Uncategorized,"","Conversion, CSS, HTML, JS, liquid",true,License type,Single Site,,,,,,,,,0.0,,0,deny,manual,29.00,39.00,false,true,,,,,"",https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar_cd4d8f82-c71a-44da-a4a7-5e1bfed28d60.webp?v=1774377720,1,"",false,,,,,czy-ten-snippet-bedzie-dzialac-z-moim-motywem-shopify; czy-moge-dostosowac-wyglad-i-tresc-snippetu-do-mojego-brandu; co-otrzymuje-po-zakupie-i-czy-sa-aktualizacje,,1,,kg,,,active
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,5 Sites,,,,,,,,,0.0,,0,deny,manual,79.00,,false,true,,,,,"",https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar_advantages.webp?v=1774523770,2,"",,,,,,,,,,kg,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,Unlimited Sites,,,,,,,,,0.0,,0,deny,manual,149.00,,false,true,,,,,"",https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar_admin.webp?v=1774523770,3,"",,,,,,,,,,kg,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar_admin_s1.webp?v=1774523770,4,"",,,,,,,,,,,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar_admin_s2.webp?v=1774523311,5,"",,,,,,,,,,,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar-savor.webp?v=1774523311,6,"",,,,,,,,,,,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar-savor_admin.webp?v=1774523311,7,"",,,,,,,,,,,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar-savor_admin_s1.webp?v=1774523311,8,"",,,,,,,,,,,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar-savor_admin_s2.webp?v=1774523311,9,"",,,,,,,,,,,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar-publisher_5b0f4daf-c486-4e63-90cc-a2e4edb1f316.webp?v=1774523311,10,"",,,,,,,,,,,,,
+surgerycode-countdown-bar-konfigurowalna-sezonowa-belka-odliczajaca-dla-shopify,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,https://cdn.shopify.com/s/files/1/0950/3906/2389/files/snippetshub-countdown-bar_horizon.webp?v=1774523311,11,"",,,,,,,,,,,,,
+shopify-developer-nbsp-by-the-hour,Shopify Developer by the Hour,"<style>
+/* Scoped styles for product description */
+.dev-product-desc {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: white;
+    padding: 40px 20px;
+    max-width: 100%;
+}
+
+.dev-product-desc * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dev-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.dev-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dev-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dev-title {
+    font-size: clamp(28px, 6vw, 48px);
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.dev-highlight {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dev-subtitle {
+    font-size: clamp(16px, 3vw, 20px);
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.dev-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 40px 0;
+}
+
+.dev-feature {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.dev-feature:hover {
+    transform: translateY(-3px);
+}
+
+.dev-checkmark {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.dev-feature-text {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.dev-pricing {
+    text-align: center;
+    margin: 40px 0;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    color: white;
+}
+
+.dev-price {
+    font-size: clamp(48px, 10vw, 72px);
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.dev-price-small {
+    font-size: 0.6em;
+}
+
+.dev-price-sub {
+    font-size: clamp(16px, 3vw, 22px);
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.dev-cta-button {
+    display: inline-block;
+    background: white;
+    color: #667eea;
+    padding: 18px 50px;
+    border-radius: 50px;
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dev-cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    color: #667eea;
+}
+
+.dev-availability {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 16px;
+    color: #666;
+}
+
+.dev-availability strong {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.dev-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 2px solid #e9ecef;
+}
+
+.dev-benefit {
+    text-align: center;
+}
+
+.dev-benefit-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.dev-benefit-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.dev-benefit-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .dev-product-desc {
+        padding: 20px 10px;
+    }
+    
+    .dev-features {
+        grid-template-columns: 1fr;
+    }
+    
+    .dev-benefits {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+</style>
+<div class=""dev-product-desc"">
+<div class=""dev-container"">
+<div class=""dev-header"">
+<div class=""dev-badge"">For Non-Technical Owners</div>
+<h2 class=""dev-title"">Hire a Senior <span class=""dev-highlight"">Shopify Developer</span>
+</h2>
+<p class=""dev-subtitle"">Expert knowledge when you need it. No long-term contracts. Just pure expertise by the hour.</p>
+</div>
+<div class=""dev-features"">
+<div class=""dev-feature"">
+<div class=""dev-checkmark"">✓</div>
+<div class=""dev-feature-text"">Custom CSS/HTML changes</div>
+</div>
+<div class=""dev-feature"">
+<div class=""dev-checkmark"">✓</div>
+<div class=""dev-feature-text"">Speed optimization and audits</div>
+</div>
+<div class=""dev-feature"">
+<div class=""dev-checkmark"">✓</div>
+<div class=""dev-feature-text"">Complex Liquid implementations</div>
+</div>
+<div class=""dev-feature"">
+<div class=""dev-checkmark"">✓</div>
+<div class=""dev-feature-text"">App integration &amp; conflict resolution</div>
+</div>
+</div>
+<div class=""dev-pricing"">
+<div class=""dev-price"">$89<span class=""dev-price-small"">/hr</span>
+</div>
+<div class=""dev-price-sub"">Senior Developer • No Contracts • Pay As You Go</div>
+<a href=""#"" class=""dev-cta-button"">Book a Developer Now</a>
+</div>
+<div class=""dev-availability"">Available <strong>Monday-Friday, 9:00-17:00</strong>
+</div>
+<div class=""dev-benefits"">
+<div class=""dev-benefit"">
+<div class=""dev-benefit-icon"">⚡</div>
+<div class=""dev-benefit-title"">Fast Response</div>
+<div class=""dev-benefit-desc"">Quick turnaround on urgent fixes</div>
+</div>
+<div class=""dev-benefit"">
+<div class=""dev-benefit-icon"">🎯</div>
+<div class=""dev-benefit-title"">Expert Level</div>
+<div class=""dev-benefit-desc"">Senior developers only</div>
+</div>
+<div class=""dev-benefit"">
+<div class=""dev-benefit-icon"">💰</div>
+<div class=""dev-benefit-title"">Flexible Billing</div>
+<div class=""dev-benefit-desc"">Pay only for hours used</div>
+</div>
+</div>
+</div>
+</div>",SnippetsHub,Services > Professional Services > IT & Technology,"","",true,Title,Default Title,,,,,,,,,0.0,,-8,deny,manual,49.99,69.99,false,true,,,,,"",https://cdn.shopify.com/s/files/1/0950/3906/2389/files/Shopify_Developer_by_the_Hour_dd2ed752-f5b7-4a1f-8747-22e697c15bc0.webp?v=1772778071,1,"",false,,,,,,TRUE,,,kg,,,active

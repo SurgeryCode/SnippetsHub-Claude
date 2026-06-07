@@ -1,0 +1,44 @@
+{% comment %}
+  Renders product badges based on global settings.
+  Source can be either Product Tags or Metafields.
+
+  Usage:
+  {% render 'snippetshub-badges', product: product %}
+{% endcomment %}
+
+{%- liquid
+  assign badge_source = settings.badge_source | default: 'tags'
+  assign badges_to_render = ''
+-%}
+
+{%- if badge_source == 'tags' -%}
+  {%- for tag in product.tags -%}
+    {%- assign badge_text = tag | remove: 'badge_' | remove: 'badge:' | strip -%}
+
+    {%- capture badge_html -%}
+        <div class="badge badge-{{ badge_text | handleize }} {{ badge_text | downcase }} badge-SurgeruCode corner corner-right">{{ badge_text }}</div>
+      {%- endcapture -%}
+
+    {%- assign badges_to_render = badges_to_render | append: badge_html -%}
+  {%- endfor -%}
+
+{%- elsif badge_source == 'metafields' -%}
+  {%- assign ns = settings.badge_metafield_namespace | default: 'custom' -%}
+  {%- assign key = settings.badge_metafield_key | default: 'badges' -%}
+  {%- assign metafield_value = product.metafields[ns][key].value -%}
+
+  {%- if metafield_value -%}
+    {%- for badge_text in metafield_value -%}
+      {%- capture badge_html -%}
+        <div class="badge badge-{{ badge_text | handleize }} badge-SurgeruCode corner corner-right">{{ badge_text }}</div>
+      {%- endcapture -%}
+      {%- assign badges_to_render = badges_to_render | append: badge_html -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if badges_to_render != '' -%}
+  <div class="p-image-badges">
+    {{ badges_to_render }}
+  </div>
+{%- endif -%}

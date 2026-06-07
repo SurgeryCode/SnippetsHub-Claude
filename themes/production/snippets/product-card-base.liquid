@@ -1,0 +1,346 @@
+{% comment %}
+  Shared SnippetsHub Product Card
+  Required: product
+  Optional:
+  - featured (boolean)
+  - description_limit (number)
+  - show_badge (boolean)
+  - demo_link (url)
+  - show_expert_qty (boolean)
+  - product_category (string)
+{% endcomment %}
+
+{%- assign is_featured = featured | default: false -%}
+{%- assign desc_limit = description_limit | default: 150 -%}
+{%- assign show_expert_qty_enabled = show_expert_qty -%}
+{%- if show_expert_qty == null -%}
+  {%- assign show_expert_qty_enabled = true -%}
+{%- endif -%}
+{%- assign selected_variant = product.selected_or_first_available_variant -%}
+{%- assign show_card_variant_picker = false -%}
+{%- if product.has_only_default_variant == false and product.variants_count <= 4 -%}
+  {%- assign show_card_variant_picker = true -%}
+{%- endif -%}
+
+<article
+  class="product-card snippet-card{% if is_featured %} snippet-card-featured{% endif %}{% if card_class != blank %} {{ card_class }}{% endif %}"
+  {% if product_category %}
+    data-category="{{ product_category }}"
+  {% endif %}
+>
+  <div class="p-image">
+    <a href="{{ product.url }}" style="display:block; width:100%; height:100%;">
+      {% if product.featured_image != blank %}
+        {{
+          product.featured_image
+          | image_url: width: 400, height: 171, crop: 'top'
+          | image_tag:
+            class: 'product-card-image',
+            loading: 'lazy',
+            alt: product.title,
+            style: 'width: 100%; object-fit: cover; border-radius: var(--radius-sm); object-position: top;'
+        }}
+      {% else %}
+        <div class="w-full h-full flex items-center justify-center text-4xl">🚀</div>
+      {% endif %}
+    </a>
+
+    {% if show_badge %}
+      <div class="badge-SurgeruCode corner corner-right">
+        {% render 'snippetshub-badges', product: product %}
+      </div>
+    {% endif %}
+  </div>
+
+  <h3 class="p-title">
+    <a href="{{ product.url }}">
+      {{ product.title }}
+    </a>
+  </h3>
+  <p class="p-desc">{{ product.description | strip_html | truncate: desc_limit }}</p>
+
+  {% if demo_link != blank %}
+    <a href="{{ demo_link }}" class="demo-link">👁 {{ 'snippetshub.view_demo' | t }}</a>
+  {% else %}
+    <a href="{{ product.url }}" class="demo-link">👁 {{ 'snippetshub.view_details' | t }}</a>
+  {% endif %}
+
+  {%- assign card_id = section.id | append: '-' | append: product.id -%}
+  {%- liquid
+    assign money_price = selected_variant.price | money
+    assign money_compare = selected_variant.compare_at_price | money
+    if settings.currency_code_enabled
+      assign money_price = selected_variant.price | money_with_currency
+      assign money_compare = selected_variant.compare_at_price | money_with_currency
+    endif
+
+    assign selected_discount = 0
+    if selected_variant.compare_at_price > selected_variant.price
+      assign selected_discount = selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price | round
+    endif
+  -%}
+
+  {%
+    render 'expert-install-upsell',
+    form_id: 'product-form-' | append: card_id,
+    wrapper_class: 'upsell-box upsell-box-card',
+    title: 'Add Expert Install',
+    subtitle: "We'll implement it (24h)",
+    qty_label: 'Do you need more hours?',
+    show_qty: show_expert_qty_enabled,
+    show_info: false,
+    hours: product.metafields.custom.installation_hours,
+    hide_expert_install: product.metafields.custom.hide_expert_install
+  %}
+
+  {% if show_card_variant_picker %}
+    <div class="snippet-card-variant-picker" data-card-variant-picker>
+      <div class="snippet-card-variant-options" role="list">
+        {%- for variant in product.variants -%}
+          {%- liquid
+            assign variant_money_price = variant.price | money
+            assign variant_money_compare = variant.compare_at_price | money
+            if settings.currency_code_enabled
+              assign variant_money_price = variant.price | money_with_currency
+              assign variant_money_compare = variant.compare_at_price | money_with_currency
+            endif
+
+            assign variant_discount_label = ''
+            if variant.compare_at_price > variant.price
+              assign variant_discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round
+              if is_featured
+                assign variant_discount_label = 'Save ' | append: variant_discount | append: '%'
+              else
+                assign variant_discount_label = '-' | append: variant_discount | append: '%'
+              endif
+            endif
+          -%}
+          <button
+            type="button"
+            class="snippet-card-variant-option{% if variant.id == selected_variant.id %} is-active{% endif %}{% unless variant.available %} is-unavailable{% endunless %}"
+            data-card-variant-option
+            data-variant-id="{{ variant.id }}"
+            data-available="{{ variant.available }}"
+            data-price="{{ variant_money_price | escape }}"
+            data-compare-price="{% if variant.compare_at_price > variant.price %}{{ variant_money_compare | escape }}{% endif %}"
+            data-discount-label="{{ variant_discount_label | escape }}"
+            aria-pressed="{% if variant.id == selected_variant.id %}true{% else %}false{% endif %}"
+          >
+            {{ variant.title | escape }}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="price-row">
+    <div
+      class="price-stack{% if is_featured %} price-stack-featured{% endif %}"
+    >
+      <span class="price" data-card-price-current>{{ money_price }}</span>
+      <div
+        class="price-meta"
+        data-card-price-meta
+        {% unless selected_variant.compare_at_price > selected_variant.price %}
+          hidden
+        {% endunless %}
+      >
+        <span class="price-original" data-card-price-original>{{ money_compare }}</span>
+        <span class="discount-badge" data-card-price-discount>
+          {% if is_featured %}
+            Save {{ selected_discount }}%
+          {% else %}
+            -{{ selected_discount }}%
+          {% endif %}
+        </span>
+      </div>
+    </div>
+
+    <form
+      action="{{ routes.cart_add_url }}"
+      method="post"
+      id="product-form-{{ card_id }}"
+      class="snippet-card-add-form"
+      data-expert-install-form=""
+      data-card-product-form
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.45rem;
+        width: min(100%, 11.75rem);
+      "
+    >
+      <input type="hidden" name="id" value="{{ selected_variant.id }}" data-card-variant-id>
+      <div
+        class="qty-selector snippet-card-qty-selector sticky-product-qty"
+        data-card-qty-control
+        style="
+          width: 100%;
+          max-width: 100%;
+        "
+      >
+        <button
+          type="button"
+          class="qty-btn qty-minus sticky-product-qty__btn"
+          data-card-qty-minus
+          aria-label="{{ 'products.product.quantity.decrease' | t }}"
+        >
+          -
+        </button>
+        <input
+          type="number"
+          name="quantity"
+          min="1"
+          value="1"
+          inputmode="numeric"
+          class="upsell-qty-input snippet-card-qty-input sticky-product-qty__input"
+          data-card-qty-input
+        >
+        <button
+          type="button"
+          class="qty-btn qty-plus sticky-product-qty__btn"
+          data-card-qty-plus
+          aria-label="{{ 'products.product.quantity.increase' | t }}"
+        >
+          +
+        </button>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-sm btn-primary{% if is_featured %}{% else %} btn-pill{% endif %}"
+        aria-live="polite"
+        data-card-submit
+        data-add-to-cart-label="{{ 'products.product.add_to_cart' | t | escape }}"
+        data-sold-out-label="{{ 'products.product.sold_out' | t | escape }}"
+        {% unless selected_variant.available %}
+          disabled
+        {% endunless %}
+        {% if is_featured %}
+          style="width: 100%;"
+        {% endif %}
+      >
+        <span class="btn-label-full">{{ 'products.product.add_to_cart' | t }}</span>
+        <span class="btn-label-mobile">{{ 'snippetshub.product_card.add_short' | t }}</span>
+        {%- render 'loading-spinner' -%}
+      </button>
+    </form>
+  </div>
+</article>
+
+<script>
+  (function () {
+    if (window.SnippetsHubCardQtyCounterInitialized || window.SnippetsHubCardQtyDelegationReady) return;
+    window.SnippetsHubCardQtyCounterInitialized = true;
+
+    function normalizeCardQty(input) {
+      if (!input) return;
+      const min = parseInt(input.getAttribute('min') || '1', 10);
+      const value = parseInt(input.value, 10);
+      const safeValue = Number.isNaN(value) || value < min ? min : value;
+      input.value = safeValue;
+
+      const wrapper = input.closest('[data-card-qty-control]');
+      const minus = wrapper ? wrapper.querySelector('[data-card-qty-minus]') : null;
+      if (minus) minus.disabled = safeValue <= min;
+    }
+
+    function updateCardVariant(card, option) {
+      if (!card || !option) return;
+
+      const form = card.querySelector('[data-card-product-form]');
+      const variantInput = form ? form.querySelector('[data-card-variant-id]') : null;
+      const priceCurrent = card.querySelector('[data-card-price-current]');
+      const priceMeta = card.querySelector('[data-card-price-meta]');
+      const priceOriginal = card.querySelector('[data-card-price-original]');
+      const priceDiscount = card.querySelector('[data-card-price-discount]');
+      const submitButton = form ? form.querySelector('[data-card-submit]') : null;
+      const isAvailable = option.dataset.available === 'true';
+      const comparePrice = option.dataset.comparePrice || '';
+      const discountLabel = option.dataset.discountLabel || '';
+
+      if (variantInput) variantInput.value = option.dataset.variantId || '';
+      if (priceCurrent) priceCurrent.textContent = option.dataset.price || '';
+
+      if (priceMeta) {
+        const hasSaleMeta = comparePrice !== '' && discountLabel !== '';
+        priceMeta.toggleAttribute('hidden', !hasSaleMeta);
+        if (priceOriginal) priceOriginal.textContent = comparePrice;
+        if (priceDiscount) priceDiscount.textContent = discountLabel;
+      }
+
+      if (submitButton) {
+        const nextLabel = isAvailable
+          ? submitButton.dataset.addToCartLabel || 'Add to cart'
+          : submitButton.dataset.soldOutLabel || 'Sold out';
+        submitButton.disabled = !isAvailable;
+        submitButton.setAttribute('aria-disabled', isAvailable ? 'false' : 'true');
+        submitButton.querySelectorAll('.btn-label-full, .btn-label-mobile').forEach((label) => {
+          label.textContent = nextLabel;
+        });
+      }
+
+      card.querySelectorAll('[data-card-variant-option]').forEach((variantOption) => {
+        const isActive = variantOption === option;
+        variantOption.classList.toggle('is-active', isActive);
+        variantOption.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    document.addEventListener('click', function (event) {
+      const minusBtn = event.target.closest('[data-card-qty-minus]');
+      const plusBtn = event.target.closest('[data-card-qty-plus]');
+      const btn = minusBtn || plusBtn;
+      if (btn) {
+        event.preventDefault();
+        const wrapper = btn.closest('[data-card-qty-control]');
+        const input = wrapper ? wrapper.querySelector('[data-card-qty-input]') : null;
+        if (!input) return;
+
+        normalizeCardQty(input);
+        const current = parseInt(input.value, 10) || 1;
+        const min = parseInt(input.getAttribute('min') || '1', 10);
+
+        if (btn.hasAttribute('data-card-qty-plus')) {
+          input.value = current + 1;
+        } else {
+          input.value = Math.max(min, current - 1);
+        }
+        normalizeCardQty(input);
+        return;
+      }
+
+      const variantOption = event.target.closest('[data-card-variant-option]');
+      if (!variantOption) return;
+
+      event.preventDefault();
+      updateCardVariant(variantOption.closest('.product-card, .snippet-card'), variantOption);
+    });
+
+    document.addEventListener('input', function (event) {
+      const input = event.target.closest('[data-card-qty-input]');
+      if (!input) return;
+      normalizeCardQty(input);
+    });
+
+    document.addEventListener('submit', function (event) {
+      const form = event.target.closest('[data-card-product-form]');
+      if (!form) return;
+
+      const submitButton = form.querySelector('[data-card-submit]');
+      if (!submitButton || submitButton.disabled) {
+        event.preventDefault();
+        return;
+      }
+
+      submitButton.classList.add('loading');
+      submitButton.setAttribute('aria-disabled', 'true');
+    });
+
+    document.querySelectorAll('[data-card-qty-input]').forEach(normalizeCardQty);
+    document.querySelectorAll('.product-card.snippet-card, .snippet-card').forEach((card) => {
+      const activeOption = card.querySelector('[data-card-variant-option].is-active');
+      if (activeOption) updateCardVariant(card, activeOption);
+    });
+  })();
+</script>

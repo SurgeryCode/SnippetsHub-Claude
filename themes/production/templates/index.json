@@ -1,0 +1,615 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_snippetshub": {
+      "type": "hero-snippetshub",
+      "settings": {
+        "badge_text": "New: Implementation Support",
+        "hero_title": "Shopify Code <br> & Expert Hands.",
+        "hero_subtitle": "Premium snippets for your store. Clean, optimized, and conversion-focused. <strong>Buy code or hire us for installation.</strong>",
+        "button_1_text": "Explore Shop",
+        "button_1_link": "shopify://collections/all",
+        "button_2_text": "Community requests",
+        "button_2_link": "shopify://pages/community-requests"
+      }
+    },
+    "categories_grid": {
+      "type": "categories-grid-snippetshub",
+      "blocks": {
+        "category_fi7Jjm": {
+          "type": "category",
+          "settings": {
+            "icon": "🏠",
+            "title": "Hero Sections",
+            "link": "shopify://collections/hero-sections"
+          }
+        },
+        "category_fBkPqF": {
+          "type": "category",
+          "settings": {
+            "icon": "📦",
+            "title": "Product Pages",
+            "link": "shopify://collections/product-pages"
+          }
+        },
+        "category_Xep7G7": {
+          "type": "category",
+          "settings": {
+            "icon": "🛒",
+            "title": "Carts (Drawer)",
+            "link": "shopify://collections/carts-drawer"
+          }
+        },
+        "category_fD4Hca": {
+          "type": "category",
+          "settings": {
+            "icon": "📢",
+            "title": "Popups & Bars",
+            "link": "shopify://collections/popups-bars"
+          }
+        },
+        "category_akKTNH": {
+          "type": "category",
+          "settings": {
+            "icon": "💳",
+            "title": "Checkout",
+            "link": "shopify://collections/checkout"
+          }
+        },
+        "category_ALkbWh": {
+          "type": "category",
+          "settings": {
+            "icon": "✨",
+            "title": "Bundles",
+            "link": "shopify://collections/bundles"
+          }
+        }
+      },
+      "block_order": [
+        "category_fi7Jjm",
+        "category_fBkPqF",
+        "category_Xep7G7",
+        "category_fD4Hca",
+        "category_akKTNH",
+        "category_ALkbWh"
+      ],
+      "settings": {
+        "title": "Browse Categories"
+      }
+    },
+    "benefits": {
+      "type": "benefits-snippetshub",
+      "blocks": {
+        "benefit_qfjLb7": {
+          "type": "benefit",
+          "settings": {
+            "icon": "💻",
+            "title": "No Coding",
+            "description": "\"Copy and paste\" solutions. Each snippet includes a step-by-step video tutorial for beginners."
+          }
+        },
+        "benefit_zEJW3G": {
+          "type": "benefit",
+          "settings": {
+            "icon": "⚡",
+            "title": "Instant Access",
+            "description": "Get files immediately after purchase. Start improving store conversion in minutes."
+          }
+        },
+        "benefit_fc48t3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🎨",
+            "title": "Theme Compatibility",
+            "description": "Tested on all major Shopify 2.0 themes. Works seamlessly without breaking design."
+          }
+        },
+        "benefit_AGrcRa": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🛠️",
+            "title": "Expert Support",
+            "description": "Stuck? We offer implementation packages if you need developer help."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_qfjLb7",
+        "benefit_zEJW3G",
+        "benefit_fc48t3",
+        "benefit_AGrcRa"
+      ],
+      "settings": {
+        "title": "Why SnippetsHub?",
+        "subtitle": "Designed for non-technical store owners. Increase sales instantly."
+      }
+    },
+    "popular_snippets": {
+      "type": "popular-snippets",
+      "settings": {
+        "title": "Popular Snippets",
+        "subtitle": "Copy and paste or let us handle the code.",
+        "collection": "popular-snippets",
+        "featured_product_id": "57028676518213",
+        "featured_product_handle": "shopify-developer-nbsp-by-the-hour",
+        "products_to_show": 6,
+        "default_icon": "🚀",
+        "image_class": "",
+        "show_badge": true,
+        "badge_text": "Bestseller",
+        "badge_class": "badge-videocalls badge-SurgeruCode",
+        "demo_link": "",
+        "install_price": "+49 PLN",
+        "enable_expert_qty": true
+      }
+    },
+    "explore_catalog": {
+      "type": "explore-catalog",
+      "settings": {
+        "title": "Explore Our Catalog",
+        "subtitle": "Premium snippets and layouts for every project.",
+        "collection": "explore-our-catalog",
+        "featured_product_id": "57028676518213",
+        "featured_product_handle": "shopify-developer-nbsp-by-the-hour",
+        "products_to_show": 12,
+        "default_icon": "💧",
+        "show_badge": true,
+        "badge_text": "New",
+        "badge_class": "badge-masterminds badge-SurgeruCode",
+        "demo_link": "",
+        "install_price": "+49 PLN",
+        "enable_expert_qty": true
+      }
+    },
+    "features_technical": {
+      "type": "features-technical",
+      "blocks": {
+        "feature_VVNMhB": {
+          "type": "feature",
+          "settings": {
+            "icon": "⚡",
+            "title": "Wydajność przede wszystkimLekki,",
+            "description": "zoptymalizowany kod. Zero zbędnych bibliotek. Tylko czysty HTML, CSS i Vanilla JS."
+          }
+        },
+        "feature_LkpQrX": {
+          "type": "feature",
+          "settings": {
+            "icon": "📱",
+            "title": "Performance First",
+            "description": "Mobile FirstKażdy element od początku zaprojektowano z myślą o użytkownikach urządzeń mobilnych."
+          }
+        },
+        "feature_PkaMWm": {
+          "type": "feature",
+          "settings": {
+            "icon": "🛠️",
+            "title": "Łatwa integracja",
+            "description": "Fragmenty kodu gotowe do wklejenia do Shopify. Przejrzysta dokumentacja i obsługa Liquid w zestawie."
+          }
+        }
+      },
+      "block_order": [
+        "feature_VVNMhB",
+        "feature_LkpQrX",
+        "feature_PkaMWm"
+      ],
+      "settings": {
+        "title": "Why Technical Quality Matters?",
+        "subtitle": "High-quality code that directly impacts your store's performance."
+      }
+    },
+    "premium_services": {
+      "type": "premium-services",
+      "blocks": {
+        "service_item_tCYMrC": {
+          "type": "service_item",
+          "settings": {
+            "text": "Custom CSS/HTML changes"
+          }
+        },
+        "service_item_GR6QCz": {
+          "type": "service_item",
+          "settings": {
+            "text": "Speed optimization and audits"
+          }
+        },
+        "service_item_qaLqQe": {
+          "type": "service_item",
+          "settings": {
+            "text": "Complex Liquid implementations"
+          }
+        },
+        "service_item_igqbGn": {
+          "type": "service_item",
+          "settings": {
+            "text": "App integration and conflict resolution"
+          }
+        }
+      },
+      "block_order": [
+        "service_item_tCYMrC",
+        "service_item_GR6QCz",
+        "service_item_qaLqQe",
+        "service_item_igqbGn"
+      ],
+      "settings": {
+        "badge_text": "For Non-Technical Owners",
+        "title": "Just need a developer?",
+        "description": "Hire a Senior Shopify Developer by the hour. No long-term contracts. Pure expert knowledge when you need it.",
+        "currency": "$",
+        "price": "89",
+        "unit": "/ hr",
+        "button_text": "Book a Developer",
+        "availability": "Available Mon-Fri, 9:00-17:00"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials-snippetshub",
+      "blocks": {
+        "testimonial_zhdNgw": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "",
+            "author": "",
+            "role": ""
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_zhdNgw"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Trusted by 500+ store owners"
+      }
+    },
+    "snh_company_logo_marquee_ctH3Je": {
+      "type": "snh-company-logo-marquee",
+      "blocks": {
+        "company_KHrGBt": {
+          "type": "company",
+          "settings": {
+            "company_name": "Reckitt",
+            "company_url": ""
+          }
+        },
+        "company_tCzT4Q": {
+          "type": "company",
+          "settings": {
+            "company_name": "Company",
+            "company_url": ""
+          }
+        },
+        "company_gJPcqP": {
+          "type": "company",
+          "settings": {
+            "company_name": "Company",
+            "company_url": ""
+          }
+        },
+        "company_NRbQqy": {
+          "type": "company",
+          "settings": {
+            "company_name": "Primavera",
+            "company_url": ""
+          }
+        },
+        "company_fjJEX8": {
+          "type": "company",
+          "settings": {
+            "company_name": "Surgery Code",
+            "company_url": ""
+          }
+        },
+        "company_jkdNHj": {
+          "type": "company",
+          "settings": {
+            "company_name": "Euvic",
+            "company_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "company_KHrGBt",
+        "company_tCzT4Q",
+        "company_gJPcqP",
+        "company_NRbQqy",
+        "company_fjJEX8",
+        "company_jkdNHj"
+      ],
+      "name": "Company Logo Marquee",
+      "settings": {
+        "eyebrow": "Trusted by teams",
+        "title": "Our developer worked with companies like",
+        "subtitle": "",
+        "scroll_speed": 28,
+        "logo_gap": 20,
+        "open_links_in_new_tab": true,
+        "enable_linkedin_spotlight": false,
+        "linkedin_toggle_label": "Open LinkedIn Spotlight",
+        "linkedin_title": "Want to verify who builds this?",
+        "linkedin_description": "<p>See real project background, recommendations, and ongoing Shopify work on LinkedIn.</p>",
+        "linkedin_button_text": "Visit LinkedIn profile",
+        "linkedin_profile_url": "https://www.linkedin.com/in/piotrnowakinfo/",
+        "section_padding_top": 56,
+        "section_padding_bottom": 56
+      }
+    },
+    "final_cta": {
+      "type": "final-cta",
+      "settings": {
+        "title": "Ready for a better Shopify store?",
+        "description": "Invest in a professional store look for a fraction of agency prices.",
+        "button_text": "View All Snippets",
+        "button_link": "/collections/all",
+        "guarantee_text": "14-Day Satisfaction Guarantee"
+      }
+    },
+    "trust_badges": {
+      "type": "trust-badges",
+      "blocks": {
+        "trust_item_gcF4Pj": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🔒",
+            "text": "Secure Payments"
+          }
+        },
+        "trust_item_KgcXVj": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "✅",
+            "text": "Shopify Compatible"
+          }
+        },
+        "trust_item_cTAJNd": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "⚡",
+            "text": "Instant Download"
+          }
+        },
+        "trust_item_qCEw8L": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🛡️",
+            "text": "Money Back Guarantee"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_gcF4Pj",
+        "trust_item_KgcXVj",
+        "trust_item_cTAJNd",
+        "trust_item_qCEw8L"
+      ],
+      "settings": {}
+    },
+    "premium_request_form": {
+      "type": "premium-request-form",
+      "settings": {
+        "badge_text": "Community",
+        "title": "Shape the Future of SnippetsHub",
+        "description": "Missing features? Found a bug? Let us know, and we'll build it.",
+        "form_action": "https://formspree.io/f/maqenene",
+        "email_label": "Your Email",
+        "email_placeholder": "jan@example.com",
+        "type_label": "Request Type",
+        "message_label": "How can we help?",
+        "message_placeholder": "Describe the functionality you need...",
+        "button_text": "Submit Request"
+      }
+    },
+    "about_developer_7T6cLW": {
+      "type": "about-developer",
+      "blocks": {
+        "skill_fCFgTM": {
+          "type": "skill",
+          "settings": {
+            "title": "Shopify Developer",
+            "color": "#95bf47"
+          }
+        },
+        "skill_ttQfUx": {
+          "type": "skill",
+          "settings": {
+            "title": "Web Development",
+            "color": "#204ecf"
+          }
+        },
+        "skill_KLVHG9": {
+          "type": "skill",
+          "settings": {
+            "title": "Software Development",
+            "color": "#333333"
+          }
+        },
+        "skill_XJtAAV": {
+          "type": "skill",
+          "settings": {
+            "title": "PHP / Symfony",
+            "color": "#000000"
+          }
+        },
+        "skill_8LNnMM": {
+          "type": "skill",
+          "settings": {
+            "title": "HTML/CSS/JS",
+            "color": "#f7df1e"
+          }
+        },
+        "experience_aidtXa": {
+          "type": "experience",
+          "settings": {
+            "role": "Shopify Developer",
+            "company": "Surgery Code",
+            "date": "May 2024 – Present",
+            "description": "<p>Programming services. Shopify store creation and development.</p>"
+          }
+        },
+        "experience_3XkU39": {
+          "type": "experience",
+          "settings": {
+            "role": "IT&D Senior Analyst, D2C Full Stack Developer",
+            "company": "Reckitt",
+            "date": "Feb 2023 – May 2024",
+            "description": "<p>Full-time. Warsaw (Hybrid). Development of D2C platforms and IT systems.</p>"
+          }
+        },
+        "experience_JF63Cd": {
+          "type": "experience",
+          "settings": {
+            "role": "D2C Shopify Developer",
+            "company": "Euvic / Reckitt Benckiser",
+            "date": "Jan 2022 – Jun 2023",
+            "description": "<p>Contract. Shopify store development for Reckitt Benckiser.</p>"
+          }
+        },
+        "experience_6NLD84": {
+          "type": "experience",
+          "settings": {
+            "role": "D2C Shopify Developer",
+            "company": "New Gravity / Reckitt Benckiser",
+            "date": "Aug 2020 – Jan 2022",
+            "description": "<p>Contract. Implementation of e-commerce solutions.</p>"
+          }
+        },
+        "experience_ipENxQ": {
+          "type": "experience",
+          "settings": {
+            "role": "Shopify Developer",
+            "company": "Surgery Code",
+            "date": "Apr 2019 – Aug 2020",
+            "description": "<p>Self-employed. Programming services and online stores.</p>"
+          }
+        },
+        "experience_WdF6Kr": {
+          "type": "experience",
+          "settings": {
+            "role": "Shopify - Full stack Ecommerce developer",
+            "company": "Primavera Parfum",
+            "date": "Jul 2019 – Apr 2020",
+            "description": "<p>Responsible for tagomago.pl and perfumeria.pl stores. Mobile optimization, SEO, integrations, landing pages.</p>"
+          }
+        },
+        "experience_KzpdTF": {
+          "type": "experience",
+          "settings": {
+            "role": "PHP Programmer",
+            "company": "Supermedia",
+            "date": "Sep 2017 – Jan 2019",
+            "description": "<p>Maintenance of CMS applications (eskago.pl, voxfm.pl) and Symfony projects. UNIX/LINUX environment, GIT, SVN.</p>"
+          }
+        },
+        "experience_engJNC": {
+          "type": "experience",
+          "settings": {
+            "role": "Webmaster, Web Developer",
+            "company": "Grupa ZPR Media",
+            "date": "Apr 2014 – 2019",
+            "description": "<p>Creation and development of eska.pl, polotv.pl, focus.tv services. HTML, CSS, JS, RWD coding. Graphic designs and landing pages.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "skill_fCFgTM",
+        "skill_ttQfUx",
+        "skill_KLVHG9",
+        "skill_XJtAAV",
+        "skill_8LNnMM",
+        "experience_aidtXa",
+        "experience_3XkU39",
+        "experience_JF63Cd",
+        "experience_6NLD84",
+        "experience_ipENxQ",
+        "experience_WdF6Kr",
+        "experience_KzpdTF",
+        "experience_engJNC"
+      ],
+      "disabled": true,
+      "name": "About Developer",
+      "settings": {
+        "name": "Piotr Nowak",
+        "role": "IT&D Senior Analyst, D2C Full Stack Developer",
+        "bio": "<p>Programmer with many years of experience in Shopify, Web Development, and E-commerce. I specialize in creating efficient, modern online stores and dedicated web solutions.</p>",
+        "cta_text": "Book Consultation",
+        "cta_url": "",
+        "card_bg": "#ffffff",
+        "use_glassmorphism": true
+      }
+    },
+    "testimonials_snippetshub_by3Apn": {
+      "type": "testimonials-snippetshub",
+      "blocks": {
+        "testimonial_fT4d7F": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best Best",
+            "author": "Konrad K",
+            "role": "CTO, Seqoi"
+          }
+        },
+        "testimonial_ciD9HL": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "This Hero section instantly reduced our bounce rate by 15%. The code was so clean my developer didn't even complain.",
+            "author": "Sarah Jenkins",
+            "role": "Owner, GlowCosmetics"
+          }
+        },
+        "testimonial_RqYqxz": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I bought the Bundle Builder and expert install. They had it up in 6 hours. Absolutely worth the price.",
+            "author": "Mike Ross",
+            "role": "Founder, GearUp"
+          }
+        },
+        "testimonial_BVzbV3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I usually hire agencies for this stuff, but these snippets are agency quality for a fraction of the price.",
+            "author": "Elena Rodriguez",
+            "role": "CTO, FashionNova"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_fT4d7F",
+        "testimonial_ciD9HL",
+        "testimonial_RqYqxz",
+        "testimonial_BVzbV3"
+      ],
+      "disabled": true,
+      "name": "Testimonials SnippetsHub",
+      "settings": {
+        "title": "Trusted by 500+ store owners"
+      }
+    }
+  },
+  "order": [
+    "hero_snippetshub",
+    "categories_grid",
+    "benefits",
+    "popular_snippets",
+    "explore_catalog",
+    "features_technical",
+    "premium_services",
+    "testimonials",
+    "snh_company_logo_marquee_ctH3Je",
+    "final_cta",
+    "trust_badges",
+    "premium_request_form",
+    "about_developer_7T6cLW",
+    "testimonials_snippetshub_by3Apn"
+  ]
+}

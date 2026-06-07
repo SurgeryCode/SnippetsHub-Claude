@@ -1,0 +1,123 @@
+/*
+  🧩 Back in Stock Styles (v1.1)
+  Developed by SurgeryCode | https://SurgeryCode.com
+  © 2025 SnippetsHub & SurgeryCode
+*/
+
+/* ─── Container ─── */
+.surgerycode-bis {
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+/* ─── Label ─── */
+.surgerycode-bis__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Row (input + button) ─── */
+.surgerycode-bis__row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ─── Email input ─── */
+.surgerycode-bis__input {
+  flex: 1 1 auto;
+  padding: 0.6rem 0.875rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #111;
+  background: #fff;
+  transition: border-color 0.2s;
+  min-width: 0;
+}
+
+.surgerycode-bis__input:focus {
+  outline: none;
+  border-color: #111;
+}
+
+.surgerycode-bis__input::placeholder {
+  color: #aaa;
+}
+
+/* ─── Button ─── */
+.surgerycode-bis__btn {
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.surgerycode-bis__btn:hover:not(:disabled) {
+  background: #333;
+}
+
+.surgerycode-bis__btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* ─── Message ─── */
+.surgerycode-bis__msg {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  min-height: 1.2em;
+}
+
+.surgerycode-bis__msg[data-type="error"] {
+  color: #c0392b;
+}
+
+.surgerycode-bis__msg[data-type="success"] {
+  color: #27ae60;
+}
+
+/* ─── Success state ─── */
+.surgerycode-bis__success {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: #27ae60;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.surgerycode-bis__success[hidden] {
+  display: none;
+}
+
+.surgerycode-bis__success svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ─── Done state (after submit) ─── */
+.surgerycode-bis--done {
+  border-color: #27ae60;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 480px) {
+  .surgerycode-bis__row {
+    flex-direction: column;
+  }
+
+  .surgerycode-bis__btn {
+    width: 100%;
+  }
+}

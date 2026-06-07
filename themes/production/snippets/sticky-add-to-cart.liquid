@@ -1,0 +1,605 @@
+{% comment %}
+  Sticky CTA Button for Shopify
+  Plik: snippets/sticky-add-to-cart.liquid
+
+  USAGE - umieść tylko RAZ na końcu pliku:
+  sections/main-product.liquid lub templates/product.liquid
+
+  {% render 'sticky-add-to-cart', product: product %}
+{% endcomment %}
+
+{% if product %}
+  <style>
+    /* Sticky Add To Cart (Floating Glass Pill - Exact Source Match) */
+    .shopify-sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(150%);
+      width: 100%;
+      max-width: 100%;
+
+      /* Source: Light Mode Glass (rgba(255, 255, 255, 0.9)) */
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid var(--border-color);
+
+      padding: 0.75rem 0;
+      {% comment %} border-radius: 9999px; /* var(--radius-full) */ {% endcomment %}
+
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      z-index: 1000;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    .shopify-sticky-cta.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Source Match: Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme='light']) .shopify-sticky-cta {
+        background-color: rgba(15, 23, 42, 0.6); /* Source: .glass-card dark bg */
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        box-shadow: 0 15px 50px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+    }
+
+    [data-theme='dark'] .shopify-sticky-cta {
+      background-color: rgba(15, 23, 42, 0.6) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      color: white !important;
+      box-shadow: 0 15px 50px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+    }
+
+    [data-theme='dark'] .shopify-sticky-cta__title {
+      color: white !important;
+    }
+    [data-theme='dark'] .shopify-sticky-cta__price {
+      color: var(--secondary) !important;
+    }
+
+    .shopify-sticky-cta__container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding-inline: clamp(1rem, 3vw, 3rem);
+    }
+
+    .sticky-product-qty {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      padding: 0.25rem;
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .sticky-product-qty__btn {
+      border: 0;
+      background: transparent;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-color, #111827);
+    }
+
+    .sticky-product-qty__btn:hover {
+      background: rgba(37, 99, 235, 0.12);
+    }
+
+    .sticky-product-qty__btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .sticky-product-qty__input {
+      width: 3rem;
+      text-align: center;
+      border: 0;
+      background: transparent;
+      font-weight: 600;
+      color: var(--text-color, #111827);
+      -moz-appearance: textfield;
+    }
+
+    .sticky-product-qty__input::-webkit-outer-spin-button,
+    .sticky-product-qty__input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Upsell Box - Exact Match to Source .upsell-box */
+    .sticky-upsell-box {
+      display: none; /* Hidden on mobile */
+      background: color-mix(in srgb, var(--primary-light), transparent 95%);
+      border: 1px dashed var(--primary-light);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.8rem;
+      transition: all 0.2s;
+    }
+
+    [data-theme='dark'] .sticky-upsell-box {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .upsell-check {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .upsell-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      line-height: 1.2;
+    }
+
+    .upsell-title {
+      font-weight: 600;
+      color: var(--primary-dark);
+      font-size: 0.85rem;
+    }
+
+    [data-theme='dark'] .upsell-title {
+      color: white;
+    }
+
+    .upsell-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .upsell-price-tag {
+      font-weight: 700;
+      color: var(--primary-light);
+      font-size: 0.85rem;
+      margin-left: auto;
+    }
+
+    .sticky-upsell-box .upsell-qty-wrapper {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-top: 0.45rem;
+    }
+
+    .sticky-upsell-box .upsell-qty-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .sticky-upsell-box .qty-selector {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      padding: 0.15rem;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .sticky-upsell-box .qty-btn {
+      width: 1.75rem;
+      height: 1.75rem;
+      border: 0;
+      border-radius: 9999px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      color: var(--text-color, #111827);
+    }
+
+    .sticky-upsell-box .qty-btn:hover {
+      background: rgba(37, 99, 235, 0.12);
+    }
+
+    .sticky-upsell-box .upsell-qty-input {
+      width: 2.25rem;
+      text-align: center;
+      border: 0;
+      background: transparent;
+      -moz-appearance: textfield;
+      font-weight: 600;
+      color: var(--text-color, #111827);
+    }
+
+    .sticky-upsell-box .upsell-qty-input::-webkit-outer-spin-button,
+    .sticky-upsell-box .upsell-qty-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .sticky-upsell-box {
+        display: block;
+        flex: 1;
+      }
+    }
+
+    .shopify-sticky-cta__info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+      min-inline-size: 0;
+    }
+
+    .shopify-sticky-cta__image {
+      inline-size: 3rem;
+      block-size: 3rem;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .shopify-sticky-cta__details {
+      min-inline-size: 0;
+      flex: 1;
+    }
+
+    .shopify-sticky-cta__title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--text-heading);
+    }
+
+    .shopify-sticky-cta__price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .shopify-sticky-cta__price--compare {
+      text-decoration: line-through;
+      opacity: 0.7;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .shopify-sticky-cta__price--discount {
+      background: color-mix(in srgb, var(--accent), transparent 85%);
+      color: var(--text-heading);
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-full);
+      border: 1px solid color-mix(in srgb, var(--accent), transparent 65%);
+    }
+
+    /* Button Styles - EXACT MATCH to .btn-primary from style.css */
+    .shopify-sticky-cta__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: white;
+      background: var(--gradient-primary);
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    @media (min-width: 640px) {
+      .shopify-sticky-cta__button {
+        min-inline-size: 180px;
+      }
+    }
+
+    .shopify-sticky-cta__button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    .shopify-sticky-cta__button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  </style>
+
+  <aside
+    class="shopify-sticky-cta"
+    id="sticky-cta-{{ product.id }}"
+    role="complementary"
+    aria-label="{{ 'snippetshub.sticky_add_to_cart.aria_label' | t }}"
+    data-sticky-cta
+  >
+    <div class="container shopify-sticky-cta__container">
+      <div class="shopify-sticky-cta__info">
+        {% if product.featured_image %}
+          <img
+            src="{{ product.featured_image | image_url: width: 150 }}"
+            alt="{{ product.title | escape }}"
+            class="shopify-sticky-cta__image"
+            loading="lazy"
+            width="150"
+            height="150"
+          >
+        {% endif %}
+        {%- liquid
+          assign money_price = product.price | money
+          assign money_compare = product.compare_at_price | money
+          if settings.currency_code_enabled
+            assign money_price = product.price | money_with_currency
+            assign money_compare = product.compare_at_price | money_with_currency
+          endif
+        -%}
+
+        <div class="shopify-sticky-cta__details">
+          <div class="shopify-sticky-cta__title">{{ product.title }}</div>
+          <div class="shopify-sticky-cta__price">
+            {{ money_price }}
+            {% if product.compare_at_price > product.price %}
+              <span class="shopify-sticky-cta__price--compare">{{ money_compare }}</span>
+              {%- assign discount = product.compare_at_price
+                | minus: product.price
+                | times: 100
+                | divided_by: product.compare_at_price
+                | round
+              -%}
+              <span class="shopify-sticky-cta__price--discount">-{{ discount }}%</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="sticky-product-qty" data-sticky-product-qty>
+        <button
+          type="button"
+          class="sticky-product-qty__btn"
+          data-sticky-qty-minus
+          aria-label="{{ 'products.product.quantity.decrease' | t }}"
+        >
+          -
+        </button>
+        <input
+          type="number"
+          min="1"
+          value="1"
+          inputmode="numeric"
+          class="sticky-product-qty__input"
+          data-sticky-qty-input
+          aria-label="{{ 'products.product.quantity.label' | t }}"
+        >
+        <button
+          type="button"
+          class="sticky-product-qty__btn"
+          data-sticky-qty-plus
+          aria-label="{{ 'products.product.quantity.increase' | t }}"
+        >
+          +
+        </button>
+      </div>
+
+      {% render 'expert-install-upsell',
+        variant: 'sticky',
+        title_key: 'snippetshub.expert_install.add_expert_install',
+        subtitle_key: 'snippetshub.expert_install.delivery_time',
+        qty_label_key: 'snippetshub.expert_install.need_more_hours',
+        show_qty: true,
+        show_info: false,
+        hours: product.metafields.custom.installation_hours,
+        hide_expert_install: product.metafields.custom.hide_expert_install
+      %}
+
+      <button
+        class="shopify-sticky-cta__button"
+        type="button"
+        data-sticky-add-to-cart
+        {% unless product.available %}
+          disabled
+        {% endunless %}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+          <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+        </svg>
+        <span>
+          {% if product.available %}
+            {{ 'products.product.add_to_cart' | t | default: 'Dodaj do koszyka' }}
+          {% else %}
+            {{ 'products.product.sold_out' | t | default: 'Wyprzedane' }}
+          {% endif %}
+        </span>
+      </button>
+    </div>
+  </aside>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const stickyBar = document.querySelector('[data-sticky-cta]');
+      const stickyButton = document.querySelector('[data-sticky-add-to-cart]');
+      const stickyQtyInput = document.querySelector('[data-sticky-qty-input]');
+      const stickyQtyMinus = document.querySelector('[data-sticky-qty-minus]');
+      const stickyQtyPlus = document.querySelector('[data-sticky-qty-plus]');
+
+      if (!stickyBar || !stickyButton) return;
+
+      const normalizeStickyQty = () => {
+        if (!stickyQtyInput) return 1;
+        const min = parseInt(stickyQtyInput.getAttribute('min') || '1', 10);
+        const value = parseInt(stickyQtyInput.value, 10);
+        const safeValue = Number.isNaN(value) || value < min ? min : value;
+        stickyQtyInput.value = safeValue;
+        if (stickyQtyMinus) stickyQtyMinus.disabled = safeValue <= min;
+        return safeValue;
+      };
+
+      stickyQtyMinus?.addEventListener('click', () => {
+        const min = parseInt(stickyQtyInput?.getAttribute('min') || '1', 10);
+        const current = normalizeStickyQty();
+        if (stickyQtyInput) stickyQtyInput.value = Math.max(min, current - 1);
+        normalizeStickyQty();
+      });
+
+      stickyQtyPlus?.addEventListener('click', () => {
+        const current = normalizeStickyQty();
+        if (stickyQtyInput) stickyQtyInput.value = current + 1;
+        normalizeStickyQty();
+      });
+
+      stickyQtyInput?.addEventListener('input', normalizeStickyQty);
+      normalizeStickyQty();
+
+      // 1. Visibility Logic (IntersectionObserver)
+      const mainAddToCart = document.querySelector(
+        'form[action*="/cart/add"] button[type="submit"], .product-form__submit, button[name="add"]'
+      );
+
+      if (mainAddToCart) {
+        const observerOptions = {
+          root: null,
+          threshold: 0,
+          rootMargin: '0px',
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting && window.scrollY > entry.boundingClientRect.top + window.scrollY) {
+              stickyBar.classList.add('is-visible');
+            } else {
+              stickyBar.classList.remove('is-visible');
+            }
+          });
+        }, observerOptions);
+
+        observer.observe(mainAddToCart);
+      } else {
+        stickyBar.classList.add('is-visible');
+      }
+
+      // 2. Add to Cart Logic
+      const addingLabel = {{ 'snippetshub.sticky_add_to_cart.adding' | t | json }};
+      const addErrorLabel = {{ 'snippetshub.sticky_add_to_cart.add_error' | t | json }};
+
+      stickyButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        if (stickyButton.disabled) return;
+
+        const mainForm = document.querySelector('form[action*="/cart/add"]');
+        if (!mainForm) {
+          console.error('Sticky Cart: Product form not found');
+          return;
+        }
+
+        const formData = new FormData(mainForm);
+        const mainVariantId = formData.get('id') || '{{ product.selected_or_first_available_variant.id }}';
+        const quantity = normalizeStickyQty();
+        const expertCheckbox = stickyBar.querySelector('[data-expert-install-checkbox]');
+        const expertQtyInput = stickyBar.querySelector('[data-expert-install-quantity]');
+        const isExpertChecked = !!(expertCheckbox && expertCheckbox.checked);
+        const expertQty = expertQtyInput ? parseInt(expertQtyInput.value, 10) || 1 : 1;
+
+        const mainQtyInput = mainForm.querySelector('input[name="quantity"]');
+        if (mainQtyInput) mainQtyInput.value = quantity;
+
+        // Visual Feedback
+        const originalContent = stickyButton.innerHTML;
+        stickyButton.disabled = true;
+        stickyButton.classList.add('shopify-sticky-cta__button--loading');
+        stickyButton.innerHTML = addingLabel;
+
+        try {
+          const items = [
+            {
+              id: parseInt(mainVariantId, 10),
+              quantity,
+            },
+          ];
+
+          if (isExpertChecked && window.ExpertInstallUpsell?.resolveExpertInstallProduct) {
+            const expertProduct = await window.ExpertInstallUpsell.resolveExpertInstallProduct();
+            const expertVariantId = expertProduct && expertProduct.variantId ? String(expertProduct.variantId) : null;
+            const isMainInstallation = expertVariantId && String(mainVariantId) === expertVariantId;
+
+            if (isMainInstallation) {
+              items[0].quantity = Math.max(quantity, expertQty);
+            } else if (expertVariantId) {
+              items.push({
+                id: parseInt(expertVariantId, 10),
+                quantity: expertQty,
+                properties: {
+                  _min_qty: expertQtyInput ? expertQtyInput.getAttribute('min') || 1 : 1,
+                  _for_product: '{{ product.title | escape }}',
+                },
+              });
+            } else {
+              items[0].properties = {
+                '_Expert Install Requested': 'Yes (service product not linked)',
+              };
+            }
+          }
+
+          if (window.SnippetsHubCart && typeof window.SnippetsHubCart.addItems === 'function') {
+            await window.SnippetsHubCart.addItems(items, {
+              sourceElement: stickyButton,
+              source: 'sticky-add-to-cart',
+            });
+          } else {
+            const response = await fetch('/cart/add.js', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify({ items }),
+            });
+
+            if (!response.ok) throw new Error('Add to cart failed');
+
+            if (window.theme && typeof window.theme.cartDrawer?.open === 'function') {
+              window.theme.cartDrawer.open();
+            } else {
+              window.location.href = '/cart';
+            }
+          }
+        } catch (error) {
+          console.error('Sticky Cart Error:', error);
+          alert(addErrorLabel);
+        } finally {
+          stickyButton.disabled = false;
+          stickyButton.classList.remove('shopify-sticky-cta__button--loading');
+          stickyButton.innerHTML = originalContent;
+        }
+      });
+    })();
+  </script>
+{% endif %}

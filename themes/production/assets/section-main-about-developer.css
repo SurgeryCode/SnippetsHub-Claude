@@ -1,0 +1,294 @@
+.dev-landing {
+    min-height: 100vh;
+    padding: 115px 20px 0;
+    background: ;
+    position: relative;
+    overflow-x: hidden;
+    font-family: var(--font-body-family);
+  }
+
+  /* Decorative Orbs */
+  .dev-landing::before, .dev-landing::after {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  .dev-landing::before {
+    background: var(--primary, #005bd3);
+    top: -300px;
+    right: -300px;
+  }
+  .dev-landing::after {
+    background: #95BF47;
+    bottom: -300px;
+    left: -300px;
+  }
+
+  .dev-grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    align-items: start;
+  }
+
+  /* Left Column: Profile Card */
+  .profile-sidebar {
+    position: sticky;
+    top: 0;
+  }
+
+  .profile-card {
+    background: #ffffff;
+    backdrop-filter: none;
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 30px;
+  }
+
+  .profile-cover {
+    height: 160px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: block!important;
+  }
+
+  .profile-avatar-wrap {
+    width: 160px;
+    height: 160px;
+    margin: -80px auto 15px;
+    position: relative;
+    border-radius: 50%;
+    padding: 5px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(5px);
+  }
+
+  .profile-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .profile-info {
+    padding: 0 25px;
+  }
+
+  .profile-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-heading, #111);
+    margin: 0 0 5px;
+    line-height: 1.2;
+  }
+
+  .profile-role {
+    font-size: 1rem;
+    color: var(--primary, #005bd3);
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .profile-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    background: var(--primary, #005bd3);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0,91,211,0.25);
+  }
+  .profile-btn:hover {
+    background: var(--primary-dark, #0046a3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,91,211,0.35);
+    color: #fff;
+  }
+
+  /* Right Column: Content */
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .content-block {
+    background: #ffffff;
+    backdrop-filter: none;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+  }
+
+  .block-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-heading, #111);
+  }
+  
+  .block-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 24px;
+    background: var(--primary, #005bd3);
+    border-radius: 2px;
+  }
+
+  /* Skills Grid */
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .skill-pill {
+    padding: 8px 16px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: transform 0.2s;
+  }
+  .skill-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+  }
+  .skill-marker {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* Experience Timeline (Redesigned) */
+  .timeline-minimal {
+    position: relative;
+    padding-left: 30px;
+  }
+  .timeline-minimal::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 5px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(0,0,0,0.08);
+  }
+
+  .timeline-entry {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .timeline-entry:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-dot-minimal {
+    position: absolute;
+    left: -30px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 5px solid var(--primary, #005bd3);
+    z-index: 2;
+  }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+  }
+
+  .entry-role {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-heading, #111);
+  }
+
+  .entry-date {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+    background: rgba(0,0,0,0.05);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .entry-company {
+    color: var(--primary, #005bd3);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+  }
+
+  .entry-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #444;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .dev-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .profile-sidebar {
+      position: relative;
+      top: 0;
+    }
+    .dev-landing {
+      padding: 30px 15px;
+    }
+  }
+
+  /* Dark mode support */
+
+  
+  [data-theme="dark"] .dev-landing { background: #121212; }
+  [data-theme="dark"] .profile-card, 
+  [data-theme="dark"] .content-block { background: rgba(30,30,30,0.7); border-color: rgba(255,255,255,0.1); }
+  [data-theme="dark"] .profile-name, 
+  [data-theme="dark"] .role-title,
+  [data-theme="dark"] .entry-role,
+  [data-theme="dark"] .block-title { color: #fff; }
+  [data-theme="dark"] .skill-pill { background: #252525; border-color: #444; color: #fff; }
+  [data-theme="dark"] .entry-desc, 
+  [data-theme="dark"] .dev-bio { color: #ccc; }
+  [data-theme="dark"] .entry-date { background: rgba(255,255,255,0.1); color: #aaa; }

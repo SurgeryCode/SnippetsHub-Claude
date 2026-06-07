@@ -1,0 +1,86 @@
+/*
+  🧩 Counter Styles (v1.1)
+  Developed by SurgeryCode | https://SurgeryCode.com
+  © 2025 SnippetsHub & SurgeryCode
+*/
+
+/* ─── Container ─── */
+.surgerycode-counter {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* ─── Label ─── */
+.surgerycode-counter__label {
+  font-size: 0.875rem;
+  color: #555;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ─── Prefix / Suffix ─── */
+.surgerycode-counter__prefix,
+.surgerycode-counter__suffix {
+  font-size: 0.875rem;
+  color: #555;
+}
+
+/* ─── Segments row ─── */
+.surgerycode-counter__wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ─── Separator ─── */
+.surgerycode-counter__sep {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #555;
+  align-self: flex-start;
+  margin-top: 0.4rem;
+  line-height: 1;
+}
+
+/* ─── Segment ─── */
+.surgerycode-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 3.5rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 0.5rem 0.625rem;
+}
+
+/* ─── Value ─── */
+.surgerycode-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* ─── Unit label ─── */
+.surgerycode-unit {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 480px) {
+  .surgerycode-segment {
+    min-width: 2.75rem;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .surgerycode-value {
+    font-size: 1.2rem;
+  }
+}

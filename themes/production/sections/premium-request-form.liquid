@@ -1,0 +1,128 @@
+{% comment %}
+  Premium Request Form Section
+{% endcomment %}
+
+<section id="premium-request">
+  <div class="premium-request-container">
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    
+    <div class="glass-card">
+      <header class="form-header text-center">
+        <span class="badge badge-gradient">{{ section.settings.badge_text }}</span>
+        <h2>{{ section.settings.title }}</h2>
+        <p>{{ section.settings.description }}</p>
+      </header>
+      
+      <form action="{{ section.settings.form_action }}" method="POST" class="premium-form">
+        <div class="input-group">
+          <label>{{ section.settings.email_label }}</label>
+          <input type="email" name="email" placeholder="{{ section.settings.email_placeholder }}" required>
+        </div>
+        
+        <div class="input-group">
+          <label>{{ section.settings.type_label }}</label>
+          <select name="type">
+            <option value="{{ 'snippetshub.premium_request.options.new_snippet_idea' | t }}">{{ 'snippetshub.premium_request.options.new_snippet_idea' | t }}</option>
+            <option value="{{ 'snippetshub.premium_request.options.bug_report' | t }}">{{ 'snippetshub.premium_request.options.bug_report' | t }}</option>
+            <option value="{{ 'snippetshub.premium_request.options.custom_task' | t }}">{{ 'snippetshub.premium_request.options.custom_task' | t }}</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+        
+        <div class="input-group full-width">
+          <label>{{ section.settings.message_label }}</label>
+          <textarea name="message" placeholder="{{ section.settings.message_placeholder }}" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-glow">{{ section.settings.button_text }}</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+.glow-1 {
+  background: #60A5FA;
+  top: -50px;
+  left: -50px;
+}
+.glow-2 {
+  background: #A78BFA;
+  bottom: -50px;
+  right: -50px;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Premium Request Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Community"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Shape the Future of SnippetsHub"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Missing features? Found a bug? Let us know, and we'll build it."
+    },
+    {
+      "type": "text",
+      "id": "form_action",
+      "label": "Form Action URL",
+      "default": "https://formspree.io/f/maqenene"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email Label",
+      "default": "Your Email"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email Placeholder",
+      "default": "jan@example.com"
+    },
+    {
+      "type": "text",
+      "id": "type_label",
+      "label": "Request Type Label",
+      "default": "Request Type"
+    },
+    {
+      "type": "text",
+      "id": "message_label",
+      "label": "Message Label",
+      "default": "How can we help?"
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "Message Placeholder",
+      "default": "Describe the functionality you need..."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Submit Request"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Request Form"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,322 @@
+{%- comment -%}
+  🧩 Section: Hero Food Hunt (v1.0)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode – Licensed for single Shopify store use only.
+{%- endcomment -%}
+
+{%- assign dishes = section.blocks | where: 'type', 'dish' -%}
+
+<section
+  class="sc-food-hero"
+  id="sc-food-hero-{{ section.id }}"
+  data-sc-food-hero
+  style="
+    --sc-primary: {{ section.settings.color_primary }};
+    --sc-bg: {{ section.settings.color_bg }};
+    --sc-text: {{ section.settings.color_text }};
+    --sc-accent: {{ section.settings.color_accent }};
+  "
+>
+  <div class="sc-food-hero__inner">
+
+    <!-- LEFT: Content -->
+    <div class="sc-food-hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="sc-food-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h1 class="sc-food-hero__heading">
+        {%- if section.settings.heading_accent != blank -%}
+          <span class="sc-food-hero__heading-accent">{{ section.settings.heading_accent }}</span>
+          <br>
+        {%- endif -%}
+        {{ section.settings.heading_main }}
+      </h1>
+
+      {%- if section.settings.description != blank -%}
+        <p class="sc-food-hero__description">{{ section.settings.description }}</p>
+      {%- endif -%}
+
+      <div class="sc-food-hero__cta-group">
+        {%- if section.settings.btn_primary_label != blank -%}
+          <a href="{{ section.settings.btn_primary_url }}" class="sc-food-hero__btn sc-food-hero__btn--primary">
+            {{ section.settings.btn_primary_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.btn_secondary_label != blank -%}
+          <a href="{{ section.settings.btn_secondary_url }}" class="sc-food-hero__btn sc-food-hero__btn--secondary">
+            {{ section.settings.btn_secondary_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- RIGHT: Visual -->
+    <div class="sc-food-hero__visual" aria-hidden="true">
+      <div class="sc-food-hero__arc-bg"></div>
+
+      <!-- Main dish (center) -->
+      <div class="sc-food-hero__main-dish" id="sc-main-dish-{{ section.id }}">
+        {%- if dishes.size > 0 -%}
+          {%- assign first_dish = dishes | first -%}
+          {%- if first_dish.settings.image != blank -%}
+            {{
+              first_dish.settings.image
+              | image_url: width: 420
+              | image_tag:
+                loading: 'eager',
+                fetchpriority: 'high',
+                class: 'sc-food-hero__main-img',
+                alt: first_dish.settings.name
+            }}
+          {%- else -%}
+            <img
+              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=420&q=80"
+              alt="{{ first_dish.settings.name | default: 'Featured dish' }}"
+              class="sc-food-hero__main-img"
+              width="420"
+              height="420"
+              loading="eager"
+            >
+          {%- endif -%}
+          <div class="sc-food-hero__dish-info">
+            <p class="sc-food-hero__dish-name" id="sc-dish-name-{{ section.id }}">{{ first_dish.settings.name }}</p>
+            <p class="sc-food-hero__dish-desc" id="sc-dish-desc-{{ section.id }}">{{ first_dish.settings.description }}</p>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Orbit: mini dishes -->
+      {%- if dishes.size > 1 -%}
+        <div class="sc-food-hero__orbit" id="sc-orbit-{{ section.id }}">
+          {%- assign orbit_dishes = dishes | slice: 1, 5 -%}
+          {%- assign orbit_count = orbit_dishes.size -%}
+          {%- for block in orbit_dishes -%}
+            {%- assign angle = forloop.index0 | times: 360 | divided_by: orbit_count -%}
+            <button
+              class="sc-food-hero__orbit-item{% if forloop.first %} is-active{% endif %}"
+              data-sc-dish-index="{{ forloop.index0 | plus: 1 }}"
+              data-sc-angle="{{ angle }}"
+              style="--sc-angle: {{ angle }}deg;"
+              aria-label="{{ block.settings.name }}"
+              type="button"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 100
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'sc-food-hero__orbit-img',
+                    alt: block.settings.name
+                }}
+              {%- else -%}
+                <img
+                  src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&q=70"
+                  alt="{{ block.settings.name | default: 'Dish' }}"
+                  class="sc-food-hero__orbit-img"
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </button>
+          {%- endfor -%}
+        </div>
+
+        <!-- Nav arrows -->
+        <div class="sc-food-hero__nav">
+          <button class="sc-food-hero__nav-btn" data-sc-prev aria-label="Previous dish" type="button">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <button class="sc-food-hero__nav-btn" data-sc-next aria-label="Next dish" type="button">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<!-- Pass dishes data to JS -->
+<script>
+  window.scFoodHeroDishes = window.scFoodHeroDishes || {};
+  window.scFoodHeroDishes['{{ section.id }}'] = [
+    {%- for block in dishes -%}
+    {
+      "name": {{ block.settings.name | json }},
+      "description": {{ block.settings.description | json }},
+      "image": {{ block.settings.image | image_url: width: 420 | json }},
+      "imageFallback": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=420&q=80"
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+</script>
+
+<link rel="stylesheet" href="{{ 'surgerycode-hero-food-hunt.css' | asset_url }}">
+<script src="{{ 'surgerycode-hero-food-hunt.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Hero Food Hunt",
+  "tag": "section",
+  "class": "sc-section-hero-food-hunt",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Premium Dining"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent (top line)",
+      "default": "Delicious"
+    },
+    {
+      "type": "text",
+      "id": "heading_main",
+      "label": "Heading main (bottom line)",
+      "default": "Quench the Hunger"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover restaurant-quality meals delivered to your door. Fresh ingredients, expert chefs, unforgettable taste."
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_label",
+      "label": "Label",
+      "default": "Order Now"
+    },
+    {
+      "type": "url",
+      "id": "btn_primary_url",
+      "label": "URL"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_label",
+      "label": "Label",
+      "default": "View Menu"
+    },
+    {
+      "type": "url",
+      "id": "btn_secondary_url",
+      "label": "URL"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_primary",
+      "label": "Primary (arc & buttons)",
+      "default": "#FF9F66"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Heading accent color",
+      "default": "#FF9F66"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "dish",
+      "name": "Dish",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Dish image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Dish name",
+          "default": "Grilled Salmon"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Short description",
+          "default": "Pan-seared with lemon butter and herbs"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Food Hunt",
+      "category": "Hero",
+      "blocks": [
+        {
+          "type": "dish",
+          "settings": {
+            "name": "Grilled Salmon",
+            "description": "Pan-seared with lemon butter and fresh herbs"
+          }
+        },
+        {
+          "type": "dish",
+          "settings": {
+            "name": "Caesar Salad",
+            "description": "Crispy romaine with house-made dressing"
+          }
+        },
+        {
+          "type": "dish",
+          "settings": {
+            "name": "Beef Tenderloin",
+            "description": "Medium-rare with truffle jus"
+          }
+        },
+        {
+          "type": "dish",
+          "settings": {
+            "name": "Mushroom Risotto",
+            "description": "Creamy arborio with porcini"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

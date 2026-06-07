@@ -1,0 +1,202 @@
+{
+  "project": {
+    "name": "SnippetsHub — Nike 3D Landing Page",
+    "type": "Frontend — HTML / CSS / JS",
+    "folder": "snippetshub-3d-HTML",
+    "goal": "Odwzorowanie projektu graficznego Nike landing page z efektami 3D, slajderem produktów i pełną interaktywnością. Projekt służy jako snippet / showcase do SnippetsHub.",
+    "design_reference": "Materiały/ProjektHTML-CSS-JS.jpg",
+    "stack": ["HTML5", "CSS3", "Vanilla JS", "model-viewer 3.5 (CDN)", "Three.js 0.128 (CDN)"],
+    "no_frameworks": true,
+    "prd_full": "PRD.md"
+  },
+
+  "files": {
+    "index.html":              "v1 — bazowa wersja, emoji 👟 jako placeholder, pełny hero + slider",
+    "index-3d.html":           "v2 — model-viewer slider (bez hero section, karty z GLB)",
+    "index-three.html":        "v3 — model-viewer w hero + kartach, synchronizacja camera-orbit",
+    "index-hero-rotate.html":  "v4 — hero interaktywny (drag-to-rotate), slider pauzuje podczas obrotu",
+    "style.css":               "Wspólne style dla wszystkich wariantów",
+    "script.js":               "Silnik slidera używany przez index.html (v1)",
+    "prd.json":                "Ten plik — skrócona dokumentacja iteracji",
+    "PRD.md":                  "Pełna dokumentacja produktu — zrobione / do zrobienia / pomysły",
+    "assets/nike_10.glb":      "Model 3D buta (~9.7 MB) — używany przez v2/v3/v4",
+    "assets/Logo_NIKE.svg":    "Logo Nike SVG",
+    "Materiały/":              "Projekt graficzny i referencyjne zrzuty"
+  },
+
+  "iterations": [
+
+    {
+      "id": 1,
+      "file": "index.html",
+      "name": "v1 — Baza projektu (emoji)",
+      "status": "completed",
+      "date": "2026-06-04",
+      "done": [
+        "Navbar — logo Nike SVG, linki, przyciski search/cart",
+        "Hero — JUST DO IT z animacją slide-in, opis, cena, przycisk GET IT NOW",
+        "Watermark NIKE w tle, dot-pattern overlay, dashed ring",
+        "Emoji 👟 z CSS filter jako obiekt testowy, animacja float",
+        "Products strip fixed bottom — 5 kart (emoji + info + gwiazdki + cena)",
+        "Slider: strzałki, klik, klawiatura ← →, drag/swipe mouse+touch",
+        "Autoplay 4 s, pauza na hover nad stripem",
+        "Zmiana aktywnej karty → aktualizacja hero (label, cena, emoji filter)",
+        "Slide counter 01/05, feedback przycisku + (✓ 1 s)",
+        "Responsive: tablet 900px, mobile 560px",
+        "CSS custom properties, font Orbitron"
+      ]
+    },
+
+    {
+      "id": 2,
+      "file": "index-3d.html",
+      "name": "v2 — Model-viewer slider",
+      "status": "completed",
+      "date": "2026-06-04",
+      "done": [
+        "Google model-viewer v3.5 via CDN",
+        "5 kart z model-viewer src=assets/nike_10.glb",
+        "Każda karta inny camera-orbit, rotation-per-second, exposure",
+        "syncRotate — aktywna karta obraca się, reszta zatrzymana",
+        "Pełnoekranowy slider bez sekcji hero",
+        "Drag: rozróżnienie ruchu poziomego (slider) od pionowego (model orbit)",
+        "Badge 3D na kartach, progress bar ostylowany"
+      ]
+    },
+
+    {
+      "id": 3,
+      "file": "index-three.html",
+      "name": "v3 — Model-viewer hero + slider",
+      "status": "completed",
+      "date": "2026-06-04",
+      "done": [
+        "Layout identyczny z index.html (hero section + products strip)",
+        "Hero: model-viewer zastępuje emoji w .shoe-display",
+        "Karty: mini model-viewer w .card-img (pointer-events: none)",
+        "go(i) synchronizuje camera-orbit hero z data-orbit wybranej karty",
+        "Lazy loading na kartach"
+      ],
+      "known_issues": [
+        "pointer-events na hero pozwala na interakcję, ale nie pauzuje slidera",
+        "Touch swipe na mobile może kolidować z model-viewer orbit"
+      ]
+    },
+
+    {
+      "id": 4,
+      "file": "index-hero-rotate.html",
+      "name": "v4 — Hero interaktywny (drag-to-rotate)",
+      "status": "completed",
+      "date": "2026-06-04",
+      "done": [
+        "pointer-events: auto na .shoe-display — nadpisuje blokadę z style.css",
+        "cursor: grab / grabbing podczas obracania",
+        "Animacja float pauzuje podczas obracania (.rotating → animation-play-state: paused)",
+        "pointerdown na hero → stopAutoplay(), heroRotating = true",
+        "pointerup/pointercancel → heroRotating = false, autoplay wznawia po 1.8 s",
+        "Flagi heroRotating + stripHovered chronią timer przed podwójnym startem",
+        "Etykieta DRAG TO ROTATE — znika po pierwszej interakcji",
+        "Refaktor startAutoplay() / stopAutoplay()"
+      ]
+    },
+
+    {
+      "id": 5,
+      "name": "Stabilność i UX",
+      "status": "planned",
+      "priority": "high",
+      "tasks": [
+        "Fallback gdy GLB nie załaduje (błąd sieciowy) — emoji lub komunikat",
+        "Skeleton/placeholder podczas ładowania 9.7 MB GLB",
+        "Poprawka touch/swipe: rozróżnienie kierunku na mobile (jak index-3d.html)",
+        "touch-action: none w CSS na hero na mobile",
+        "Wybrać jeden wariant jako finalny snippet (rekomendacja: v4)"
+      ]
+    },
+
+    {
+      "id": 6,
+      "name": "Responsive & dostępność",
+      "status": "planned",
+      "priority": "high",
+      "tasks": [
+        "Test iPhone SE 375px — model-viewer w kartach",
+        "Hamburger menu na mobile (nav-links drawer)",
+        "aria-live=polite na #heroLabel i #heroPrice",
+        "Fokus klawiaturowy widoczny na kartach i przyciskach",
+        "Lighthouse audit — cel 90+ Performance, 100 Accessibility"
+      ]
+    },
+
+    {
+      "id": 7,
+      "name": "Animacje i polish",
+      "status": "optional",
+      "priority": "medium",
+      "tasks": [
+        "Progress bar autoplay (4 s fill pod sliderem)",
+        "Smooth background color przy zmianie produktu",
+        "Licznik roll-up (cyfry wchodzą z góry/dołu)",
+        "Ripple efekt na przyciskach",
+        "Hero transition przy zmianie slajdu (scale + opacity modelu)",
+        "Particle overlay w tle hero"
+      ]
+    },
+
+    {
+      "id": 8,
+      "name": "Personalizacja i e-commerce",
+      "status": "optional",
+      "priority": "low",
+      "tasks": [
+        "Color picker — swatch kółka kolorów pod ceną w hero",
+        "Size selector",
+        "360° lightbox — powiększony model na full-screen",
+        "Mini-koszyk drawer — lista, suma, badge na ikonie cart",
+        "Wishlist / serce zapisane w localStorage",
+        "AR button na model-viewer (iPhone/Android)"
+      ]
+    },
+
+    {
+      "id": 9,
+      "name": "Performance",
+      "status": "optional",
+      "priority": "medium",
+      "tasks": [
+        "Skompresować nike_10.glb przez gltf-transform (cel <3 MB)",
+        "Draco compression dla geometrii modelu",
+        "Preload GLB: <link rel=preload as=fetch>",
+        "Intersection Observer — zatrzymać animacje kart poza viewport",
+        "Drugi plik GLB dla drugiego produktu — pełna różnorodność"
+      ]
+    }
+
+  ],
+
+  "design_tokens": {
+    "colors": {
+      "bg_primary":  "#1B2A7A",
+      "bg_dark":     "#101D5E",
+      "accent_gold": "#F5A623",
+      "accent_red":  "#E53935",
+      "white":       "#FFFFFF",
+      "white_60":    "rgba(255,255,255,0.6)",
+      "card_bg":     "rgba(255,255,255,0.07)",
+      "strip_bg":    "#111D5E"
+    },
+    "typography": {
+      "font_body":    "Segoe UI, Arial, sans-serif",
+      "font_display": "Orbitron, Arial Black, sans-serif",
+      "weight_heavy": 900,
+      "weight_nav":   700
+    },
+    "motion": {
+      "transition":    "0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+      "float_duration":"4s",
+      "autoplay_ms":   4000,
+      "hero_resume_delay_ms": 1800
+    }
+  }
+}

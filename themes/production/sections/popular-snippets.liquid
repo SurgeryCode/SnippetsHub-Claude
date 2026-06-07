@@ -1,0 +1,173 @@
+{% comment %}
+  Popular Snippets - Featured Products from Collection
+{% endcomment %}
+
+<section id="snippets" class="section-py container" data-filtering-section>
+  <div class="text-center">
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+    {% if section.settings.subtitle != blank %}
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+
+  <div class="products-container">
+    {% if section.settings.collection != blank %}
+      {% assign collection = section.settings.collection %}
+      {% assign product_limit = section.settings.products_to_show | default: 6 %}
+      {% assign featured_id_str = section.settings.featured_product_id | strip %}
+      {% assign featured_handle = section.settings.featured_product_handle | strip %}
+      {% assign rendered_count = 0 %}
+      {% assign featured_product_found = blank %}
+
+      {% comment %} 1. Identify Featured Product {% endcomment %}
+      {% if featured_handle != blank %}
+        {% assign featured_product_found = all_products[featured_handle] %}
+      {% endif %}
+
+      {% if featured_product_found == blank and featured_id_str != blank %}
+        {% for product in collection.products %}
+          {% assign p_id_str = product.id | append: '' %}
+          {% if p_id_str == featured_id_str %}
+            {% assign featured_product_found = product %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% comment %} 2. Render Featured Product First {% endcomment %}
+      {% if featured_product_found != blank %}
+        <div class="grid__item">
+          {% render 'featured-product-card',
+            product: featured_product_found,
+            show_badge: section.settings.show_badge,
+            badge_text: section.settings.badge_text,
+            install_price: section.settings.install_price,
+            show_expert_qty: section.settings.enable_expert_qty
+          %}
+        </div>
+        {% assign rendered_count = rendered_count | plus: 1 %}
+      {% endif %}
+
+      {% comment %} 3. Render remaining products up to limit {% endcomment %}
+      {% for product in collection.products %}
+        {% if featured_product_found != blank and product.id == featured_product_found.id %}
+          {% continue %}
+        {% endif %}
+        {% if rendered_count >= product_limit %}
+          {% break %}
+        {% endif %}
+
+        <div class="grid__item">
+          {% render 'snippetshub-card',
+            product: product,
+            show_badge: section.settings.show_badge,
+            badge_text: section.settings.badge_text,
+            install_price: section.settings.install_price,
+            show_expert_qty: section.settings.enable_expert_qty
+          %}
+        </div>
+        {% assign rendered_count = rendered_count | plus: 1 %}
+      {% endfor %}
+    {% else %}
+      <p style="text-align:center;">{{ 'snippetshub.catalog.select_collection' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Popular Snippets",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Popular Snippets"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Copy and paste or let us handle the code."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Product Collection"
+    },
+    {
+      "type": "text",
+      "id": "featured_product_id",
+      "label": "Featured Product ID",
+      "info": "Paste ID (e.g., 57028676518213)"
+    },
+    {
+      "type": "text",
+      "id": "featured_product_handle",
+      "label": "Featured Product Handle",
+      "info": "Alternative to ID. Paste handle from URL (e.g., shopify-developer-hour)."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Number of products to show",
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "default_icon",
+      "label": "Default Icon (Emoji)",
+      "default": "🚀"
+    },
+    {
+      "type": "text",
+      "id": "image_class",
+      "label": "Image Background Class",
+      "info": "e.g., img-green, img-purple"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Bestseller"
+    },
+    {
+      "type": "text",
+      "id": "badge_class",
+      "label": "Badge Class",
+      "default": "badge-videocalls badge-SurgeruCode"
+    },
+    {
+      "type": "url",
+      "id": "demo_link",
+      "label": "Demo Link (optional)"
+    },
+    {
+      "type": "text",
+      "id": "install_price",
+      "label": "Expert Install Price",
+      "default": "+49 PLN"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_expert_qty",
+      "label": "Enable Quantity Selection",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Popular Snippets"
+    }
+  ]
+}
+{% endschema %}

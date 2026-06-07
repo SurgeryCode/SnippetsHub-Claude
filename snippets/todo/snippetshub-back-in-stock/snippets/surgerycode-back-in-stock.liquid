@@ -1,0 +1,85 @@
+{%- comment -%}
+  🧩 Snippet: Back in Stock (v1.1)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode
+
+  Wymagane parametry:
+    endpoint   — URL do App Proxy / serverless function
+    product_id — ID produktu (np. product.id)
+    variant_id — ID wariantu (np. product.selected_or_first_available_variant.id)
+
+  Opcjonalne:
+    show_if_unavailable — true/false (domyślnie true — zawsze pokazuj)
+    btn_label           — etykieta przycisku (domyślnie: tłumaczenie notify_me)
+
+  Przykład użycia:
+    {% render 'surgerycode-back-in-stock',
+      endpoint: '/apps/bis/subscribe',
+      product_id: product.id,
+      variant_id: product.selected_or_first_available_variant.id
+    %}
+{%- endcomment -%}
+
+{%- liquid
+  assign _endpoint   = endpoint | default: ''
+  assign _product_id = product_id | default: ''
+  assign _variant_id = variant_id | default: ''
+  assign _btn_label  = btn_label | default: 'products.product.notify_me' | t | default: 'Notify me'
+  assign _email_placeholder = 'customer.register.email' | t | default: 'your@email.com'
+-%}
+
+<div
+  class="surgerycode-bis"
+  data-sc-bis
+  data-endpoint="{{ _endpoint | escape }}"
+  data-product-id="{{ _product_id }}"
+  data-variant-id="{{ _variant_id }}"
+  role="form"
+  aria-label="{{ _btn_label }}"
+>
+  <div class="surgerycode-bis__form" data-sc-bis-form>
+    <label for="sc-bis-email-{{ _variant_id }}" class="surgerycode-bis__label">
+      {{ 'customer.register.email' | t | default: 'Email address' }}
+    </label>
+    <div class="surgerycode-bis__row">
+      <input
+        id="sc-bis-email-{{ _variant_id }}"
+        type="email"
+        class="surgerycode-bis__input"
+        placeholder="{{ _email_placeholder }}"
+        aria-label="{{ _email_placeholder }}"
+        autocomplete="email"
+        required
+      >
+      <button
+        type="button"
+        class="surgerycode-bis__btn"
+        data-sc-bis-btn
+        aria-label="{{ _btn_label }}"
+      >
+        {{ _btn_label }}
+      </button>
+    </div>
+    <div
+      class="surgerycode-bis__msg"
+      data-sc-bis-msg
+      role="alert"
+      aria-live="polite"
+    ></div>
+  </div>
+
+  <!-- Success state (hidden until submitted) -->
+  <div class="surgerycode-bis__success" data-sc-bis-success hidden>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M6 10l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span data-sc-bis-success-text>
+      {{ 'products.product.notify_confirm' | t | default: "You're on the list! We'll notify you when this item is back." }}
+    </span>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{{ 'surgerycode-back-in-stock.css' | asset_url }}">
+<script src="{{ 'surgerycode-back-in-stock.js' | asset_url }}" defer></script>

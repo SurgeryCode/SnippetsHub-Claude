@@ -1,0 +1,8 @@
+.section-padding{padding:48px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 16px}
+.surgerycode-lp__hero{background-size:cover;background-position:center}
+.surgerycode-lp__hero-inner{padding:80px 16px;max-width:1200px;margin:0 auto;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.surgerycode-lp__btn{display:inline-block;background:#111;color:#fff;padding:.75rem 1.25rem;border-radius:8px;text-decoration:none}
+.surgerycode-lp__image img{display:block;max-width:100%;height:auto;border-radius:8px}
+.surgerycode-lp__faq-item{border:1px solid #eee;border-radius:8px;padding:.5rem 1rem;margin:.5rem 0;background:#fff}
+.surgerycode-lp__faq-item .answer{padding:.5rem 0 0;color:#555}

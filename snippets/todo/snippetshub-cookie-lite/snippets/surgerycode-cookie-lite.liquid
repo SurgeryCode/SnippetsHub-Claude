@@ -1,0 +1,63 @@
+{%- comment -%}
+  🧩 Snippet: Cookie Lite (v1.1)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode
+
+  Parametry opcjonalne:
+    title          — nagłówek baneru (domyślnie pusty)
+    text           — treść komunikatu
+    accept_label   — etykieta przycisku akceptacji (domyślnie: 'Accept')
+    decline_label  — etykieta przycisku odrzucenia (domyślnie: 'Decline')
+    policy_url     — link do polityki prywatności (opcjonalny)
+    position       — 'bottom' | 'top' (domyślnie: 'bottom')
+
+  Przykład:
+    {% render 'surgerycode-cookie-lite',
+      text: 'We use cookies to improve your experience.',
+      policy_url: '/policies/privacy-policy',
+      accept_label: 'Accept all',
+      decline_label: 'Decline'
+    %}
+{%- endcomment -%}
+
+{%- liquid
+  assign _title         = title | default: ''
+  assign _text          = text  | default: 'We use cookies to improve your experience.'
+  assign _accept_label  = accept_label  | default: 'Accept'
+  assign _decline_label = decline_label | default: 'Decline'
+  assign _policy_url    = policy_url    | default: ''
+  assign _position      = position      | default: 'bottom'
+-%}
+
+<div
+  class="surgerycode-cookie surgerycode-cookie--{{ _position }}"
+  hidden
+  role="dialog"
+  aria-modal="false"
+  aria-label="{{ 'general.cookies.title' | t | default: 'Cookie consent' }}"
+  data-sc-cookie
+>
+  <div class="surgerycode-cookie__inner">
+    <div class="surgerycode-cookie__content">
+      {%- if _title != blank -%}
+        <p class="surgerycode-cookie__title">{{ _title }}</p>
+      {%- endif -%}
+      <p class="surgerycode-cookie__text">
+        {{ _text }}
+        {%- if _policy_url != blank -%}
+          <a href="{{ _policy_url | escape }}" class="surgerycode-cookie__link" target="_blank" rel="noopener noreferrer">
+            {{- 'policies.privacy_policy.title' | t | default: 'Privacy Policy' -}}
+          </a>
+        {%- endif -%}
+      </p>
+    </div>
+    <div class="surgerycode-cookie__actions">
+      <button type="button" class="surgerycode-cookie__btn" data-action="accept">{{ _accept_label }}</button>
+      <button type="button" class="surgerycode-cookie__btn surgerycode-cookie__btn--secondary" data-action="decline">{{ _decline_label }}</button>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{{ 'surgerycode-cookie-lite.css' | asset_url }}">
+<script src="{{ 'surgerycode-cookie-lite.js' | asset_url }}" defer></script>

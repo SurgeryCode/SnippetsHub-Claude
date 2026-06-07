@@ -1,0 +1,110 @@
+{% comment %}
+  SnippetsHub Hero Section
+  Premium hero with animated code window
+{% endcomment %}
+
+<section class="hero-section">
+  <div class="container hero-grid">
+    <div>
+      {% if section.settings.badge_text != blank %}
+        <span class="badge">{{ section.settings.badge_text }}</span>
+      {% endif %}
+      
+      <h1 class="hero-title">
+        {{ section.settings.hero_title }}
+      </h1>
+      
+      {% if section.settings.hero_subtitle != blank %}
+        <p class="hero-subtitle">
+          {{ section.settings.hero_subtitle }}
+        </p>
+      {% endif %}
+      
+      <div class="hero-cta-group flex gap-4">
+        {% if section.settings.button_1_text != blank %}
+          <a href="{{ section.settings.button_1_link }}" class="btn btn-primary">
+            {{ section.settings.button_1_text }}
+          </a>
+        {% endif %}
+        
+        {% if section.settings.button_2_text != blank %}
+          <a href="{{ section.settings.button_2_link }}" class="btn btn-outline">
+            {{ section.settings.button_2_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="code-window">
+      <div class="dot-row">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+      </div>
+      <code>
+        <span class="code-line syntax-blue">const shopifyBoost = {</span>
+        <span class="code-line cl-1">snippets: <span class="syntax-pink">'High Conversion'</span>,</span>
+        <span class="code-line cl-1">speed: <span class="syntax-green">'Lightning Fast'</span>,</span>
+        <span class="code-line cl-1">support: <span class="syntax-yellow">true</span>,</span>
+        <span class="code-line cl-1">install: () => {</span>
+        <span class="code-line cl-2">increaseSales();</span>
+        <span class="code-line cl-2">optimizeUX();</span>
+        <span class="code-line cl-1">}</span>
+        <span class="code-line">}<span class="cursor"></span></span>
+      </code>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero SnippetsHub",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "New: Implementation Support"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Shopify Code <br> & Expert Hands."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Premium snippets for your store. Clean, optimized, and conversion-focused. <strong>Buy code or hire us for installation.</strong>"
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 Text",
+      "default": "Explore Shop"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 Text",
+      "default": "Hire a Developer"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero SnippetsHub"
+    }
+  ]
+}
+{% endschema %}

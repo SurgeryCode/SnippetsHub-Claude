@@ -1,0 +1,1113 @@
+{%- comment -%}
+SnippetsHub
+Section: SnippetsHub Countdown Bar
+Version: 1.0.0
+License: Default is Single Store License unless the purchased product variant states otherwise.
+Support: support@snippetshub.com
+{%- endcomment -%}
+
+{% assign selected_font = section.settings.font_family %}
+{% assign show_on = section.settings.show_on | default: 'all' %}
+{% assign page_type = request.page_type %}
+{% assign render_bar = false %}
+{% if show_on == 'all' %}
+  {% assign render_bar = true %}
+{% elsif show_on == 'home' and page_type == 'index' %}
+  {% assign render_bar = true %}
+{% elsif show_on == 'product' and page_type == 'product' %}
+  {% assign render_bar = true %}
+{% elsif show_on == 'collection' and page_type == 'collection' %}
+  {% assign render_bar = true %}
+{% endif %}
+{% if render_bar %}
+  <div
+    class="SnippetsHub SNH-countdown-bar snippetshub-countdown-bar snippetshub-countdown-bar--{{ section.settings.theme_style }}"
+    id="snippetshub-countdown-bar-{{ section.id }}"
+    data-snh="snippetshub-countdown-bar"
+    data-snh-version="1.0.0"
+    data-snh-owner="SnippetsHub"
+    style="display:none;"
+  >
+    <div class="snippetshub-countdown-bar__inner">
+      <div class="snippetshub-countdown-bar__content">
+        {% if section.settings.scroll_text %}
+          <div
+            class="snippetshub-countdown-bar__text snippetshub-countdown-bar__text--scroll{% if section.settings.marquee_pause_on_hover %} snippetshub-countdown-bar__text--pause-on-hover{% endif %}{% if section.settings.marquee_direction == 'right' %} snippetshub-countdown-bar__text--dir-right{% endif %}{% if section.settings.marquee_mobile_only %} snippetshub-countdown-bar__text--mobile-only{% endif %}"
+            style="--sc-marquee-duration: {{ section.settings.marquee_duration | default: '20s' }}; --sc-marquee-gap: {{ section.settings.marquee_gap | default: '2rem' }};"
+            {% if section.settings.marquee_aria_label != blank %}
+              aria-label="{{ section.settings.marquee_aria_label }}" aria-live="off"
+            {% endif %}
+          >
+            <div class="snippetshub-countdown-bar__text-track">
+              <span class="snippetshub-countdown-bar__text-segment">{{ section.settings.text }}</span>
+              <span class="snippetshub-countdown-bar__text-segment" aria-hidden="true">
+                {{- section.settings.text -}}
+              </span>
+            </div>
+          </div>
+        {% else %}
+          <div class="snippetshub-countdown-bar__text">
+            {{ section.settings.text }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.cta_1_link != blank and section.settings.cta_1_label != blank %}
+          <a
+            href="{{ section.settings.cta_1_link }}"
+            class="snippetshub-countdown-bar__button snippetshub-countdown-bar__button--primary"
+          >
+            {{ section.settings.cta_1_label }}
+          </a>
+        {% elsif section.settings.cta_1_label != blank %}
+          <span
+            class="snippetshub-countdown-bar__button snippetshub-countdown-bar__button--primary snippetshub-countdown-bar__button--disabled"
+            aria-disabled="true"
+          >
+            {{ section.settings.cta_1_label }}
+          </span>
+        {% endif %}
+
+        {% if section.settings.cta_2_link != blank and section.settings.cta_2_label != blank %}
+          <a
+            href="{{ section.settings.cta_2_link }}"
+            class="snippetshub-countdown-bar__button snippetshub-countdown-bar__button--secondary"
+          >
+            {{ section.settings.cta_2_label }}
+          </a>
+        {% elsif section.settings.cta_2_label != blank %}
+          <span
+            class="snippetshub-countdown-bar__button snippetshub-countdown-bar__button--secondary snippetshub-countdown-bar__button--disabled"
+            aria-disabled="true"
+          >
+            {{ section.settings.cta_2_label }}
+          </span>
+        {% endif %}
+
+        {% if section.settings.show_timer %}
+          <div
+            class="snippetshub-countdown-bar__timer"
+            data-start-date="{{ section.settings.start_date }}"
+            data-end-date="{{ section.settings.event_date }}"
+            data-end-message="{{ section.settings.end_message | escape }}"
+          >
+            <div class="snippetshub-countdown-bar__time-item">
+              <span class="snippetshub-countdown-bar__time-value" data-days>00</span>
+              <span class="snippetshub-countdown-bar__time-label">{{ section.settings.label_days }}</span>
+            </div>
+            <div class="snippetshub-countdown-bar__time-item">
+              <span class="snippetshub-countdown-bar__time-value" data-hours>00</span>
+              <span class="snippetshub-countdown-bar__time-label">{{ section.settings.label_hours }}</span>
+            </div>
+            <div class="snippetshub-countdown-bar__time-item">
+              <span class="snippetshub-countdown-bar__time-value" data-minutes>00</span>
+              <span class="snippetshub-countdown-bar__time-label">{{ section.settings.label_minutes }}</span>
+            </div>
+            <div class="snippetshub-countdown-bar__time-item">
+              <span class="snippetshub-countdown-bar__time-value" data-seconds>00</span>
+              <span class="snippetshub-countdown-bar__time-label">{{ section.settings.label_seconds }}</span>
+            </div>
+          </div>
+        {% endif %}
+
+        <button class="snippetshub-countdown-bar__close" type="button" aria-label="Close">&times;</button>
+      </div>
+    </div>
+
+    <style>
+      #snippetshub-countdown-bar-{{ section.id }} {
+        width: 100%;
+        position: relative;
+      z-index: {{ section.settings.z_index }};
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        margin-top: {{ section.settings.margin_top }};
+        margin-bottom: {{ section.settings.margin_bottom }};
+        font-family: {{ selected_font.family }}, {{ selected_font.fallback_families }};
+        --snh-text-color: {{ section.settings.text_color }};
+        --snh-cta1-bg: {{ section.settings.cta_1_bg }};
+        --snh-cta1-color: {{ section.settings.cta_1_color }};
+        --snh-cta2-bg: {{ section.settings.cta_2_bg }};
+        --snh-cta2-color: {{ section.settings.cta_2_color }};
+        --snh-timer-color: {{ section.settings.text_color }};
+        --snh-time-item-bg: {{ section.settings.time_item_bg_gradient | default: section.settings.time_item_bg_color | default: 'transparent' }};
+        --snh-close-color: {{ section.settings.close_color }};
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background: {{ section.settings.background_gradient | default: section.settings.background_color }};
+        {% if section.settings.background_image_desktop != blank %}
+          background-image: url({{ section.settings.background_image_desktop | image_url: width: 2000 }});
+        {% elsif section.settings.background_image_mobile != blank %}
+          background-image: url({{ section.settings.background_image_mobile | image_url: width: 800 }});
+        {% endif %}
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      @media (max-width: 768px) {
+        #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__inner {
+          {% if section.settings.background_image_mobile != blank %}
+            background-image: url({{ section.settings.background_image_mobile | image_url: width: 800 }});
+          {% elsif section.settings.background_image_desktop != blank %}
+            background-image: url({{ section.settings.background_image_desktop | image_url: width: 2000 }});
+          {% endif %}
+        }
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__content {
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        align-items: center;
+        gap: 1rem;
+        width: {{ section.settings.inner_width }};
+        max-width: 100%;
+        padding: {{ section.settings.content_padding }};
+        text-align: center;
+        background: {{ section.settings.inner_background_gradient | default: section.settings.inner_background_color }};
+        {% if section.settings.inner_background_image != blank %}
+          background-image: url({{ section.settings.inner_background_image | image_url }});
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+        {% endif %}
+        border-radius: {{ section.settings.content_border_radius }};
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text {
+        font-size: {{ section.settings.text_font_size }};
+        font-weight: 500;
+        color: var(--snh-text-color);
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text--scroll {
+        overflow: hidden;
+      }
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text--scroll .snippetshub-countdown-bar__text-track {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sc-marquee-gap, 2rem);
+        white-space: nowrap;
+        will-change: transform;
+        animation: sc-marquee-{{ section.id }} var(--sc-marquee-duration, 20s) linear infinite;
+      }
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text--scroll .snippetshub-countdown-bar__text-segment {
+        flex: 0 0 auto;
+      }
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text--pause-on-hover:hover .snippetshub-countdown-bar__text-track {
+        animation-play-state: paused;
+      }
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text--dir-right .snippetshub-countdown-bar__text-track {
+        animation-direction: reverse;
+      }
+      @keyframes sc-marquee-{{ section.id }} {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+
+      @media (min-width: 769px) {
+        #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text--mobile-only {
+          overflow: visible;
+        }
+        #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text--mobile-only .snippetshub-countdown-bar__text-track {
+          animation: none !important;
+          white-space: normal;
+          display: inline;
+          gap: 0;
+        }
+        #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__text--mobile-only .snippetshub-countdown-bar__text-segment:nth-child(2) {
+          display: none;
+        }
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__button,
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__button-text {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        border-radius: {{ section.settings.button_border_radius }};
+        text-decoration: none;
+        transition: background 0.3s ease, color 0.3s ease;
+        min-width: 100px;
+        text-align: center;
+        font-size: {{ section.settings.cta_font_size }};
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__button--primary {
+        background-color: var(--snh-cta1-bg);
+        color: var(--snh-cta1-color);
+      }
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__button--secondary {
+        background-color: var(--snh-cta2-bg);
+        color: var(--snh-cta2-color);
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} a.snippetshub-countdown-bar__button:hover {
+        opacity: 0.85;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__button-text {
+        color: {{ section.settings.text_color }};
+        background: transparent;
+        cursor: default;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__timer {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        align-items: center;
+        font-size: {{ section.settings.timer_font_size }};
+        color: var(--snh-timer-color);
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__time-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        background: var(--snh-time-item-bg);
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__time-value {
+        font-weight: bold;
+        display: block;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__time-label {
+        font-size: 0.7em;
+        opacity: 0.8;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__close {
+        position: absolute;
+        right: .3rem;
+        top: .3rem;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        line-height: 1;
+        color: var(--snh-close-color);
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__close:hover {
+        opacity: 0.7;
+      }
+
+      @media (max-width: 768px) {
+        #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__content {
+          grid-template-columns: 1fr;
+          gap: 0.5rem;
+        }
+        #snippetshub-countdown-bar-{{ section.id }} .snippetshub-countdown-bar__timer {
+          flex-wrap: wrap;
+        }
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--new_year .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#021024,#0b3a66);
+        background-image: url({{ 'snippetshub-countdown-bar--new_year.png' | asset_url }});
+        background-size: cover;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--new_year .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--new_year .snippetshub-countdown-bar__button--primary {
+        background-color: #1e589b;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--new_year .snippetshub-countdown-bar__button--secondary {
+        background-color: rgba(0, 0, 0, 0);
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--new_year .snippetshub-countdown-bar__timer {
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--new_year .snippetshub-countdown-bar__close {
+        color: #ffffff;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--halloween .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#000000,#ff6a00);
+        background-image: url({{ 'snippetshub-countdown-bar--halloween.png' | asset_url }});
+        background-size: cover;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--halloween .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--halloween .snippetshub-countdown-bar__button--primary {
+        background-color: #38156b;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--halloween .snippetshub-countdown-bar__button--secondary {
+        background-color: rgba(0, 0, 0, 0);
+        color: #f3b06d;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--halloween .snippetshub-countdown-bar__timer {
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--halloween .snippetshub-countdown-bar__close {
+        color: #f3b06d;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--valentines .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#ffdde1,#f7797d);
+        background-image: url({{ 'snippetshub-countdown-bar--valentines.png' | asset_url }});
+        background-size: cover;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--valentines .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #6e2b61;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--valentines .snippetshub-countdown-bar__button--primary {
+        background-color: #6e2b61;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--valentines .snippetshub-countdown-bar__button--secondary {
+        background-color: rgba(0, 0, 0, 0);
+        color: #6e2b61;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--valentines .snippetshub-countdown-bar__timer {
+        color: #6e2b61;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--valentines .snippetshub-countdown-bar__close {
+        color: #6e2b61;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--womens_day .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#f5e6ff,#b388ff);
+        background-image: url({{ 'snippetshub-countdown-bar-womens_day.png' | asset_url }});
+        background-size: cover;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--womens_day .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--womens_day .snippetshub-countdown-bar__button--primary {
+        background-color: rgba(0, 0, 0, 0);
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--womens_day .snippetshub-countdown-bar__button--secondary {
+        background-color: #f00281;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--womens_day .snippetshub-countdown-bar__timer {
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--womens_day .snippetshub-countdown-bar__close {
+        color: #5d48b6;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--mothers_day .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#fff0f6,#ffd6e7);
+        background-image: url({{ 'snippetshub-countdown-bar-mothers_day.png' | asset_url }});
+        background-size: cover;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--mothers_day .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--mothers_day .snippetshub-countdown-bar__button--primary {
+        background-color: rgba(0, 0, 0, 0);
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--mothers_day .snippetshub-countdown-bar__button--secondary {
+        background-color: #f779c1;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--mothers_day .snippetshub-countdown-bar__timer {
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--mothers_day .snippetshub-countdown-bar__close {
+        color: #ffffff;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--fathers_day .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#e6f0ff,#4a90e2);
+        background-image: url({{ 'snippetshub-countdown-bar-fathers_day.png' | asset_url }});
+        background-size: cover;
+        color: #031728;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--fathers_day .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #031728;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--fathers_day .snippetshub-countdown-bar__button--primary {
+        {% comment %} background-color: #0573a8; {% endcomment %}
+        background-color: rgba(0, 0, 0, 0);
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--fathers_day .snippetshub-countdown-bar__button--secondary {
+        background-color: #4a90e2;
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--fathers_day .snippetshub-countdown-bar__timer {
+        color: #03507c;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--fathers_day .snippetshub-countdown-bar__close {
+        color: #03a3cb;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--easter .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#fff7e6,#b6f0d6);
+        background-image: url({{ 'snippetshub-countdown-bar-easter.png' | asset_url }});
+        background-size: cover;
+        color: #2b3a2b;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--easter .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #f4843a;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--easter .snippetshub-countdown-bar__button--primary {
+        {% comment %} background-color: #0573a8; {% endcomment %}
+        background-color: rgba(0, 0, 0, 0);
+        color: #f4843a;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--easter .snippetshub-countdown-bar__button--secondary {
+        background-color: #fe6579;
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--easter .snippetshub-countdown-bar__timer {
+        color: #f4843a;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--easter .snippetshub-countdown-bar__close {
+        color: #f4843a;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--childrens_day .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#ffd6a5,#ffb3c6);
+        background-image: url({{ 'snippetshub-countdown-bar-childrens_day.png' | asset_url }});
+        background-size: cover;
+        color: #2b1a1a;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--childrens_day .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #f4843a;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--childrens_day .snippetshub-countdown-bar__button--primary {
+        {% comment %} background-color: #0573a8; {% endcomment %}
+        background-color: rgba(0, 0, 0, 0);
+        color: #f4843a;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--childrens_day .snippetshub-countdown-bar__button--secondary {
+        background-color: #fe6579;
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--childrens_day .snippetshub-countdown-bar__timer {
+        color: #f4843a;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--childrens_day .snippetshub-countdown-bar__close {
+        color: #f4843a;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--back_to_school .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#fff7d6,#cfe8ff);
+        background-image: url({{ 'snippetshub-countdown-bar-back_to_school.png' | asset_url }});
+        background-size: cover;
+        color: #10243a;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--back_to_school .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: rgb(251, 192, 13);
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--back_to_school .snippetshub-countdown-bar__button--primary {
+        {% comment %} background-color: #0573a8; {% endcomment %}
+        background-color: rgba(0, 0, 0, 0);
+        color: rgb(251, 192, 13);
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--back_to_school .snippetshub-countdown-bar__button--secondary {
+        background-color: rgb(251, 192, 13);
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--back_to_school .snippetshub-countdown-bar__timer {
+        color: rgb(251, 192, 13);
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--back_to_school .snippetshub-countdown-bar__close {
+        color: rgb(251, 192, 13);
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--black_friday .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#000000,#2b2b2b);
+        background-image: url({{ 'snippetshub-countdown-bar-black_friday.png' | asset_url }});
+        background-size: cover;
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--black_friday .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--black_friday .snippetshub-countdown-bar__button--primary {
+        {% comment %} background-color: #0573a8; {% endcomment %}
+        background-color: rgba(0, 0, 0, 0);
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--black_friday .snippetshub-countdown-bar__button--secondary {
+        background-color: #10243a;
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--black_friday .snippetshub-countdown-bar__timer {
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--black_friday .snippetshub-countdown-bar__close {
+        color: #e6f0ff;
+      }
+
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--cyber_monday .snippetshub-countdown-bar__inner {
+        background: linear-gradient(90deg,#00121a,#00384d);
+        background-image: url({{ 'snippetshub-countdown-bar--cyber_monday.png' | asset_url }});
+        background-size: cover;
+        color: #00ffd6;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--cyber_monday .snippetshub-countdown-bar__text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--cyber_monday .snippetshub-countdown-bar__button--primary {
+        {% comment %} background-color: #0573a8; {% endcomment %}
+        background-color: #03cbfb;
+        color: #190024;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--cyber_monday .snippetshub-countdown-bar__button--secondary {
+        background-color: #c228fe;
+        color: #ffffff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--cyber_monday .snippetshub-countdown-bar__timer {
+        color: #e6f0ff;
+      }
+      #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--cyber_monday .snippetshub-countdown-bar__close {
+        color: #e6f0ff;
+      }
+
+      @media (max-width: 768px) {
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--new_year .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#021024,#0b3a66);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--halloween .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#000000,#ff6a00);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--valentines .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#ffdde1,#f7797d);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--womens_day .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#f5e6ff,#b388ff);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--mothers_day .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#fff0f6,#ffd6e7);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--fathers_day .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#e6f0ff,#4a90e2);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--easter .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#fff7e6,#b6f0d6);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--childrens_day .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#ffd6a5,#ffb3c6);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--back_to_school .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#fff7d6,#cfe8ff);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--black_friday .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg,#000000,#2b2b2b);
+        }
+        #snippetshub-countdown-bar-{{ section.id }}.snippetshub-countdown-bar--cyber_monday .snippetshub-countdown-bar__inner {
+          background: linear-gradient(90deg, #00121a, #00384d);
+        }
+      }
+    </style>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const id = "{{ section.id }}";
+      const bar = document.getElementById(`snippetshub-countdown-bar-${id}`);
+      if (!bar) return;
+      const closeBtn = bar.querySelector(".snippetshub-countdown-bar__close");
+      const timer = bar.querySelector(".snippetshub-countdown-bar__timer");
+      const hasTimer = !!(timer && timer.dataset);
+      const startDateRaw = hasTimer ? timer.dataset.startDate : null;
+      const endDateRaw = hasTimer ? timer.dataset.endDate : null;
+      const endMessage = hasTimer && timer.dataset.endMessage ? timer.dataset.endMessage : "Event started!";
+      const hideAfterEnd = {{ section.settings.hide_after_end | default: false }};
+      const startDate = startDateRaw ? new Date(startDateRaw) : null;
+      const endDate = endDateRaw ? new Date(endDateRaw) : null;
+      const reappearDays = {{ section.settings.reappear_days }};
+      const hideKey = `snippetshub_countdown_hidden_until_${id}`;
+
+      try {
+        const hiddenUntil = localStorage.getItem(hideKey);
+        if (hiddenUntil && new Date(hiddenUntil) > new Date()) return;
+      } catch (err) {
+        // localStorage may be blocked; ignore
+      }
+
+      const now = new Date();
+      if (startDate && !isNaN(startDate) && now < startDate) return;
+
+      if (endDate && !isNaN(endDate) && now > endDate && hideAfterEnd) {
+        bar.style.display = "none";
+        return;
+      }
+
+      bar.style.display = "block";
+      bar.style.opacity = "0";
+      bar.style.transform = "translateY(-20px)";
+      setTimeout(() => {
+        bar.style.opacity = "1";
+        bar.style.transform = "translateY(0)";
+      }, 50);
+
+      function updateCountdown() {
+        if (!hasTimer || !endDate || isNaN(endDate)) return;
+        const now = new Date();
+        const diff = endDate - now;
+        if (diff <= 0) {
+          if (timer) timer.textContent = endMessage;
+          if (interval) clearInterval(interval);
+          if (hideAfterEnd) {
+            setTimeout(() => { bar.style.display = "none"; }, 300);
+          }
+          return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        if (timer) {
+          timer.querySelector("[data-days]").textContent = String(days).padStart(2, "0");
+          timer.querySelector("[data-hours]").textContent = String(hours).padStart(2, "0");
+          timer.querySelector("[data-minutes]").textContent = String(minutes).padStart(2, "0");
+          timer.querySelector("[data-seconds]").textContent = String(seconds).padStart(2, "0");
+        }
+      }
+
+      let interval = null;
+      if (hasTimer && endDate && !isNaN(endDate)) {
+        interval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+      }
+
+      if (closeBtn) closeBtn.addEventListener("click", () => {
+        bar.style.opacity = "0";
+        bar.style.transform = "translateY(-100%)";
+        setTimeout(() => { bar.style.display = "none"; }, 300);
+        const reappearDate = new Date();
+        reappearDate.setDate(reappearDate.getDate() + reappearDays);
+        try {
+          localStorage.setItem(hideKey, reappearDate.toISOString());
+        } catch (err) {
+          // localStorage may be blocked; ignore
+        }
+      });
+    });
+    </script>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "SnippetsHub Countdown Bar",
+  "settings": [
+    {
+      "type": "select",
+      "id": "show_on",
+      "label": "Show on",
+      "default": "all",
+      "options": [
+        { "value": "all", "label": "All pages" },
+        { "value": "home", "label": "Home page" },
+        { "value": "product", "label": "Product pages" },
+        { "value": "collection", "label": "Collection pages" }
+      ],
+      "info": "Limit where this bar appears (uses Shopify page type)."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Bar text",
+      "default": "Don't miss our special event!",
+      "info": "Main announcement text displayed in the bar. Keep it short for best results."
+    },
+    {
+      "type": "text",
+      "id": "text_font_size",
+      "label": "Text Font Size (e.g. 16px)",
+      "default": "16px",
+      "info": "CSS length with units, e.g. 14px, 1rem. Controls the bar text size."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000",
+      "info": "Text color. HEX or rgba supported. Ensure sufficient contrast."
+    },
+    {
+      "type": "checkbox",
+      "id": "scroll_text",
+      "label": "Scroll text (marquee)",
+      "default": false,
+      "info": "When enabled, the bar text scrolls continuously instead of wrapping."
+    },
+    {
+      "type": "text",
+      "id": "marquee_duration",
+      "label": "Marquee duration (e.g. 20s)",
+      "default": "20s",
+      "info": "CSS time for one loop (e.g. 12s, 20s). Lower = faster."
+    },
+    {
+      "type": "checkbox",
+      "id": "marquee_pause_on_hover",
+      "label": "Pause marquee on hover",
+      "default": true,
+      "info": "Pause scrolling when the user hovers the bar text."
+    },
+    {
+      "type": "select",
+      "id": "marquee_direction",
+      "label": "Marquee direction",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "info": "Choose scrolling direction for marquee text."
+    },
+    {
+      "type": "checkbox",
+      "id": "marquee_mobile_only",
+      "label": "Enable marquee only on mobile (<=768px)",
+      "default": false,
+      "info": "Enable scrolling on small screens; desktop will show normal wrapped text."
+    },
+    {
+      "type": "text",
+      "id": "marquee_gap",
+      "label": "Gap between repeats (e.g. 2rem)",
+      "default": "2rem",
+      "info": "Space between repeated text segments. Use CSS length with units (e.g. 2rem, 24px)."
+    },
+    {
+      "type": "text",
+      "id": "marquee_aria_label",
+      "label": "ARIA label for scrolling text (optional)",
+      "default": "ARIA label for scrolling text (optional)",
+      "info": "Optional accessibility label describing the scrolling message."
+    },
+
+    {
+      "type": "url",
+      "id": "cta_1_link",
+      "label": "CTA 1 Link",
+      "info": "Target URL for the primary button. Leave empty to render a disabled label."
+    },
+    {
+      "type": "text",
+      "id": "cta_1_label",
+      "label": "CTA 1 Label",
+      "default": "Shop Now",
+      "info": "Primary button text. Keep it short (e.g. ‘Shop Now’)."
+    },
+    {
+      "type": "color",
+      "id": "cta_1_bg",
+      "label": "CTA 1 Background",
+      "default": "rgba(0,0,0,0)",
+      "info": "Primary button background color (HEX or rgba)."
+    },
+    {
+      "type": "color",
+      "id": "cta_1_color",
+      "label": "CTA 1 Text Color",
+      "default": "#000000",
+      "info": "Primary button text color. Use transparent (rgba(0,0,0,0)) to inherit preset styles if desired."
+    },
+
+    {
+      "type": "url",
+      "id": "cta_2_link",
+      "label": "CTA 2 Link",
+      "info": "Target URL for the secondary button. Leave empty to render a disabled label."
+    },
+    {
+      "type": "text",
+      "id": "cta_2_label",
+      "label": "CTA 2 Label",
+      "default": "Learn More",
+      "info": "Secondary button text (optional)."
+    },
+    {
+      "type": "color",
+      "id": "cta_2_bg",
+      "label": "CTA 2 Background",
+      "default": "rgba(0,0,0,0)",
+      "info": "Secondary button background color. Transparent allowed to blend with background."
+    },
+    {
+      "type": "color",
+      "id": "cta_2_color",
+      "label": "CTA 2 Text Color",
+      "default": "#000000",
+      "info": "Secondary button text color (HEX or rgba)."
+    },
+    {
+      "type": "text",
+      "id": "cta_font_size",
+      "label": "CTA Font Size (e.g. 14px)",
+      "default": "14px",
+      "info": "CSS length with units (e.g. 13px, .9rem). Applies to both buttons."
+    },
+
+    {
+      "type": "color",
+      "id": "close_color",
+      "label": "Close Button Color",
+      "default": "#000000",
+      "info": "Color of the close (×) icon."
+    },
+
+    {
+      "type": "checkbox",
+      "id": "show_timer",
+      "label": "Show countdown timer",
+      "default": true,
+      "info": "Enable to display the countdown timer block."
+    },
+    {
+      "type": "text",
+      "id": "timer_font_size",
+      "label": "Timer Font Size (e.g. 16px)",
+      "default": "16px",
+      "info": "CSS length with units controlling the timer numbers, e.g. 16px, 1rem."
+    },
+    {
+      "type": "text",
+      "id": "label_days",
+      "label": "Label: Days",
+      "default": "Days",
+      "info": "Label for the days unit."
+    },
+    {
+      "type": "text",
+      "id": "label_hours",
+      "label": "Label: Hours",
+      "default": "Hours",
+      "info": "Label for the hours unit."
+    },
+    {
+      "type": "text",
+      "id": "label_minutes",
+      "label": "Label: Minutes",
+      "default": "Minutes",
+      "info": "Label for the minutes unit."
+    },
+    {
+      "type": "text",
+      "id": "label_seconds",
+      "label": "Label: Seconds",
+      "default": "Seconds",
+      "info": "Label for the seconds unit."
+    },
+    {
+      "type": "text",
+      "id": "start_date",
+      "label": "Start Date (YYYY-MM-DDTHH:MM:SS)",
+      "default": "2026-01-07T00:00:00",
+      "info": "Optional start date/time. If set, the bar will only show after this time (store timezone)."
+    },
+    {
+      "type": "color",
+      "id": "time_item_bg_color",
+      "label": "Time item background color",
+      "default": "rgba(0,0,0,0)",
+      "info": "Background color for each time unit box. Transparent allowed."
+    },
+    {
+      "type": "color_background",
+      "id": "time_item_bg_gradient",
+      "label": "Time item background gradient",
+      "info": "Optional gradient for time unit boxes. Overrides the background color when set."
+    },
+    {
+      "type": "text",
+      "id": "event_date",
+      "label": "End Date (YYYY-MM-DDTHH:MM:SS)",
+      "default": "2030-12-31T23:59:59",
+      "info": "Event end date/time in ISO format, e.g. 2026-12-31T23:59:59 (store timezone)."
+    },
+    {
+      "type": "text",
+      "id": "end_message",
+      "label": "End Message",
+      "default": "Event started!",
+      "info": "Message displayed when the countdown ends."
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_after_end",
+      "label": "Hide after end date",
+      "default": false,
+      "info": "If enabled, the bar hides after the countdown reaches zero."
+    },
+    {
+      "type": "number",
+      "id": "reappear_days",
+      "label": "Reappear after (days)",
+      "default": 2,
+      "info": "Days to keep the bar hidden after user closes it (uses localStorage)."
+    },
+
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "rgba(0,0,0,0)",
+      "info": "Section background color. If gradient/image is set, those will take precedence."
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Background Gradient",
+      "info": "Optional gradient for the section background (Shopify gradient picker)."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_desktop",
+      "label": "Background Image (Desktop)",
+      "info": "Large background image for desktop (recommended 1600×400)."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background Image (Mobile)",
+      "info": "Background image for mobile (recommended 800×320)."
+    },
+
+    {
+      "type": "color",
+      "id": "inner_background_color",
+      "label": "Inner Background Color",
+      "default": "rgba(0,0,0,0)",
+      "info": "Background color for the inner content container."
+    },
+    {
+      "type": "color_background",
+      "id": "inner_background_gradient",
+      "label": "Inner Background Gradient",
+      "info": "Optional gradient for the inner container (overrides inner color)."
+    },
+    {
+      "type": "image_picker",
+      "id": "inner_background_image",
+      "label": "Inner Background Image",
+      "info": "Optional background image for the inner container."
+    },
+    {
+      "type": "text",
+      "id": "inner_width",
+      "label": "Inner Container Width",
+      "default": "1200px",
+      "info": "Max content width (e.g. 1200px, 100%)."
+    },
+
+    {
+      "type": "text",
+      "id": "content_border_radius",
+      "label": "Content Border Radius",
+      "default": "8px",
+      "info": "CSS border-radius for the inner container (e.g. 8px)."
+    },
+    {
+      "type": "text",
+      "id": "button_border_radius",
+      "label": "Button Border Radius",
+      "default": "6px",
+      "info": "CSS border-radius for both CTA buttons (e.g. 6px)."
+    },
+    {
+      "type": "text",
+      "id": "content_padding",
+      "label": "Content Padding (e.g. 1rem 2rem)",
+      "default": "1rem",
+      "info": "Padding inside the inner container (CSS shorthand allowed)."
+    },
+
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "Top Margin",
+      "default": "0",
+      "info": "Outer spacing above the bar (e.g. 0, 16px)."
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "Bottom Margin",
+      "default": "0",
+      "info": "Outer spacing below the bar (e.g. 0, 16px)."
+    },
+    {
+      "type": "number",
+      "id": "z_index",
+      "label": "Z-Index",
+      "default": 9999,
+      "info": "Stacking order. Increase if the bar is hidden behind other elements."
+    },
+
+    {
+      "type": "font_picker",
+      "id": "font_family",
+      "label": "Font Family",
+      "default": "helvetica_n4",
+      "info": "Font applied to the bar. Note: some legacy fonts may be deprecated."
+    },
+
+    {
+      "type": "select",
+      "id": "theme_style",
+      "label": "Appearance",
+      "default": "default",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "new_year", "label": "New Year’s Day" },
+        { "value": "halloween", "label": "Halloween" },
+        { "value": "valentines", "label": "Valentine’s Day" },
+        { "value": "womens_day", "label": "International Women’s Day" },
+        { "value": "mothers_day", "label": "Mother’s Day" },
+        { "value": "fathers_day", "label": "Father’s Day" },
+        { "value": "easter", "label": "Easter" },
+        { "value": "childrens_day", "label": "Children’s Day" },
+        { "value": "back_to_school", "label": "Back to School" },
+        { "value": "black_friday", "label": "Black Friday" },
+        { "value": "cyber_monday", "label": "Cyber Monday" }
+      ],
+      "info": "Preset appearance with themed colors and accents."
+    }
+  ],
+  "presets": [{ "name": "Countdown Bar by SnippetsHub" }]
+}
+{% endschema %}

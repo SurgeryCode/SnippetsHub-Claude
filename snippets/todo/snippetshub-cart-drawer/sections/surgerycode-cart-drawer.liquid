@@ -1,0 +1,164 @@
+{%- comment -%}
+  🧩 Section: Cart Drawer (v1.2)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode
+  Instalacja: wklej {% section 'surgerycode-cart-drawer' %} przed </body> w layout/theme.liquid
+{%- endcomment -%}
+
+<div
+  class="surgerycode-cart-drawer__overlay"
+  data-surgerycode-close
+  aria-hidden="true"
+></div>
+
+<div
+  id="SurgeryCodeCartDrawer"
+  class="surgerycode-cart-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="SurgeryCodeCartTitle"
+  aria-hidden="true"
+>
+  <header class="surgerycode-cart-drawer__header">
+    <h2 id="SurgeryCodeCartTitle" class="surgerycode-cart-drawer__title">
+      {{ section.settings.drawer_title | default: 'Your Cart' }}
+      <span class="surgerycode-cart-drawer__count" data-surgerycode-count></span>
+    </h2>
+    <button
+      type="button"
+      class="surgerycode-cart-drawer__close"
+      data-surgerycode-close
+      aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="surgerycode-cart-drawer__body">
+    <div
+      class="surgerycode-cart-drawer__items"
+      data-surgerycode-cart-items
+      aria-live="polite"
+    ></div>
+
+    <div class="surgerycode-cart-drawer__empty" data-surgerycode-empty hidden>
+      <p>{{ 'cart.general.empty' | t | default: 'Your cart is empty' }}</p>
+      <a href="{{ routes.collections_url }}" class="surgerycode-cart-drawer__btn surgerycode-cart-drawer__btn--primary">
+        {{ 'general.continue_shopping' | t | default: 'Continue shopping' }}
+      </a>
+    </div>
+
+    {%- if section.settings.enable_upsells -%}
+      <div
+        class="surgerycode-cart-drawer__upsells"
+        data-surgerycode-upsells
+        hidden
+      >
+        <p class="surgerycode-cart-drawer__upsells-title">
+          {{ section.settings.upsells_title | default: 'You may also like' }}
+        </p>
+        <div data-surgerycode-upsells-items></div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <footer class="surgerycode-cart-drawer__footer" data-surgerycode-footer>
+    <div class="surgerycode-cart-drawer__subtotal">
+      <span>{{ 'cart.general.subtotal' | t | default: 'Subtotal' }}</span>
+      <strong data-surgerycode-subtotal></strong>
+    </div>
+
+    <p class="surgerycode-cart-drawer__taxes-note">
+      {{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t | default: 'Taxes and shipping calculated at checkout' }}
+    </p>
+
+    <div class="surgerycode-cart-drawer__actions">
+      <a href="{{ routes.cart_url }}" class="surgerycode-cart-drawer__btn surgerycode-cart-drawer__btn--outline">
+        {{ 'cart.general.view_cart' | t | default: 'View cart' }}
+      </a>
+      <a href="/checkout" class="surgerycode-cart-drawer__btn surgerycode-cart-drawer__btn--primary">
+        {{ 'cart.general.checkout' | t | default: 'Checkout' }}
+        &rarr;
+      </a>
+    </div>
+
+    {%- if section.settings.show_payment_icons -%}
+      <div class="surgerycode-cart-drawer__payments">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'surgerycode-cart-drawer__payment-icon' }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </footer>
+</div>
+
+<link rel="stylesheet" href="{{ 'surgerycode-cart-drawer.css' | asset_url }}">
+<script
+  src="{{ 'surgerycode-cart-drawer.js' | asset_url }}"
+  defer
+  data-enable-upsells="{{ section.settings.enable_upsells }}"
+  data-upsell-limit="{{ section.settings.upsell_limit | default: 3 }}"
+></script>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "drawer_title",
+      "label": "Drawer title",
+      "default": "Your Cart"
+    },
+    {
+      "type": "header",
+      "content": "Upsells"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_upsells",
+      "label": "Show recommended products",
+      "default": false,
+      "info": "Loads Shopify recommendations based on items in cart"
+    },
+    {
+      "type": "text",
+      "id": "upsells_title",
+      "label": "Upsells section title",
+      "default": "You may also like"
+    },
+    {
+      "type": "range",
+      "id": "upsell_limit",
+      "label": "Number of recommendations",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart Drawer",
+      "category": "Cart"
+    }
+  ]
+}
+{% endschema %}

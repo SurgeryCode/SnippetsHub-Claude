@@ -1,0 +1,160 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.6 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-sticky-add-to-cart-for-product-page.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-sticky-add-to-cart-for-product-page.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-snh-sticky-add-to-cart-for-product-page {
+    --snh-sticky-atc-background: {{ section.settings.background_color }};
+    --snh-sticky-atc-text: {{ section.settings.text_color }};
+    --snh-sticky-atc-border: {{ section.settings.border_color }};
+    --snh-sticky-atc-button-bg: {{ section.settings.button_background_color }};
+    --snh-sticky-atc-button-text: {{ section.settings.button_text_color }};
+  }
+{% endstyle %}
+
+{% if product %}
+  {% render 'snh-sticky-add-to-cart-for-product-page', product: product, section: section %}
+{% elsif request.design_mode %}
+  <div class="SnippetsHub SNH-snh-sticky-add-to-cart-for-product-page" data-snh="snippetshub-sticky-add-to-cart-bar" data-snh-version="1.0.6" data-snh-owner="SnippetsHub">
+    <div class="SNH-StickyAtc__empty-state">
+      Add the Sticky Add to Cart section to a product template to preview the component.
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "SNH Sticky Add to Cart",
+  "tag": "section",
+  "class": "section section-snh-sticky-add-to-cart",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable sticky add to cart",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_title",
+      "label": "Show product title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_title",
+      "label": "Show variant title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show product image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Bar position",
+      "default": "bottom",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_footer_hover",
+      "label": "Hide bar near footer",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "post_add_behavior",
+      "label": "After add to cart",
+      "default": "stay_on_page",
+      "options": [
+        {
+          "value": "stay_on_page",
+          "label": "Stay on product page"
+        },
+        {
+          "value": "theme_default",
+          "label": "Use theme default behavior"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#2B2B2B"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background color",
+      "default": "#F4B400"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#111111"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Sticky Add to Cart"
+    }
+  ]
+}
+{% endschema %}

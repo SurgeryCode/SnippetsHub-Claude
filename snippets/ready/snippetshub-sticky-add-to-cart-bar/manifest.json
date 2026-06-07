@@ -1,0 +1,17 @@
+{
+  "name": "SnippetsHub Sticky Add to Cart Bar",
+  "slug": "snippetshub-sticky-add-to-cart-bar",
+  "version": "1.0.6",
+  "owner": "SnippetsHub",
+  "license": "License depends on the purchased plan. Default: Single Store License unless the purchased variant states otherwise.",
+  "supportEmail": "support@snippetshub.com",
+  "type": "section",
+  "entry": {
+    "section": "sections/snh-sticky-add-to-cart-for-product-page.liquid",
+    "snippet": "snippets/snh-sticky-add-to-cart-for-product-page.liquid",
+    "assets": [
+      "assets/snh-sticky-add-to-cart-for-product-page.css",
+      "assets/snh-sticky-add-to-cart-for-product-page.js"
+    ]
+  }
+}

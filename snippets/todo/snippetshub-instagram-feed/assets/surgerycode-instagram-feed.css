@@ -1,0 +1,49 @@
+/*
+  🧩 Instagram Feed Styles (v1.1)
+  Developed by SurgeryCode | https://SurgeryCode.com
+  © 2025 SnippetsHub & SurgeryCode
+*/
+
+/* ─── Grid ─── */
+.surgerycode-ig__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+}
+
+/* ─── Item ─── */
+.surgerycode-ig__item {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #eee;
+  aspect-ratio: 1 / 1;
+}
+
+/* ─── Image ─── */
+.surgerycode-ig__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.surgerycode-ig__item:hover .surgerycode-ig__img,
+.surgerycode-ig__item:focus-visible .surgerycode-ig__img {
+  transform: scale(1.04);
+  opacity: 0.9;
+}
+
+/* ─── Notice (empty / error) ─── */
+.surgerycode-ig__notice {
+  color: #888;
+  font-size: 0.875rem;
+  padding: 1rem 0;
+}
+
+/* ─── Loading skeleton ─── */
+.surgerycode-ig__grid[aria-busy="true"] {
+  pointer-events: none;
+}

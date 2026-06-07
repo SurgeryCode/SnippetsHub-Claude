@@ -1,0 +1,35 @@
+<div class="surgerycode-3d-banner" data-surgerycode-id="surgerycode-3d-banner-2025">
+  {% if section.settings.model_url != blank %}
+    <model-viewer
+      class="surgerycode-3d-banner__viewer"
+      src="{{ section.settings.model_url }}"
+      {% if section.settings.poster != blank %}poster="{{ section.settings.poster | image_url }}"{% endif %}
+      camera-controls
+      {% if section.settings.autoplay %}autoplay{% endif %}
+      {% if section.settings.ar %}ar ar-modes="webxr scene-viewer quick-look"{% endif %}
+      shadow-intensity="1"
+      exposure="1"
+      style="--background-color: {{ section.settings.background | default: '#ffffff' }};"
+    ></model-viewer>
+  {% else %}
+    <div class="surgerycode-3d-banner__placeholder">Add a 3D model URL in the section settings</div>
+  {% endif %}
+</div>
+
+<link rel="stylesheet" href="{{ 'surgerycode-3d-product-banner.css' | asset_url }}">
+<script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js" type="module"></script>
+<script src="{{ 'surgerycode-3d-product-banner.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "3D Product Banner",
+  "settings": [
+    { "type": "url", "id": "model_url", "label": "3D model URL (.glb/.gltf)" },
+    { "type": "image_picker", "id": "poster", "label": "Poster image (optional)" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": false },
+    { "type": "checkbox", "id": "ar", "label": "Enable AR (if supported)", "default": false },
+    { "type": "color", "id": "background", "label": "Background color", "default": "#ffffff" }
+  ],
+  "presets": [ { "name": "3D Product Banner", "category": "Product" } ]
+}
+{% endschema %}

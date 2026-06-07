@@ -1,0 +1,173 @@
+{% comment %}
+  SnippetsHub Custom Header
+  Matches the original project design
+{% endcomment %}
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="{{ routes.root_url }}" class="logo-container" aria-label="{{ 'snippetshub.header.home_aria' | t }}">
+      {% if section.settings.logo != blank %}
+        {{
+          section.settings.logo
+          | image_url: width: 300
+          | image_tag: alt: shop.name, width: '150', height: '40', class: 'logo-regular'
+        }}
+      {% else %}
+        {% render 'logo-light-no-padding', class: 'logo-regular' %}
+      {% endif %}
+
+      <!-- Dark Mode Logo -->
+      {% render 'logo-no-padding', class: 'logo-dark-mode' %}
+    </a>
+
+    <nav class="nav-links" aria-label="{{ 'snippetshub.header.navigation_aria' | t }}">
+      {% if section.settings.menu != blank %}
+        {% for link in section.settings.menu.links %}
+          <a
+            href="{{ link.url }}"
+            class="{% if link.current or link.child_active %}is-active{% endif %}"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            {{- link.title -}}
+          </a>
+        {% endfor %}
+      {% else %}
+        <a href="/collections" class="{% if request.path contains '/collections' %}is-active{% endif %}">{{ 'snippetshub.header.catalog' | t }}</a>
+        <a href="/pages/services" class="{% if request.path == '/pages/services' %}is-active{% endif %}">{{ 'snippetshub.header.services' | t }}</a>
+        <a href="/pages/about" class="{% if request.path == '/pages/about' %}is-active{% endif %}">{{ 'snippetshub.header.about' | t }}</a>
+        <a href="/pages/contact" class="{% if request.path == '/pages/contact' %}is-active{% endif %}">{{ 'snippetshub.header.contact' | t }}</a>
+      {% endif %}
+
+      {%- liquid
+        assign show_mobile_country_selector = false
+        if localization.available_countries and localization.available_countries.size > 1
+          assign show_mobile_country_selector = true
+        endif
+
+        assign show_mobile_language_selector = false
+        if localization.available_languages and localization.available_languages.size > 0
+          assign show_mobile_language_selector = true
+        endif
+      -%}
+      {% if show_mobile_country_selector or show_mobile_language_selector %}
+        <div class="nav-mobile-localization" role="group" aria-label="{{ 'localization.country_label' | t }} / {{ 'localization.language_label' | t }}">
+          {% if show_mobile_country_selector %}
+            <div class="nav-mobile-localization__item">
+              <localization-form>
+                {%- form 'localization', id: 'HeaderCountryFormMobile', class: 'localization-form' -%}
+                  <div class="no-js-hidden">
+                    <h2 class="visually-hidden" id="HeaderCountryLabelMobile">{{ 'localization.country_label' | t }}</h2>
+                    {%- render 'country-localization', localPosition: 'HeaderCountryMobileInline' -%}
+                  </div>
+                {%- endform -%}
+              </localization-form>
+            </div>
+          {% endif %}
+
+          {% if show_mobile_language_selector %}
+            <div class="nav-mobile-localization__item">
+              <localization-form>
+                {%- form 'localization', id: 'HeaderLanguageFormMobile', class: 'localization-form' -%}
+                  <div class="no-js-hidden">
+                    <h2 class="visually-hidden" id="HeaderLanguageLabelMobile">{{ 'localization.language_label' | t }}</h2>
+                    {%- render 'language-localization', localPosition: 'HeaderLanguageMobileInline' -%}
+                  </div>
+                {%- endform -%}
+              </localization-form>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+    </nav>
+
+    <div class="header-actions">
+      {% if section.settings.enable_country_selector and localization.available_countries and localization.available_countries.size > 1 %}
+        <div class="header-localization">
+          <localization-form>
+            {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
+              <div class="no-js-hidden">
+                <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                {%- render 'country-localization', localPosition: 'HeaderCountry' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        </div>
+      {% endif %}
+
+      {% if localization.available_languages and localization.available_languages.size > 0 %}
+        <div class="header-localization">
+          <localization-form>
+            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+              <div class="no-js-hidden">
+                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        </div>
+      {% endif %}
+      {% comment %}
+        <button class="theme-toggle" aria-label="Toggle Dark Mode">
+          <span class="icon-sun">☀️</span>
+          <span class="icon-moon">🌙</span>
+        </button>
+      {% endcomment %}
+
+      {% if section.settings.enable_search %}
+        <a href="{{ routes.search_url }}" class="header-icon" aria-label="{{ 'general.search.search' | t }}">🔍</a>
+      {% endif %}
+
+      <a href="{{ routes.cart_url }}" class="header-icon relative" id="cart-icon-bubble" aria-label="{{ 'templates.cart.cart' | t }}">
+        🛒
+        {%- if cart.item_count > 0 -%}
+          <span class="cart-count">{{ cart.item_count }}</span>
+        {%- else -%}
+          <span class="cart-count">0</span>
+        {%- endif -%}
+        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="{{ 'snippetshub.header.toggle_menu' | t }}" style="font-size:1.5rem;">☰</button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header SnippetsHub",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "label": "Enable Search",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Enable country selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "Enable language selector",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

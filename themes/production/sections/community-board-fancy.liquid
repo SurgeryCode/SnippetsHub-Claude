@@ -1,0 +1,467 @@
+{% schema %}
+{
+  "name": "Community Board (Fancy)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Lab Title",
+      "default": "THE LAB // WORKSHOP"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "INITIATE PROTOCOL: REQUEST_FEATURE. VIEW STATUS: ACTIVE."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "task",
+      "name": "Lab Task",
+      "settings": [
+        {
+          "type": "text",
+          "id": "task_title",
+          "label": "Directive Title",
+          "default": "Optimize Core"
+        },
+        {
+          "type": "select",
+          "id": "status",
+          "label": "Processing Stage",
+          "options": [
+            { "value": "queue", "label": "Raw Input (Queue)" },
+            { "value": "progress", "label": "Processing (Active)" },
+            { "value": "done", "label": "Deployed (Done)" }
+          ],
+          "default": "queue"
+        },
+        {
+          "type": "text",
+          "id": "code",
+          "label": "Task Code (e.g. ERR-404)",
+          "default": "REQ-001"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Community Board (Fancy)",
+      "blocks": [
+        { "type": "task", "settings": { "task_title": "Fix Checkout Lag", "status": "progress", "code": "BUG-CRIT" } },
+        { "type": "task", "settings": { "task_title": "Dark Mode Toggle", "status": "done", "code": "FEAT-UI" } },
+        { "type": "task", "settings": { "task_title": "AI Search", "status": "queue", "code": "REQ-AI" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<section class="cb-fancy-section">
+  <div class="cb-grid-bg"></div>
+
+  <div class="container relative z-10">
+    <!-- Header -->
+    <div class="cb-header glitched">
+      <h2 class="cb-title">
+        {{ section.settings.title }}
+        <span class="blink">_</span>
+      </h2>
+      <p class="cb-subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <!-- Pipeline Visualizer -->
+    <div class="cb-pipeline">
+      <!-- Stage 1: Queue -->
+      <div class="cb-stage">
+        <div class="stage-header"><span class="icon">📥</span> {{ 'snippetshub.community_fancy.raw_input' | t }}</div>
+        <div class="stage-track">
+          {% for block in section.blocks %}
+            {% if block.settings.status == 'queue' %}
+              <div class="cb-card status-queue">
+                <div class="card-code">{{ block.settings.code }}</div>
+                <div class="card-title">{{ block.settings.task_title }}</div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="cb-connector">➜</div>
+
+      <!-- Stage 2: Processing -->
+      <div class="cb-stage active-stage">
+        <div class="stage-header flowing"><span class="icon">⚙️</span> {{ 'snippetshub.community_fancy.processing' | t }}</div>
+        <div class="stage-track">
+          {% for block in section.blocks %}
+            {% if block.settings.status == 'progress' %}
+              <div class="cb-card status-progress">
+                <div class="card-code">{{ block.settings.code }}</div>
+                <div class="card-title">{{ block.settings.task_title }}</div>
+                <div class="progress-bar">
+                  <div class="bar-fill"></div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="cb-connector">➜</div>
+
+      <!-- Stage 3: Done -->
+      <div class="cb-stage">
+        <div class="stage-header success"><span class="icon">✅</span> {{ 'snippetshub.community_fancy.deployed' | t }}</div>
+        <div class="stage-track">
+          {% for block in section.blocks %}
+            {% if block.settings.status == 'done' %}
+              <div class="cb-card status-done">
+                <div class="card-code">{{ block.settings.code }}</div>
+                <div class="card-title">{{ block.settings.task_title }}</div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal Form -->
+    <div class="cb-terminal">
+      <div class="terminal-bar">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="terminal-title">{{ 'snippetshub.community_fancy.terminal_title' | t }}</span>
+      </div>
+      <div class="terminal-body">
+        <p class="term-line">{{ 'snippetshub.community_fancy.initiate_sequence' | t }}</p>
+
+        {% form 'contact' %}
+          {% if form.posted_successfully? %}
+            <div class="term-success">{{ 'snippetshub.community_fancy.success' | t }}</div>
+          {% else %}
+            {{ form.errors | default_errors }}
+          {% endif %}
+
+          <div class="term-input-group">
+            <span class="prompt">{{ 'snippetshub.community_fancy.prompt_name' | t }}</span>
+            <input type="text" name="contact[name]" placeholder="{{ 'snippetshub.community_fancy.placeholder_identity' | t }}" class="term-input">
+          </div>
+
+          <div class="term-input-group">
+            <span class="prompt">{{ 'snippetshub.community_fancy.prompt_email' | t }}</span>
+            <input type="email" name="contact[email]" placeholder="{{ 'snippetshub.community_fancy.placeholder_channel' | t }}" class="term-input" required>
+          </div>
+
+          <div class="term-input-group">
+            <span class="prompt">{{ 'snippetshub.community_fancy.prompt_request' | t }}</span>
+            <textarea
+              name="contact[body]"
+              rows="3"
+              placeholder="{{ 'snippetshub.community_fancy.placeholder_directive' | t }}"
+              class="term-input full-width"
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="term-btn">{{ 'snippetshub.community_fancy.execute' | t }}</button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Import monospace for the lab look */
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+  .cb-fancy-section {
+    padding: 4rem 0;
+    position: relative;
+    background: #0a0a0f; /* Pitch black/blue */
+    color: #00ff9d; /* Neon Green */
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+  }
+
+  /* Blueprint Grid Background */
+  .cb-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(0, 255, 157, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 157, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .z-10 {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Typography */
+  .cb-title {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+  }
+
+  .cb-subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+  }
+
+  .blink {
+    animation: blinker 1s linear infinite;
+  }
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .cb-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  /* Pipeline */
+  .cb-pipeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 4rem;
+    flex-wrap: wrap; /* responsive */
+  }
+
+  @media (max-width: 768px) {
+    .cb-pipeline {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .cb-connector {
+      transform: rotate(90deg);
+      text-align: center;
+      margin: 1rem 0;
+    }
+  }
+
+  .cb-stage {
+    flex: 1;
+    min-width: 280px;
+    background: rgba(0, 255, 157, 0.03);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    padding: 1rem;
+    border-radius: 4px;
+  }
+
+  .active-stage {
+    border-color: #f7e227; /* Yellow Warning */
+    box-shadow: 0 0 15px rgba(247, 226, 39, 0.1);
+  }
+
+  .stage-header {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    border-bottom: 1px dashed rgba(0, 255, 157, 0.3);
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .active-stage .stage-header {
+    color: #f7e227;
+    border-color: rgba(247, 226, 39, 0.3);
+  }
+  .success {
+    color: #27f7e2;
+  }
+
+  .cb-connector {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.2);
+    padding-top: 2rem;
+  }
+
+  /* Cards */
+  .cb-card {
+    background: rgba(0, 20, 10, 0.8);
+    border: 1px solid #00ff9d;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .cb-card:hover {
+    transform: translateX(5px);
+    box-shadow: -5px 5px 0 rgba(0, 255, 157, 0.2);
+  }
+
+  .card-code {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2px;
+  }
+
+  .card-title {
+    font-weight: 700;
+    color: #fff;
+    font-size: 0.9rem;
+  }
+
+  .status-progress {
+    border-color: #f7e227;
+  }
+
+  .status-done {
+    border-color: #27f7e2;
+    opacity: 0.7;
+    text-decoration: line-through;
+  }
+
+  /* Progress Bar Animation */
+  .progress-bar {
+    margin-top: 8px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: #f7e227;
+    width: 50%;
+    position: absolute;
+    animation: loading 2s infinite linear;
+  }
+  @keyframes loading {
+    0% {
+      left: -50%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  /* Terminal */
+  .cb-terminal {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #1a1a1a;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+    font-family: inherit;
+  }
+
+  .terminal-bar {
+    background: #2d2d2d;
+    padding: 0.5rem 1rem;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .red {
+    background: #ff5f56;
+  }
+  .yellow {
+    background: #ffbd2e;
+  }
+  .green {
+    background: #27c93f;
+  }
+  .terminal-title {
+    margin-left: 1rem;
+    font-size: 0.8rem;
+    color: #999;
+  }
+
+  .terminal-body {
+    padding: 1.5rem;
+    color: #ccc;
+  }
+
+  .term-line {
+    margin-bottom: 1rem;
+    color: #00ff9d;
+  }
+
+  .term-input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    background: #000;
+    padding: 0.5rem;
+    border: 1px solid #333;
+  }
+  .term-input-group:focus-within {
+    border-color: #00ff9d;
+  }
+
+  .prompt {
+    color: #27f7e2;
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .term-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.9rem;
+  }
+  .term-input:focus {
+    outline: none;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .term-btn {
+    background: transparent;
+    border: 1px solid #00ff9d;
+    color: #00ff9d;
+    width: 100%;
+    padding: 0.75rem;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s;
+  }
+  .term-btn:hover {
+    background: #00ff9d;
+    color: #000;
+  }
+
+  .term-success {
+    color: #00ff9d;
+    margin-bottom: 1rem;
+    border: 1px dashed #00ff9d;
+    padding: 0.5rem;
+  }
+</style>

@@ -1,0 +1,249 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-announcement-bar.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-announcement-bar.js' | asset_url }}" defer="defer"></script>
+
+{%- assign message_blocks = section.blocks | where: 'type', 'message' -%}
+{%- assign visible_messages = message_blocks | where: 'settings.enabled', true -%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-AnnouncementBar {
+    --snh-ab-bg: {{ section.settings.background_color }};
+    --snh-ab-text: {{ section.settings.text_color }};
+    --snh-ab-link: {{ section.settings.link_color }};
+    --snh-ab-dot-active: {{ section.settings.text_color }};
+    --snh-ab-dot-inactive: {{ section.settings.text_color | color_modify: 'alpha', 0.35 }};
+    --snh-ab-btn-bg: {{ section.settings.close_button_color }};
+    --snh-ab-speed: {{ section.settings.rotation_speed }}ms;
+  }
+{% endstyle %}
+
+<div
+  class="SnippetsHub SNH-snh-announcement-bar"
+  data-snh="snippetshub-announcement-bar"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-speed="{{ section.settings.rotation_speed }}"
+  data-show-close="{{ section.settings.show_close }}"
+  data-close-id="snh-ab-{{ section.id }}"
+  role="complementary"
+  aria-label="Announcements"
+>
+  {%- if visible_messages.size > 0 -%}
+    <div class="SNH-AnnouncementBar">
+
+      {%- comment %} Messages track {%- endcomment -%}
+      <div class="SNH-AnnouncementBar__track" data-snh-track aria-live="polite" aria-atomic="true">
+        {%- for block in visible_messages -%}
+          <div
+            class="SNH-AnnouncementBar__slide{% if forloop.first %} is-active{% endif %}"
+            data-snh-slide
+            aria-hidden="{{ forloop.first | json | replace: 'true', 'false' | replace: 'false', 'true' }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.link != blank -%}
+              <a class="SNH-AnnouncementBar__message" href="{{ block.settings.link }}">
+                {%- unless block.settings.icon == blank -%}
+                  <span class="SNH-AnnouncementBar__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+                {%- endunless -%}
+                <span>{{ block.settings.text }}</span>
+              </a>
+            {%- else -%}
+              <p class="SNH-AnnouncementBar__message">
+                {%- unless block.settings.icon == blank -%}
+                  <span class="SNH-AnnouncementBar__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+                {%- endunless -%}
+                <span>{{ block.settings.text }}</span>
+              </p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment %} Navigation dots — only if more than 1 message {%- endcomment -%}
+      {%- if visible_messages.size > 1 and section.settings.show_dots -%}
+        <div class="SNH-AnnouncementBar__nav" role="tablist" aria-label="Announcement messages" data-snh-nav>
+          {%- for block in visible_messages -%}
+            <button
+              class="SNH-AnnouncementBar__dot{% if forloop.first %} is-active{% endif %}"
+              role="tab"
+              aria-selected="{{ forloop.first }}"
+              aria-label="Message {{ forloop.index }}"
+              data-snh-dot="{{ forloop.index0 }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment %} Arrow navigation {%- endcomment -%}
+      {%- if visible_messages.size > 1 and section.settings.show_arrows -%}
+        <button class="SNH-AnnouncementBar__arrow SNH-AnnouncementBar__arrow--prev" data-snh-prev aria-label="Previous announcement">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="SNH-AnnouncementBar__arrow SNH-AnnouncementBar__arrow--next" data-snh-next aria-label="Next announcement">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      {%- endif -%}
+
+      {%- comment %} Close button {%- endcomment -%}
+      {%- if section.settings.show_close -%}
+        <button class="SNH-AnnouncementBar__close" data-snh-close aria-label="Dismiss announcements">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      {%- endif -%}
+
+    </div>
+  {%- elsif request.design_mode -%}
+    <div class="SNH-AnnouncementBar">
+      <div class="SNH-AnnouncementBar__track">
+        <div class="SNH-AnnouncementBar__slide is-active">
+          <p class="SNH-AnnouncementBar__message">
+            <span>Add your first announcement message using the "+" button.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "SNH Announcement Bar",
+  "tag": "section",
+  "class": "section section-snh-announcement-bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rotation"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate messages",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rotation_speed",
+      "label": "Rotation interval (ms)",
+      "min": 2000,
+      "max": 8000,
+      "step": 500,
+      "default": 4000
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show navigation dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show prev / next arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_close",
+      "label": "Show close button",
+      "default": true,
+      "info": "Dismissed state is saved in sessionStorage — reappears on next visit."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link / hover",
+      "default": "#F4B400"
+    },
+    {
+      "type": "color",
+      "id": "close_button_color",
+      "label": "Close button",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Enable this message",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "placeholder": "🚚"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Message text",
+          "default": "Free shipping on orders over 200 PLN"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)",
+          "info": "Makes the entire message clickable."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Announcement Bar",
+      "blocks": [
+        {
+          "type": "message",
+          "settings": {
+            "icon": "🚚",
+            "text": "Free shipping on orders over 200 PLN",
+            "enabled": true
+          }
+        },
+        {
+          "type": "message",
+          "settings": {
+            "icon": "⚡",
+            "text": "Limited offer — 25% off all snippets this week",
+            "enabled": true
+          }
+        },
+        {
+          "type": "message",
+          "settings": {
+            "icon": "🔒",
+            "text": "Secure checkout — SSL encrypted",
+            "enabled": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

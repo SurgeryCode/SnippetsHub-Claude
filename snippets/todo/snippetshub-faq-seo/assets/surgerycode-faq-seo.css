@@ -1,0 +1,148 @@
+/*
+  🧩 SurgeryCode FAQ + SEO Styles (v1.1)
+  Developed by SurgeryCode | https://SurgeryCode.com
+  © 2025 SnippetsHub & SurgeryCode
+*/
+
+/* ─── Layout ─── */
+.surgerycode-faq {
+  padding: 3rem 0;
+}
+
+.surgerycode-faq__container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ─── Header ─── */
+.surgerycode-faq__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.surgerycode-faq__title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.surgerycode-faq__subtitle {
+  color: #666;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* ─── FAQ list ─── */
+.surgerycode-faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ─── Item (bordered style — default) ─── */
+.surgerycode-faq__item {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.surgerycode-faq__item:first-child {
+  border-top: 1px solid #e8e8e8;
+}
+
+/* ─── Item (card style) ─── */
+[data-style="card"] .surgerycode-faq__item {
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+[data-style="card"] .surgerycode-faq__item:first-child {
+  border-top: 1px solid #e8e8e8;
+}
+
+/* ─── Summary (question) ─── */
+.surgerycode-faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #111;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+[data-style="card"] .surgerycode-faq__question {
+  padding: 1.1rem 1.25rem;
+}
+
+.surgerycode-faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.surgerycode-faq__question:hover {
+  color: #000;
+}
+
+/* ─── Icon +/- ─── */
+.surgerycode-faq__icon {
+  flex-shrink: 0;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.surgerycode-faq__icon-minus {
+  display: none;
+}
+
+.surgerycode-faq__item[open] .surgerycode-faq__icon-plus {
+  display: none;
+}
+
+.surgerycode-faq__item[open] .surgerycode-faq__icon-minus {
+  display: block;
+}
+
+.surgerycode-faq__item[open] .surgerycode-faq__icon {
+  color: #111;
+}
+
+/* ─── Answer ─── */
+.surgerycode-faq__answer {
+  padding-bottom: 1.1rem;
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  /* Smooth open/close animation */
+  animation: sc-faq-open 0.25s ease;
+}
+
+[data-style="card"] .surgerycode-faq__answer {
+  padding: 0 1.25rem 1.1rem;
+}
+
+.surgerycode-faq__answer p {
+  margin: 0 0 0.75em;
+}
+
+.surgerycode-faq__answer p:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes sc-faq-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Editor hint ─── */
+.surgerycode-faq__empty-hint {
+  text-align: center;
+  color: #999;
+  padding: 2rem;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+}

@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="pl-PL">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width">
+
+  <title>SurgeryCode - OneStepCheckout</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- InPost Paczkomaty 24/7 -->
+ <script async src="https://sandbox-geowidget.easypack24.net/js/sdk-for-javascript.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://sandbox-geowidget.easypack24.net/css/easypack.css">
+  
+  <!-- Paczka w RUCHu -->
+ <link type="text/css" rel="stylesheet" media="all" href="css/paczkawruchu.css">
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDp-mK8Mxm9zU-KagI7r_RYA81kDKaqjGk&sensor=true&language=pl&libraries=places&v=3.17.15"></script>
+  <script type="text/javascript" src="js/pwrgeopickerhttmls.js"></script>
+
+  <!-- <script type="text/javascript" src="js/paylane.js"></script> -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!--[if lte IE 9]>
+      <p class="browserupgrade">Używasz <strong> nieaktualnej </strong> przeglądarki. <a href="https://browsehappy.com/"> zaktualizuj przeglądarkę </a>, aby poprawić swoje wrażenia i bezpieczeństwo.</p>
+  <![endif]-->
+  
+  <section>
+    <div class="container mt-3">
+      <div class="row">
+          <div class="col col-lg-9 col-md-12 col-sm-12">
+            <img class="logo" alt="SurgeryCode - OneStepCheckout" src="images/surgerycode-logo.svg" style="width: 300px;">
+          </div>
+          <div class="col col-lg-3 col-md-3 col-sm-6 d-flex top-delivery-time">
+            <div class="d-flex align-items-center">
+              <img style="width: 25px; margin-right: 15px; color: #C54F9D;" src="images/delivery-truck.svg" alt="">
+            </div>
+            <div class="d-flex align-items-center ">
+             <div>
+              <h5>Wysyłka w 24 h</h5>
+             </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="checkout">
+
+  <div class="container mb-1 mt-3">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="col-header text-center mb-2">
+          <h3>Zamówienie</h3>
+          <h5>Wypełnij formularz, aby dokończyć zamówienie</h5>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  <div class="container mb-2 mt-3">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="checkout-steps">
+          <ul class="d-flex justify-content-between">
+            <li class="active"><div><span class="number">1</span> Dane </div></li>
+            <li><div><span class="number">2</span> Dostawa i Płatność</div> </li>
+            <li><div><span class="number">3</span> Podsumowanie</div> </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  <form class="checkout-form" id="checkout-form" action="https://secure.paylane.com/order/cart.html" method="post" onkeydown="return event.key != 'Enter';">
+    <div class="submited-done">
+      <img id="ajaxCircle" src="images/spinner.gif"/>
+      <div class="layer">
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="row d-flex justify-content-between">
+        
+          <div class="user-data c-m-step-one">
+            <div class="col-content">
+
+              <div class="col-header border-btm">
+                <h3>1. Twoje dane</h3>
+              </div>
+
+              <div class="col border-btm">
+                <div class="login">
+                  <p>Masz już konto? Kliknij, żeby się zalogować!</p>
+                  <a href="/account/login" class="perf-btn">Zaloguj się</a>
+                </div>
+              </div>
+              
+              <div class="col">
+                <div class="check-person-business d-flex justify-content-between">
+                  <div class="col col-lg-6 col-md-6 col-sm-6 custom-control custom-radio">
+                    <input type="radio" id="checkFormTypePerson" name="checkFormType" value="Osoba prywatna" class="custom-control-input" checked>
+                    <label class="h5 custom-control-label" for="checkFormTypePerson">Osoba prywatna</label>
+                  </div>
+                  <div class="col col-lg-6 col-md-6 col-sm-6 custom-control custom-radio">
+                    <input type="radio" id="checkFormTypeBusiness" name="checkFormType" value="Firma" class="custom-control-input">
+                    <label class="h5 custom-control-label" for="checkFormTypeBusiness">Firma</label>
+                  </div>
+                </div>
+                <div class="step-one-form">
+                  
+                  <div class="form-firm-address">
+                    <div class="form-group show-company-inpit-name"><label class="h6" for="cartFormCompanyName">Firma</label><input
+                        type="text" class="form-control" id="cartFormCompanyName" name="companyName" placeholder="Wpisz nazwę firmy">
+                      <div class="invalid-feedback">To pole jest wymagane</div>
+                    </div>
+                    <div class="form-group show-nip-inpit show-company-inpit-name"></div>
+                    <div class="form-group show-nip-inpit show-company-inpit-name"><input type="nip" class="form-control"
+                        id="cartFormCompanyNip" name="companyNip" pattern="([0-9][\-]?){10}" placeholder="Wpisz NIP">
+                      <div class="invalid-feedback">To pole jest wymagane w formie: xxxxxxxxxx</div>
+                    </div>
+                  </div>
+
+                  <div class="form-person">
+                    <div class="form-group">
+                      <label class="h6">Adres e-mail</label>
+                      <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="form-control" id="cartPersonEmail" name="personEmail" placeholder="Wpisz adres e-mail">
+                      <div class="invalid-feedback">Niepoprawny adres e-mail</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="h6">Imię</label>
+                      <input type="text" class="form-control" id="cartFormName" name="personName" placeholder="Wpisz imię">
+                      <div class="invalid-feedback">To pole jest wymagane</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="h6">Nazwisko</label>
+                      <input type="text" class="form-control" id="cartFormLastName" name="personLastName" placeholder="Wpisz nazwisko">
+                      <div class="invalid-feedback">To pole jest wymagane</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="h6">Tel. komórkowy</label>
+                      <input type="text" pattern="[0-9' -]{9,11}" class="form-control" id="cartFormNumber" name="personPhone" placeholder="Wpisz tel. komórkowy" inputmode="numeric">
+                      <div class="invalid-feedback">To pole jest wymagane w formacie: xxxxxxxxx</div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-8">
+                        <label class="h6">Ulica i numer domu</label>
+                        <input type="text" class="form-control" id="cartFormAddress" name="personStreetNumper" placeholder="Wpisz ulicę i numer domu">
+                        <div class="invalid-feedback">To pole jest wymagane</div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="h6">Numer lokalu</label>
+                        <input type="number" class="form-control" id="cartFormAddressNr" name="personHomeNumber" placeholder="Numer lokalu" inputmode="numeric">
+                        <div class="invalid-feedback">To pole jest wymagane</div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-8">
+                        <label class="h6">Miasto</label>
+                        <input type="text" class="form-control" id="cartFormAddressCity" name="personCity" placeholder="Wpisz miasto">
+                        <div class="invalid-feedback">To pole jest wymagane</div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="h6">Kod pocztowy</label>
+                        <input type="text" class="form-control" id="cartFormAddressZip" name="personZipCode" placeholder="Kod pocztowy" inputmode="numeric">
+                        <div class="invalid-feedback">To pole jest wymagane w formacie: xx-xxx</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="h6">Kraj</label>
+                      <select class="custom-select my-1 mr-sm-2" id="cartFormAddressCountry" name="personCountry" disabled>
+                        <option value="Polska" selected>Polska</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="cartFormDifferentShippingAddress" value="Dostawa pod inny adres" name="differentShippingAddress">
+                        <label class="h5 custom-control-label" for="cartFormDifferentShippingAddress">Dostawa pod inny adres</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-different-address">
+                    <div class="form-group"><label class="h6">Imię</label>
+                      <input type="text" class="form-control" id="cartFormNameShipping" name="personName" placeholder="Wpisz imię">
+                      <div class="invalid-feedback">To pole jest wymagane</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="h6" for="cartFormLastName">Nazwisko</label>
+                      <input type="text" class="form-control" id="cartFormLastNameShipping" name="personLastName" placeholder="Wpisz nazwisko">
+                      <div class="invalid-feedback">To pole jest wymagane</div>
+                    </div>
+                    <div class="form-group"><label class="h6" for="cartFormNumberShipping">Tel. komórkowy</label>
+                      <input type="text" class="form-control" id="cartFormNumberShipping" name="personPhone" placeholder="Wpisz tel. komórkowy" inputmode="numeric">
+                      <div class="invalid-feedback">To pole jest wymagane w formacie: xxxxxxxxx</div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-8">
+                        <label class="h6" for="cartFormAddress">Ulica i numer domu</label>
+                        <input type="text" class="form-control" id="cartFormAddressShipping" name="personStreetNumper" placeholder="Wpisz ulicę i numer domu">
+                        <div class="invalid-feedback">To pole jest wymagane</div>
+                      </div>
+                      <div class="form-group col-md-4"><label class="h6" for="cartFormAddressNr">Numer lokalu</label>
+                        <input type="number" class="form-control" id="cartFormAddressNrShipping" name="personHomeNumber" placeholder="Numer lokalu" inputmode="numeric">
+                        <div class="invalid-feedback">To pole jest wymagane</div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-8">
+                        <label class="h6" for="cartFormAddressCity">Miasto</label>
+                        <input type="text" class="form-control" id="cartFormAddressCityShipping" name="personCity" placeholder="Wpisz miasto">
+                        <div class="invalid-feedback">To pole jest wymagane</div>
+                      </div>
+                      <div class="form-group col-md-4"><label class="h6" for="cartFormAddressZip">Kod pocztowy</label>
+                        <input type="text" class="form-control" id="cartFormAddressZipShipping" name="personZipCode" placeholder="Kod pocztowy" inputmode="numeric">
+                        <div class="invalid-feedback">To pole jest wymagane w formacie: xx-xxx</div>
+                      </div>
+                    </div>
+                  </div> 
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col b-m-step-one">
+              <a href="" class="perf-btn btn-steps" href="#">Przejdź do wyboru metody dostawy</a>
+            </div>
+          </div>
+
+          <div class="delivery-pay-content c-m-step-two">
+            <div class="col-content">
+              <div class="col-header border-btm">
+                <h3>2. Metoda dostawy</h3>
+              </div>
+              <div class="col">
+                  <div class="select-delivery-methods">
+                    <div class="delivery-choice"></div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="checkFormDeliveryUps" name="checkFormDeliveryPrice" value="13.99|Kurier UPS" class="custom-control-input">
+                      <label class="h5 custom-control-label" for="checkFormDeliveryUps">UPS - Przesyłka kurierska <span>13,99 zł</span></label>
+                      <div class="invalid-feedback">To pole jest wymagane</div>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="checkFormDeliveryRuch" name="checkFormDeliveryPrice" value="6.99|Paczka w Ruchu" class="custom-control-input">
+                      <label class="h5 custom-control-label" for="checkFormDeliveryRuch">Paczka w RUCHu <span>6,99 zł</span></label>
+                      <div class="invalid-feedback">To pole jest wymagane. Wybierz adres dostawy</div>
+                    </div>
+                    <div class="show-content">
+                      <div class="delivery-map">
+                          <div class="content-map">
+                            <a href="#" id="deliveryRuchMap" class="link">Otwórz mapę, wybierz adres dostawy.</a>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="checkFormDeliveryInPost" name="checkFormDeliveryPrice" value="10.99|Paczkomat" class="custom-control-input">
+                      <label class="h5 custom-control-label" for="checkFormDeliveryInPost">InPost Paczkomaty 24/7<span>10,99 zł</span></label>
+                      <div class="invalid-feedback">To pole jest wymagane</div>
+                    </div>
+                    <div class="show-content">
+                      <div class="delivery-map">
+                          <div class="content-map">
+                            <div id="easypack-widget"></div>
+                            <a href="" class="link open-modal-map" href="#" onclick="openModal(); return false;">Otwórz mapę, wybierz adres dostawy.</a>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-content">
+              <div class="col-header border-btm">
+                <h3>3. Metoda płatności</h3>
+              </div>
+              <div class="col">
+                <div class="select-pay-methods">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="checkFormPayBlik" name="checkFormPay" value="paylane_polskie_epłatności" class="custom-control-input">
+                    <label class="h5 custom-control-label" for="checkFormPayBlik">Szybki przelew / BLIK</label>
+                  </div>
+                  <div class="show-content">
+                    <div class="h6 mb-4 mt-n3">Po złożeniu zamówienia nastąpi przekierowanie do PayLane</div>
+                  </div>   
+                  <div class="custom-control custom-radio" id="contentFormPayCard">
+                    <input type="radio" id="checkFormPayReceipt" name="checkFormPay" value="Cash on Delivery (COD)" class="custom-control-input">
+                    <label class="h5 custom-control-label" for="checkFormPayReceipt">Płatność za pobraniem</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="checkFormPayCard" name="checkFormPay" value="paylane_polskie_epłatności" class="custom-control-input">
+                    <label class="h5 custom-control-label" for="checkFormPayCard">Płatność kartą</label>
+                  </div>
+                  <div class="show-content">
+                    <div class="h6 mb-4 mt-n3">Po złożeniu zamówienia nastąpi przekierowanie do PayLane</div>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="checkFormPayTransfer" name="checkFormPay" value="Bank Deposit" class="custom-control-input">
+                    <label class="h5 custom-control-label" for="checkFormPayTransfer">Przelew bankowy tradycyjny</label>
+                  </div>
+                  <div class="show-content">
+                    <div class="h6 mb-4 mt-n3">Prosimy o wykonanie przelewu na konto, którego dane otrzymają Państwo na stronie z podsumowaniem zamówienia oraz w mailu potwierdzającym jego złożenie. W tytule płatności prosimy podać numer zamówienia oraz opcjonalnie login, co ułatwi realizację zamówienia.</div>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <span class="h5"><img src="/images/safety.svg"/>Bezpieczna płatność dzięki szyfrowaniu SSL</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col b-m-step-two">
+              <a href="" class="perf-btn btn-steps" href="#">Przejdź do podsumowania </a>
+            </div>
+          </div>
+
+          <div class="summary c-m-step-thre">
+            <div class="col-content ">
+              <div class="col-header border-btm">
+                <h3>4. Podsumowanie</h3>
+              </div>
+              <div class="col rm-m-r border-btm">
+                <div class="summary-products">
+                  <ul id="products-info">
+
+                  </ul>
+                  <div class="mt-4 mb-3"><a href="/cart" class="link">Edytuj koszyk</a></div>
+                </div>
+              </div>
+              <div class="col border-btm">
+                <div class="summary-price">
+                    <ul>
+                      <li id="total-cart">Suma: </li>
+                      <li id="delivery-cost">Koszt dostawy: </li>
+                      <li id="discount-cost" style="color:green; font-weight: bold; display:none">Rabat: </li>
+                      <li id="total-to-pay">Do zapłaty: </li>
+                    </ul>
+                  <div class="col">
+                    <div class="form-group row discountCodeGroup">
+                      <label for="inputDiscountCode" class="h6 col-form-label">Kod rabatowy</label>
+                        <input type="text" class="form-control" id="inputDiscountCode" name="discountCode" placeholder="Wpisz kod rabatowy">
+                        <a href="#" class="link mt-2 absolut-btn" id="discount-button">Zastosuj</a>
+                        <div id="discount-error" class="invalid-feedback">Nie istnieje aktywny kod rabatowy o tej nazwie</div>
+                    </div>
+					<!-- <div class="show-content" id="discount-error" style="display:none">
+						<div class="h6 mb-4 mt-n3" style="color:red"></div>
+					</div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col border-btm">
+                <div class="summary-agreement">
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox checkbox-white">
+                      <input type="checkbox" class="custom-control-input" id="checkAgreementAll" name="agreementAll">
+                      <label class="h5 custom-control-label" for="checkAgreementAll">Zaznacz wszystkie</label>
+                    </div>
+                    <div class="custom-control custom-checkbox checkbox-white">
+                      <input type="checkbox" class="custom-control-input" id="checkAgreementOffer" name="agreementOffer">
+                      <label class="h5 custom-control-label" for="checkAgreementOffer">Chcę otrzymywać spersonalizowane i sprofilowane oferty specjalne na stronie i przez e-mail</label>
+                    </div>
+                    <div class="custom-control custom-checkbox checkbox-white">
+                      <input type="checkbox" class="custom-control-input" id="checkAgreementTerms"  name="agreementTerms">
+                      <label class="h5 custom-control-label" for="checkAgreementTerms">* Oświadczam, że zapoznałem się z treścią <a href="#" target="blank">Regulaminu serwisu</a> i akceptuję jego postanowienia</label>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit"value="submit" class="perf-btn perf-btn__pink" >Zamawiam i płacę</button>
+                <img id="ajaxCircle" style="display:none; max-witdh:80px; max-height:80px" src="/images/spinner.gif"/>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+  </form>
+  </section>
+
+  <script src="js/external.js"></script>
+  <script src="js/main.js"></script>
+  <!-- <script src="js/form-validate.js"></script> -->
+</body>
+
+</html>

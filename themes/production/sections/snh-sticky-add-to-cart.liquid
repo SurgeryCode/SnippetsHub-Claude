@@ -1,0 +1,23 @@
+{%- comment -%}
+SnippetsHub
+Section: Sticky Add To Cart
+Version: 1.0.1
+License: Single Store License
+Support: support@snippetshub.com
+{%- endcomment -%}
+
+{% assign sticky_root_id = 'snh-sticky-add-to-cart-' | append: section.id %}
+{% render 'snh-sticky-add-to-cart', sticky_root_id: sticky_root_id %}
+
+{% schema %}
+{
+  "name": "Sticky Add To Cart",
+  "settings": [],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Sticky Add To Cart"
+    }
+  ]
+}
+{% endschema %}

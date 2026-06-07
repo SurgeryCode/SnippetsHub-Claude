@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nike — 3D Product Slider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
+  <style>
+    .s3d-main {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 0 40px;
+      background: radial-gradient(
+        ellipse at 50% 44%,
+        #1d2f96 0%,
+        var(--bg) 52%,
+        var(--bg-dark) 100%
+      );
+    }
+
+    .s3d-main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .s3d-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: clamp(130px, 20vw, 280px);
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.04);
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      z-index: 0;
+    }
+
+    .s3d-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      width: 80px;
+      z-index: 10;
+      padding-left: 20px;
+    }
+
+    .s3d-counter {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      margin-top: 6px;
+    }
+
+    .s3d-counter__curr {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .s3d-counter__sep,
+    .s3d-counter__total {
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+    }
+
+    .s3d-viewport {
+      flex: 1;
+      min-width: 0;
+      overflow: visible;
+      clip-path: inset(-80px 0 -20px -16px);
+      z-index: 1;
+      padding: 40px 0 20px 16px;
+    }
+
+    .s3d-track {
+      display: flex;
+      gap: 16px;
+      transform: translateX(var(--track-offset, 0px));
+      transition: transform 0.52s cubic-bezier(0.36, 0, 0.18, 1);
+      will-change: transform;
+      align-items: flex-end;
+    }
+
+    .s3d-viewport.dragging .s3d-track {
+      transition: none;
+    }
+
+    .s3d-info__add.is-added {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg-dark);
+    }
+
+    .s3d-card {
+      flex: 0 0 calc((100% - 32px) / 3.3);
+      min-width: 240px;
+      position: relative;
+      border-radius: 20px;
+      background: linear-gradient(145deg,
+        rgba(255,255,255,0.055) 0%,
+        rgba(255,255,255,0.095) 100%
+      );
+      border: 1px solid rgba(255,255,255,0.10);
+      cursor: pointer;
+      overflow: visible;
+      transition:
+        transform 0.45s cubic-bezier(0.36, 0, 0.18, 1),
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+    }
+
+    .s3d-card:hover:not(.active) {
+      background: linear-gradient(145deg,
+        rgba(255,255,255,0.08) 0%,
+        rgba(255,255,255,0.13) 100%
+      );
+      border-color: rgba(255,255,255,0.16);
+      transform: translateY(-4px);
+    }
+
+    .s3d-card.active {
+      background: linear-gradient(145deg,
+        rgba(255,255,255,0.11) 0%,
+        rgba(255,255,255,0.20) 100%
+      );
+      border-color: rgba(255,255,255,0.30);
+      transform: translateY(-10px) scale(1.025);
+      box-shadow:
+        inset 0  1px 0   rgba(255,255,255,0.35),
+        inset 0 -1px 0   rgba(255,255,255,0.08),
+        inset 0  0   28px rgba(255,255,255,0.04);
+    }
+
+    .s3d-viewer-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 18px 18px 0 0;
+      overflow: hidden;
+      position: relative;
+      background: radial-gradient(
+        ellipse at 50% 65%,
+        rgba(30, 50, 190, 0.3) 0%,
+        rgba(18, 28, 90, 0.15) 60%,
+        transparent 100%
+      );
+    }
+
+    .s3d-viewer-wrap model-viewer {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .s3d-viewer-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      background: linear-gradient(to top, rgba(14, 20, 72, 0.7) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .s3d-info {
+      padding: 14px 18px 16px;
+    }
+
+    .s3d-info__name {
+      font-family: var(--font-display);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .s3d-info__stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 10px;
+    }
+
+    .s3d-info__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .s3d-info__price {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.01em;
+    }
+
+    .s3d-info__add {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      background: transparent;
+      color: var(--white);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition:
+        background var(--transition),
+        border-color var(--transition),
+        transform var(--transition);
+    }
+
+    .s3d-info__add:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg-dark);
+      transform: scale(1.15);
+    }
+
+    .s3d-card.active .s3d-viewer-wrap {
+      background: radial-gradient(
+        ellipse at 50% 65%,
+        rgba(36, 60, 220, 0.38) 0%,
+        rgba(18, 28, 90, 0.2) 60%,
+        transparent 100%
+      );
+    }
+
+    .s3d-badge {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      font-family: var(--font-display);
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(245,166,35,0.35);
+      border-radius: 4px;
+      padding: 2px 6px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .s3d-controls .slider-arrow {
+      width: 38px;
+      height: 38px;
+    }
+
+    /* Grab cursor — pokazuje że slider jest przeciągalny */
+    .s3d-viewport { cursor: grab; }
+    .s3d-viewport .s3d-card { cursor: grab; }
+    .s3d-viewport .s3d-info__add { cursor: pointer; }
+    .s3d-viewport.dragging,
+    .s3d-viewport.dragging * { cursor: grabbing !important; }
+
+    @media (max-width: 900px) {
+      .s3d-main { padding: 90px 0 30px; }
+      .s3d-controls { width: 60px; padding-left: 10px; }
+      .s3d-card { flex: 0 0 calc((100% - 16px) / 2.2); }
+    }
+
+    @media (max-width: 560px) {
+      .s3d-card { flex: 0 0 calc((100% - 8px) / 1.2); }
+      .s3d-controls { width: 48px; padding-left: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="assets/Logo_NIKE.svg" class="nav-logo-img" alt="Nike" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">MEN</a></li>
+      <li><a href="#" class="active">WOMEN</a></li>
+      <li><a href="#">KIDS</a></li>
+      <li><a href="#">CUSTOMIZE</a></li>
+      <li><a href="#">FAVORITES</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-icon btn-search" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+      <button class="btn-icon btn-cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 3D SLIDER -->
+  <main class="s3d-main">
+
+    <span class="s3d-watermark" aria-hidden="true">NIKE</span>
+
+    <div class="s3d-controls">
+      <button class="slider-arrow" id="s3dPrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <button class="slider-arrow" id="s3dNext" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+      <div class="s3d-counter">
+        <span class="s3d-counter__curr" id="s3dCurr">01</span>
+        <span class="s3d-counter__sep">/</span>
+        <span class="s3d-counter__total">05</span>
+      </div>
+    </div>
+
+    <div class="s3d-viewport">
+      <div class="s3d-track" id="s3dTrack">
+
+        <!-- KARTA 1 -->
+        <div class="s3d-card active" data-idx="0">
+          <span class="s3d-badge">3D</span>
+          <div class="s3d-viewer-wrap">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="eager"
+              reveal="auto"
+              camera-controls
+              auto-rotate
+              auto-rotate-delay="800"
+              rotation-per-second="18deg"
+              shadow-intensity="1.2"
+              shadow-softness="0.8"
+              exposure="1.15"
+              environment-image="neutral"
+              camera-orbit="30deg 74deg 130%"
+              min-camera-orbit="auto auto 75%"
+              max-camera-orbit="auto auto 210%"
+              interaction-prompt="none"
+              aria-label="Nike Air Huarnie Premium"
+            >
+              <div class="mv-loader" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+                <span class="mv-loader__text">Loading</span>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="s3d-info">
+            <p class="s3d-info__name">Nike Air Huarnie Premium</p>
+            <div class="s3d-info__stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span>
+            </div>
+            <div class="s3d-info__bottom">
+              <p class="s3d-info__price">$485</p>
+              <button class="s3d-info__add" aria-label="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KARTA 2 -->
+        <div class="s3d-card" data-idx="1">
+          <span class="s3d-badge">3D</span>
+          <div class="s3d-viewer-wrap">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="eager"
+              reveal="auto"
+              camera-controls
+              auto-rotate-delay="600"
+              rotation-per-second="16deg"
+              shadow-intensity="1.1"
+              shadow-softness="0.9"
+              exposure="1.1"
+              environment-image="neutral"
+              camera-orbit="95deg 78deg 128%"
+              min-camera-orbit="auto auto 75%"
+              max-camera-orbit="auto auto 210%"
+              interaction-prompt="none"
+              aria-label="Nike Air Force 1 High"
+            >
+              <div class="mv-loader" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+                <span class="mv-loader__text">Loading</span>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="s3d-info">
+            <p class="s3d-info__name">Nike Air Force 1 High</p>
+            <div class="s3d-info__stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star">★</span>
+            </div>
+            <div class="s3d-info__bottom">
+              <p class="s3d-info__price">$225</p>
+              <button class="s3d-info__add" aria-label="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KARTA 3 -->
+        <div class="s3d-card" data-idx="2">
+          <span class="s3d-badge">3D</span>
+          <div class="s3d-viewer-wrap">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="eager"
+              reveal="auto"
+              camera-controls
+              auto-rotate-delay="700"
+              rotation-per-second="20deg"
+              shadow-intensity="1.3"
+              shadow-softness="0.7"
+              exposure="1.2"
+              environment-image="neutral"
+              camera-orbit="165deg 72deg 125%"
+              min-camera-orbit="auto auto 75%"
+              max-camera-orbit="auto auto 210%"
+              interaction-prompt="none"
+              aria-label="Nike Air Span II Premium"
+            >
+              <div class="mv-loader" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+                <span class="mv-loader__text">Loading</span>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="s3d-info">
+            <p class="s3d-info__name">Nike Air Span II Premium</p>
+            <div class="s3d-info__stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star">★</span>
+              <span class="star">★</span>
+            </div>
+            <div class="s3d-info__bottom">
+              <p class="s3d-info__price">$48</p>
+              <button class="s3d-info__add" aria-label="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KARTA 4 -->
+        <div class="s3d-card" data-idx="3">
+          <span class="s3d-badge">3D</span>
+          <div class="s3d-viewer-wrap">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="eager"
+              reveal="auto"
+              camera-controls
+              auto-rotate-delay="900"
+              rotation-per-second="14deg"
+              shadow-intensity="1.0"
+              shadow-softness="0.9"
+              exposure="1.05"
+              environment-image="neutral"
+              camera-orbit="-20deg 80deg 138%"
+              min-camera-orbit="auto auto 75%"
+              max-camera-orbit="auto auto 210%"
+              interaction-prompt="none"
+              aria-label="Nike Air Huarnie Premium"
+            >
+              <div class="mv-loader" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+                <span class="mv-loader__text">Loading</span>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="s3d-info">
+            <p class="s3d-info__name">Nike Air Huarnie Premium</p>
+            <div class="s3d-info__stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star">★</span>
+            </div>
+            <div class="s3d-info__bottom">
+              <p class="s3d-info__price">$165</p>
+              <button class="s3d-info__add" aria-label="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KARTA 5 -->
+        <div class="s3d-card" data-idx="4">
+          <span class="s3d-badge">3D</span>
+          <div class="s3d-viewer-wrap">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="eager"
+              reveal="auto"
+              camera-controls
+              auto-rotate-delay="500"
+              rotation-per-second="22deg"
+              shadow-intensity="1.2"
+              shadow-softness="0.85"
+              exposure="1.18"
+              environment-image="neutral"
+              camera-orbit="52deg 65deg 122%"
+              min-camera-orbit="auto auto 75%"
+              max-camera-orbit="auto auto 210%"
+              interaction-prompt="none"
+              aria-label="Nike Air Max 270"
+            >
+              <div class="mv-loader" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+                <span class="mv-loader__text">Loading</span>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="s3d-info">
+            <p class="s3d-info__name">Nike Air Max 270</p>
+            <div class="s3d-info__stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span>
+            </div>
+            <div class="s3d-info__bottom">
+              <p class="s3d-info__price">$310</p>
+              <button class="s3d-info__add" aria-label="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const cards   = document.querySelectorAll('.s3d-card');
+    const track   = document.getElementById('s3dTrack');
+    const vp      = document.querySelector('.s3d-viewport');
+    const currEl  = document.getElementById('s3dCurr');
+    const prevBtn = document.getElementById('s3dPrev');
+    const nextBtn = document.getElementById('s3dNext');
+
+    const TOTAL   = cards.length;
+    const VISIBLE = 3.3;
+    const GAP     = 16;
+    const SNAP    = 55;
+    let idx  = 0;
+    let step = 0;
+
+    function getStep() {
+      if (!step) step = cards[0].getBoundingClientRect().width + GAP;
+      return step;
+    }
+    window.addEventListener('resize', () => { step = 0; });
+
+    function maxOff() { return Math.max(0, (TOTAL - VISIBLE) * getStep()); }
+    function toOff(i) { return Math.min(Math.max(0, i * getStep()), maxOff()); }
+    function clamp(v) { return Math.max(0, Math.min(v, maxOff())); }
+
+    function syncRotate(i) {
+      cards.forEach((c, n) => {
+        const mv = c.querySelector('model-viewer');
+        if (mv) n === i ? mv.setAttribute('auto-rotate', '') : mv.removeAttribute('auto-rotate');
+      });
+    }
+
+    function go(i) {
+      idx = Math.max(0, Math.min(i, TOTAL - 1));
+      track.style.setProperty('--track-offset', `-${toOff(idx)}px`);
+      cards.forEach((c, n) => c.classList.toggle('active', n === idx));
+      currEl.textContent = String(idx + 1).padStart(2, '0');
+      syncRotate(idx);
+      prevBtn.classList.toggle('disabled', idx === 0);
+      nextBtn.classList.toggle('disabled', idx === TOTAL - 1);
+    }
+
+    go(0);
+
+    /* Autoplay — zatrzymuje się podczas hover/drag */
+    let timer = setInterval(() => go(idx + 1 < TOTAL ? idx + 1 : 0), 4000);
+    const main = document.querySelector('.s3d-main');
+    main.addEventListener('mouseenter', () => clearInterval(timer));
+    main.addEventListener('mouseleave', () => { timer = setInterval(() => go(idx + 1 < TOTAL ? idx + 1 : 0), 4000); });
+
+    nextBtn.addEventListener('click', () => go(idx + 1));
+    prevBtn.addEventListener('click', () => go(idx - 1));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') go(idx + 1);
+      if (e.key === 'ArrowLeft')  go(idx - 1);
+    });
+
+    /* Drag/swipe: horizontal = slide, vertical = model-viewer orbit */
+    let x0 = null, y0 = null, base = 0, moved = false, locked = false;
+
+    function begin(x, y) { x0 = x; y0 = y; base = toOff(idx); moved = false; }
+    function slide(x) {
+      if (x0 === null) return;
+      if (Math.abs(x0 - x) > 5) moved = true;
+      if (!moved) return;
+      track.style.setProperty('--track-offset', `-${clamp(base + (x0 - x))}px`);
+    }
+    function finish(x) {
+      if (x0 === null) return;
+      const d = x0 - x, was = moved;
+      x0 = null; moved = false;
+      vp.classList.remove('dragging');
+      if (was) {
+        locked = true; setTimeout(() => { locked = false; }, 20);
+        go(idx + (Math.abs(d) >= SNAP ? (d > 0 ? 1 : -1) : 0));
+      }
+    }
+    function reset() {
+      x0 = null; moved = false;
+      vp.classList.remove('dragging');
+      track.style.setProperty('--track-offset', `-${toOff(idx)}px`);
+    }
+
+    let mDir = null;
+    vp.addEventListener('mousedown', e => { if (e.button) return; begin(e.clientX, e.clientY); mDir = null; });
+    document.addEventListener('mousemove', e => {
+      if (x0 === null) return;
+      const dx = Math.abs(e.clientX - x0), dy = Math.abs(e.clientY - y0);
+      if (!mDir && (dx > 8 || dy > 8)) mDir = dx >= dy ? 'h' : 'v';
+      if (mDir === 'h') { e.preventDefault(); vp.classList.add('dragging'); slide(e.clientX); }
+    });
+    document.addEventListener('mouseup', e => {
+      if (x0 === null) return;
+      mDir === 'h' ? finish(e.clientX) : reset();
+      mDir = null;
+    });
+    document.addEventListener('mouseleave', () => {
+      if (x0 === null) return;
+      mDir === 'h' ? finish(x0) : reset();
+      mDir = null;
+    });
+
+    let tDir = null;
+    vp.addEventListener('touchstart', e => { begin(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    vp.addEventListener('touchmove', e => {
+      if (x0 === null) return;
+      const dx = Math.abs(e.touches[0].clientX - x0), dy = Math.abs(e.touches[0].clientY - y0);
+      if (!tDir && (dx > 8 || dy > 8)) tDir = dx >= dy ? 'h' : 'v';
+      if (tDir === 'h') { e.preventDefault(); slide(e.touches[0].clientX); }
+      else if (tDir === 'v') reset();
+    }, { passive: false });
+    vp.addEventListener('touchend', e => {
+      if (x0 !== null) finish(tDir === 'h' ? e.changedTouches[0].clientX : x0);
+      tDir = null;
+    });
+    vp.addEventListener('touchcancel', () => { reset(); tDir = null; });
+
+    cards.forEach((c, i) => c.addEventListener('click', () => { if (!locked) go(i); }));
+
+    document.querySelectorAll('.s3d-info__add').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        btn.textContent = '✓';
+        btn.classList.add('is-added');
+        setTimeout(() => { btn.textContent = '+'; btn.classList.remove('is-added'); }, 1000);
+      });
+    });
+
+    /* Chowaj loader po załadowaniu modelu */
+    document.querySelectorAll('model-viewer').forEach(mv => {
+      const loader = mv.querySelector('.mv-loader');
+      if (!loader) return;
+      function hideLoader() {
+        loader.classList.add('is-hidden');
+        setTimeout(() => { loader.style.display = 'none'; }, 460);
+      }
+      if (mv.loaded) { hideLoader(); return; }
+      mv.addEventListener('load', hideLoader, { once: true });
+      mv.addEventListener('error', hideLoader, { once: true });
+    });
+  </script>
+
+</body>
+</html>

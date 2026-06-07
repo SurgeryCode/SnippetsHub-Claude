@@ -1,0 +1,5 @@
+{%- comment -%}
+Inject critical CSS early. Place in <head> of layout/theme.liquid.
+{%- endcomment -%}
+<link rel="preload" as="style" href="{{ 'surgerycode-critical.css' | asset_url }}" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'surgerycode-critical.css' | asset_url }}"></noscript>

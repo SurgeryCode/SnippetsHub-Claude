@@ -1,0 +1,151 @@
+{% comment %}
+  Premium Services Section
+{% endcomment %}
+
+<section id="services" class="premium-services-section">
+  <div class="premium-services-container">
+    <div class="ambient-glow glow-3"></div>
+    <div class="ambient-glow glow-4"></div>
+
+    <div class="glass-card premium-service-card">
+      <div class="surgerucode-badge-container">
+        <div class="testimonial badge-SurgeruCode">
+          <div>
+            <div class="badge videocalls badge-SurgeruCode">{{ 'snippetshub.premium_services.badges.consultations' | t }}</div>
+            <div class="badge digital-products badge-SurgeruCode">{{ 'snippetshub.premium_services.badges.digital_products' | t }}</div>
+            <div class="badge masterminds badge-SurgeruCode">{{ 'snippetshub.premium_services.badges.training' | t }}</div>
+            <div class="badge ebooks badge-SurgeruCode">{{ 'snippetshub.premium_services.badges.ebooks' | t }}</div>
+            <div class="badge webinars badge-SurgeruCode">{{ 'snippetshub.premium_services.badges.webinars' | t }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-content">
+        <span class="badge badge-success">{{ section.settings.badge_text }}</span>
+        <h2>{{ section.settings.title }}</h2>
+        <p>{{ section.settings.description }}</p>
+
+        <ul class="service-list">
+          {% for block in section.blocks %}
+            <li {{ block.shopify_attributes }}>
+              <span class="check-icon">✓</span>
+              {{ block.settings.text }}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="service-pricing">
+        <div class="price-tag">
+          <span class="currency">{{ section.settings.currency }}</span>
+          <span class="amount">{{ section.settings.price }}</span>
+          <span class="unit">{{ section.settings.unit }}</span>
+        </div>
+        <button class="btn btn-primary btn-glow">{{ section.settings.button_text }}</button>
+        <p class="service-note">{{ section.settings.availability }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} Styles moved to snippetshub-style.css.liquid {% endcomment %}
+
+{% schema %}
+{
+  "name": "Premium Services",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "For Non-Technical Owners"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Just need a developer?"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Hire a Senior Shopify Developer by the hour. No long-term contracts. Pure expert knowledge when you need it."
+    },
+    {
+      "type": "text",
+      "id": "currency",
+      "label": "Currency Symbol",
+      "default": "$"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price",
+      "default": "89"
+    },
+    {
+      "type": "text",
+      "id": "unit",
+      "label": "Unit",
+      "default": "/ hr"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Book a Developer"
+    },
+    {
+      "type": "text",
+      "id": "availability",
+      "label": "Availability Note",
+      "default": "Available Mon-Fri, 9:00-17:00"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service_item",
+      "name": "Service Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Service Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Services",
+      "blocks": [
+        {
+          "type": "service_item",
+          "settings": {
+            "text": "Custom CSS/HTML changes"
+          }
+        },
+        {
+          "type": "service_item",
+          "settings": {
+            "text": "Speed optimization and audits"
+          }
+        },
+        {
+          "type": "service_item",
+          "settings": {
+            "text": "Complex Liquid implementations"
+          }
+        },
+        {
+          "type": "service_item",
+          "settings": {
+            "text": "App integration and conflict resolution"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

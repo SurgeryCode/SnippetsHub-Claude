@@ -1,0 +1,75 @@
+{% comment %}
+  Trust Badges Section
+{% endcomment %}
+
+<section class="trust-section">
+  <div class="container trust-grid">
+    {% for block in section.blocks %}
+      <div class="trust-item" {{ block.shopify_attributes }}>
+        <span class="trust-icon">{{ block.settings.icon }}</span>
+        <span>{{ block.settings.text }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust Badges",
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (Emoji)",
+          "default": "🔒"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Secure Payments"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Badges",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🔒",
+            "text": "Secure Payments"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "✅",
+            "text": "Shopify Compatible"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "⚡",
+            "text": "Instant Download"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🛡️",
+            "text": "Money Back Guarantee"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

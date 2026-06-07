@@ -1,0 +1,160 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.2.0 | Support: support@snippetshub.com
+Instalation: add {% section 'snh-cart-drawer' %} before </body> in layout/theme.liquid
+{% endcomment %}
+
+<div
+  class="snh-cart-drawer__overlay"
+  data-snh-close
+  aria-hidden="true"
+></div>
+
+<div
+  id="SNHCartDrawer"
+  class="snh-cart-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="SNHCartTitle"
+  aria-hidden="true"
+>
+  <header class="snh-cart-drawer__header">
+    <h2 id="SNHCartTitle" class="snh-cart-drawer__title">
+      {{ section.settings.drawer_title | default: 'Your Cart' }}
+      <span class="snh-cart-drawer__count" data-snh-count></span>
+    </h2>
+    <button
+      type="button"
+      class="snh-cart-drawer__close"
+      data-snh-close
+      aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M1 1l14 14M15 1L1 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="snh-cart-drawer__body">
+    <div
+      class="snh-cart-drawer__items"
+      data-snh-cart-items
+      aria-live="polite"
+    ></div>
+
+    <div class="snh-cart-drawer__empty" data-snh-empty hidden>
+      <p>{{ 'cart.general.empty' | t | default: 'Your cart is empty' }}</p>
+      <a href="{{ routes.collections_url }}" class="snh-cart-drawer__btn snh-cart-drawer__btn--primary">
+        {{ 'general.continue_shopping' | t | default: 'Continue shopping' }}
+      </a>
+    </div>
+
+    {%- if section.settings.enable_upsells -%}
+      <div
+        class="snh-cart-drawer__upsells"
+        data-snh-upsells
+        hidden
+      >
+        <p class="snh-cart-drawer__upsells-title">
+          {{ section.settings.upsells_title | default: 'You may also like' }}
+        </p>
+        <div data-snh-upsells-items></div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <footer class="snh-cart-drawer__footer" data-snh-footer>
+    <div class="snh-cart-drawer__subtotal">
+      <span>{{ 'cart.general.subtotal' | t | default: 'Subtotal' }}</span>
+      <strong data-snh-subtotal></strong>
+    </div>
+
+    <p class="snh-cart-drawer__taxes-note">
+      {{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t | default: 'Taxes and shipping calculated at checkout' }}
+    </p>
+
+    <div class="snh-cart-drawer__actions">
+      <a href="{{ routes.cart_url }}" class="snh-cart-drawer__btn snh-cart-drawer__btn--outline">
+        {{ 'cart.general.view_cart' | t | default: 'View cart' }}
+      </a>
+      <a href="/checkout" class="snh-cart-drawer__btn snh-cart-drawer__btn--primary">
+        {{ 'cart.general.checkout' | t | default: 'Checkout' }} &rarr;
+      </a>
+    </div>
+
+    {%- if section.settings.show_payment_icons -%}
+      <div class="snh-cart-drawer__payments">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'snh-cart-drawer__payment-icon' }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </footer>
+</div>
+
+{{ 'snh-cart-drawer.css' | asset_url | stylesheet_tag }}
+<script
+  src="{{ 'snh-cart-drawer.js' | asset_url }}"
+  defer
+  data-enable-upsells="{{ section.settings.enable_upsells }}"
+  data-upsell-limit="{{ section.settings.upsell_limit | default: 3 }}"
+></script>
+
+{% schema %}
+{
+  "name": "SNH Cart Drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "drawer_title",
+      "label": "Drawer title",
+      "default": "Your Cart"
+    },
+    {
+      "type": "header",
+      "content": "Recommendations"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_upsells",
+      "label": "Show recommended products",
+      "default": false,
+      "info": "Loads Shopify recommendations based on items in cart"
+    },
+    {
+      "type": "text",
+      "id": "upsells_title",
+      "label": "Recommendations section title",
+      "default": "You may also like"
+    },
+    {
+      "type": "range",
+      "id": "upsell_limit",
+      "label": "Number of recommendations",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Cart Drawer",
+      "category": "Cart"
+    }
+  ]
+}
+{% endschema %}

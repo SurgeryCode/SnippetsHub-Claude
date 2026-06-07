@@ -1,0 +1,16 @@
+{
+  "standardVersion": "1.0",
+  "name": "SnippetsHub Upsell Cross-sell Section",
+  "slug": "snippetshub-upsell-cross-sell",
+  "version": "1.0.0",
+  "owner": "SnippetsHub",
+  "license": "License depends on the purchased plan. Default: Single Store License unless the purchased variant states otherwise.",
+  "supportEmail": "support@snippetshub.com",
+  "homepage": "https://snippetshub.com",
+  "minTheme": "Online Store 2.0",
+  "type": "section",
+  "entry": {
+    "section": "sections/snh-upsell-cross-sell.liquid",
+    "assets": ["assets/snh-upsell-cross-sell.css", "assets/snh-upsell-cross-sell.js"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "SnippetsHub Back in Stock",
+  "slug": "snippetshub-back-in-stock",
+  "version": "1.1.0",
+  "owner": "SnippetsHub",
+  "license": "License depends on the purchased plan. Default: Single Store License unless the purchased variant states otherwise.",
+  "supportEmail": "support@snippetshub.com",
+  "type": "section",
+  "category": "popups-bars",
+  "technologies": ["CSS", "HTML", "JS", "Liquid"],
+  "shopify_os2": true,
+  "entry": {
+    "section": "sections/snh-back-in-stock.liquid",
+    "assets": [
+      "assets/snh-back-in-stock.css",
+      "assets/snh-back-in-stock.js"
+    ]
+  }
+}

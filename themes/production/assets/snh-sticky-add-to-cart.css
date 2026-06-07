@@ -1,0 +1,63 @@
+/*
+SnippetsHub
+Snippet: Sticky Add To Cart
+Version: 1.0.1
+License: Single Store License
+Support: support@snippetshub.com
+*/
+
+.SnippetsHub.SNH-sticky-add-to-cart.snh-sticky-add-to-cart[id^='snh-sticky-add-to-cart-'] {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 45;
+  display: flex;
+  justify-content: center;
+  padding: 0.85rem 1rem calc(0.85rem + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(130%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.24s ease, opacity 0.24s ease;
+}
+
+.SnippetsHub.SNH-sticky-add-to-cart.snh-sticky-add-to-cart[id^='snh-sticky-add-to-cart-'].is-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.SnippetsHub.SNH-sticky-add-to-cart.snh-sticky-add-to-cart[id^='snh-sticky-add-to-cart-'] .snh-sticky-add-to-cart__button {
+  width: min(100%, 34rem);
+  min-height: 4.2rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.85rem 1.4rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  color: #fff;
+  background: #111;
+  transition: background-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+
+.SnippetsHub.SNH-sticky-add-to-cart.snh-sticky-add-to-cart[id^='snh-sticky-add-to-cart-'] .snh-sticky-add-to-cart__button:hover {
+  background: #2a2a2a;
+  transform: translateY(-1px);
+}
+
+.SnippetsHub.SNH-sticky-add-to-cart.snh-sticky-add-to-cart[id^='snh-sticky-add-to-cart-'].is-disabled .snh-sticky-add-to-cart__button,
+.SnippetsHub.SNH-sticky-add-to-cart.snh-sticky-add-to-cart[id^='snh-sticky-add-to-cart-'] .snh-sticky-add-to-cart__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .SnippetsHub.SNH-sticky-add-to-cart.snh-sticky-add-to-cart[id^='snh-sticky-add-to-cart-'],
+  .SnippetsHub.SNH-sticky-add-to-cart.snh-sticky-add-to-cart[id^='snh-sticky-add-to-cart-'] .snh-sticky-add-to-cart__button {
+    transition: none;
+  }
+}

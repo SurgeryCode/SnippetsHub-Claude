@@ -1,0 +1,428 @@
+/* 
+  STICKY BUTTON - STYLE VARIANTS
+  Różne warianty stylizacji sticky button dla różnych brandów i estetyk
+  
+  Instrukcja: Skopiuj wybrany wariant do swojego pliku sticky-add-to-cart.liquid
+  zamiast domyślnych styli
+*/
+
+/* ============================================
+   VARIANT 1: MINIMAL MODERN
+   Minimalistyczny, clean design z subtelnymi cieniami
+   ============================================ */
+.sticky-cta--minimal {
+  background-color: oklch(1 0 0);
+  border-block-start: 1px solid oklch(0.9 0 0);
+  box-shadow: 0 -2px 10px oklch(0 0 0 / 0.05);
+  padding-block: 0.75rem;
+}
+
+.sticky-cta--minimal .sticky-cta__button {
+  background-color: oklch(0.15 0 0);
+  border-radius: 2rem;
+  padding-inline: 2.5rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.sticky-cta--minimal .sticky-cta__button:hover {
+  background-color: oklch(0.25 0 0);
+  transform: scale(1.02);
+}
+
+.sticky-cta--minimal .sticky-cta__price {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: oklch(0.3 0 0);
+}
+
+/* ============================================
+   VARIANT 2: BOLD & ENERGETIC
+   Dynamiczny, z mocnymi kolorami i gradientami
+   ============================================ */
+.sticky-cta--bold {
+  background: linear-gradient(135deg, 
+    oklch(0.95 0.02 280) 0%, 
+    oklch(0.98 0.01 300) 100%
+  );
+  border-block-start: 2px solid oklch(0.85 0.05 280);
+  box-shadow: 0 -4px 20px oklch(0.5 0.2 280 / 0.2);
+}
+
+.sticky-cta--bold .sticky-cta__button {
+  background: linear-gradient(135deg, 
+    oklch(0.55 0.25 330) 0%, 
+    oklch(0.50 0.28 280) 100%
+  );
+  border-radius: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 15px oklch(0.5 0.25 300 / 0.3);
+}
+
+.sticky-cta--bold .sticky-cta__button:hover {
+  background: linear-gradient(135deg, 
+    oklch(0.60 0.27 330) 0%, 
+    oklch(0.55 0.30 280) 100%
+  );
+  box-shadow: 0 6px 20px oklch(0.5 0.25 300 / 0.4);
+  transform: translateY(-2px);
+}
+
+.sticky-cta--bold .sticky-cta__price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, 
+    oklch(0.50 0.25 330), 
+    oklch(0.45 0.28 280)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================
+   VARIANT 3: GLASSMORPHISM
+   Nowoczesny efekt szkła z blur
+   ============================================ */
+.sticky-cta--glass {
+  background: color-mix(in oklch, oklch(1 0 0) 60%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-block-start: 1px solid color-mix(in oklch, oklch(1 0 0) 20%, transparent);
+  box-shadow: 
+    0 8px 32px oklch(0 0 0 / 0.1),
+    inset 0 1px 0 color-mix(in oklch, oklch(1 0 0) 20%, transparent);
+}
+
+@supports not (backdrop-filter: blur(20px)) {
+  .sticky-cta--glass {
+    background: oklch(0.98 0 0);
+  }
+}
+
+.sticky-cta--glass .sticky-cta__button {
+  background: color-mix(in oklch, oklch(0.45 0.25 264) 90%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 20%, transparent);
+  box-shadow: 
+    0 4px 20px oklch(0.45 0.25 264 / 0.2),
+    inset 0 1px 0 color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+}
+
+.sticky-cta--glass .sticky-cta__button:hover {
+  background: oklch(0.45 0.25 264);
+  box-shadow: 
+    0 6px 25px oklch(0.45 0.25 264 / 0.3),
+    inset 0 1px 0 color-mix(in oklch, oklch(1 0 0) 15%, transparent);
+}
+
+/* ============================================
+   VARIANT 4: LUXURY / PREMIUM
+   Elegancki, luksusowy z metalicznymi akcentami
+   ============================================ */
+.sticky-cta--luxury {
+  background: linear-gradient(180deg, 
+    oklch(0.12 0.01 280) 0%, 
+    oklch(0.08 0.01 280) 100%
+  );
+  border-block-start: 1px solid oklch(0.25 0.02 45);
+  box-shadow: 0 -8px 30px oklch(0 0 0 / 0.5);
+  padding-block: 1.25rem;
+}
+
+.sticky-cta--luxury .sticky-cta__title,
+.sticky-cta--luxury .sticky-cta__price {
+  color: oklch(0.95 0.01 45);
+}
+
+.sticky-cta--luxury .sticky-cta__price {
+  font-family: Georgia, serif;
+  font-size: 1.125rem;
+  letter-spacing: 0.02em;
+}
+
+.sticky-cta--luxury .sticky-cta__button {
+  background: linear-gradient(135deg, 
+    oklch(0.65 0.15 45) 0%, 
+    oklch(0.55 0.12 35) 100%
+  );
+  border: 1px solid oklch(0.70 0.15 45);
+  font-family: Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  box-shadow: 
+    0 4px 20px oklch(0.60 0.15 45 / 0.4),
+    inset 0 1px 0 oklch(0.75 0.18 45 / 0.5);
+}
+
+.sticky-cta--luxury .sticky-cta__button:hover {
+  background: linear-gradient(135deg, 
+    oklch(0.70 0.18 45) 0%, 
+    oklch(0.60 0.15 35) 100%
+  );
+  box-shadow: 
+    0 6px 25px oklch(0.60 0.15 45 / 0.5),
+    inset 0 1px 0 oklch(0.80 0.20 45 / 0.6);
+}
+
+/* ============================================
+   VARIANT 5: PLAYFUL / FUN
+   Kolorowy, radosny z zaokrąglonymi kształtami
+   ============================================ */
+.sticky-cta--playful {
+  background: linear-gradient(135deg,
+    oklch(0.97 0.05 120) 0%,
+    oklch(0.95 0.08 180) 50%,
+    oklch(0.97 0.05 240) 100%
+  );
+  border-block-start: 3px solid oklch(0.85 0.15 180);
+  box-shadow: 0 -4px 20px oklch(0.8 0.1 180 / 0.3);
+  padding-block: 1rem;
+}
+
+.sticky-cta--playful .sticky-cta__image {
+  border-radius: 50%;
+  border: 3px solid oklch(1 0 0);
+  box-shadow: 0 2px 10px oklch(0 0 0 / 0.1);
+}
+
+.sticky-cta--playful .sticky-cta__button {
+  background: linear-gradient(135deg,
+    oklch(0.65 0.22 330) 0%,
+    oklch(0.60 0.25 280) 100%
+  );
+  border-radius: 2rem;
+  font-weight: 700;
+  transform: rotate(-1deg);
+  box-shadow: 
+    0 4px 15px oklch(0.6 0.22 300 / 0.3),
+    0 0 0 4px oklch(0.95 0.08 300);
+}
+
+.sticky-cta--playful .sticky-cta__button:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 
+    0 6px 20px oklch(0.6 0.22 300 / 0.4),
+    0 0 0 4px oklch(0.90 0.12 300);
+}
+
+.sticky-cta--playful .sticky-cta__price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: oklch(0.50 0.25 300);
+  text-shadow: 1px 1px 0 oklch(0.95 0.05 300);
+}
+
+/* ============================================
+   VARIANT 6: ECO / NATURAL
+   Naturalne kolory, organiczne kształty
+   ============================================ */
+.sticky-cta--eco {
+  background: linear-gradient(180deg,
+    oklch(0.96 0.03 140) 0%,
+    oklch(0.98 0.02 120) 100%
+  );
+  border-block-start: 2px solid oklch(0.70 0.12 140);
+  box-shadow: 0 -4px 15px oklch(0.70 0.08 140 / 0.15);
+}
+
+.sticky-cta--eco .sticky-cta__button {
+  background: oklch(0.55 0.14 142);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  box-shadow: 
+    0 2px 8px oklch(0.55 0.14 142 / 0.25),
+    inset 0 1px 0 oklch(0.65 0.16 142 / 0.5);
+}
+
+.sticky-cta--eco .sticky-cta__button:hover {
+  background: oklch(0.50 0.16 142);
+  box-shadow: 
+    0 4px 12px oklch(0.50 0.16 142 / 0.3),
+    inset 0 1px 0 oklch(0.60 0.18 142 / 0.6);
+}
+
+.sticky-cta--eco .sticky-cta__price {
+  color: oklch(0.45 0.14 142);
+  font-weight: 700;
+}
+
+/* ============================================
+   VARIANT 7: TECH / CYBERPUNK
+   Futurystyczny z neonowymi akcentami
+   ============================================ */
+.sticky-cta--tech {
+  background: linear-gradient(180deg,
+    oklch(0.10 0.02 280) 0%,
+    oklch(0.08 0.02 260) 100%
+  );
+  border-block-start: 1px solid oklch(0.60 0.25 280);
+  box-shadow: 
+    0 -4px 30px oklch(0.60 0.25 280 / 0.3),
+    inset 0 1px 0 oklch(0.60 0.25 280 / 0.2);
+}
+
+.sticky-cta--tech .sticky-cta__title,
+.sticky-cta--tech .sticky-cta__price {
+  color: oklch(0.95 0.05 280);
+  text-shadow: 0 0 10px oklch(0.70 0.25 280 / 0.5);
+}
+
+.sticky-cta--tech .sticky-cta__button {
+  background: transparent;
+  border: 2px solid oklch(0.60 0.25 280);
+  color: oklch(0.95 0.05 280);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  box-shadow: 
+    0 0 20px oklch(0.60 0.25 280 / 0.3),
+    inset 0 0 20px oklch(0.60 0.25 280 / 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sticky-cta--tech .sticky-cta__button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    transparent 0%,
+    oklch(0.60 0.25 280 / 0.2) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 400ms;
+}
+
+.sticky-cta--tech .sticky-cta__button:hover::before {
+  transform: translateX(100%);
+}
+
+.sticky-cta--tech .sticky-cta__button:hover {
+  background: oklch(0.60 0.25 280 / 0.1);
+  border-color: oklch(0.70 0.28 280);
+  box-shadow: 
+    0 0 30px oklch(0.60 0.25 280 / 0.5),
+    inset 0 0 20px oklch(0.60 0.25 280 / 0.2);
+}
+
+/* ============================================
+   VARIANT 8: SOFT PASTEL
+   Delikatne pastele, idealny dla beauty/fashion
+   ============================================ */
+.sticky-cta--pastel {
+  background: linear-gradient(135deg,
+    oklch(0.95 0.05 340) 0%,
+    oklch(0.97 0.04 320) 100%
+  );
+  border-block-start: 1px solid oklch(0.85 0.08 330);
+  box-shadow: 0 -4px 20px oklch(0.85 0.08 330 / 0.2);
+}
+
+.sticky-cta--pastel .sticky-cta__image {
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px oklch(0.85 0.08 330 / 0.2);
+}
+
+.sticky-cta--pastel .sticky-cta__button {
+  background: oklch(0.75 0.10 330);
+  border-radius: 2rem;
+  font-weight: 600;
+  box-shadow: 
+    0 4px 15px oklch(0.75 0.10 330 / 0.3),
+    inset 0 1px 0 oklch(0.85 0.08 330 / 0.5);
+}
+
+.sticky-cta--pastel .sticky-cta__button:hover {
+  background: oklch(0.70 0.12 330);
+  box-shadow: 
+    0 6px 20px oklch(0.70 0.12 330 / 0.4),
+    inset 0 1px 0 oklch(0.80 0.10 330 / 0.6);
+}
+
+.sticky-cta--pastel .sticky-cta__price {
+  color: oklch(0.60 0.12 330);
+  font-weight: 600;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   Dla wszystkich wariantów
+   ============================================ */
+@media (max-width: 640px) {
+  .sticky-cta--bold .sticky-cta__button,
+  .sticky-cta--tech .sticky-cta__button {
+    font-size: 0.8125rem;
+    letter-spacing: 0.03em;
+  }
+  
+  .sticky-cta--luxury .sticky-cta__price,
+  .sticky-cta--playful .sticky-cta__price {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   DARK MODE ADAPTATIONS
+   Automatyczne dostosowania dla dark mode
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  .sticky-cta--minimal {
+    background-color: oklch(0.15 0.01 280);
+    border-block-start-color: oklch(0.25 0.02 280);
+  }
+  
+  .sticky-cta--glass {
+    background: color-mix(in oklch, oklch(0.15 0.01 280) 60%, transparent);
+    border-block-start-color: color-mix(in oklch, oklch(1 0 0) 10%, transparent);
+  }
+  
+  .sticky-cta--eco {
+    background: linear-gradient(180deg,
+      oklch(0.18 0.03 140) 0%,
+      oklch(0.15 0.02 120) 100%
+    );
+  }
+  
+  .sticky-cta--pastel {
+    background: linear-gradient(135deg,
+      oklch(0.20 0.05 340) 0%,
+      oklch(0.18 0.04 320) 100%
+    );
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   Dla wszystkich wariantów
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta--bold .sticky-cta__button,
+  .sticky-cta--playful .sticky-cta__button,
+  .sticky-cta--tech .sticky-cta__button::before {
+    transition: none;
+  }
+  
+  .sticky-cta--playful .sticky-cta__button {
+    transform: rotate(0deg);
+  }
+  
+  .sticky-cta--playful .sticky-cta__button:hover {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-contrast: high) {
+  .sticky-cta--glass,
+  .sticky-cta--tech .sticky-cta__button {
+    border-width: 2px;
+  }
+  
+  .sticky-cta--pastel .sticky-cta__button {
+    background: oklch(0.65 0.15 330);
+  }
+}

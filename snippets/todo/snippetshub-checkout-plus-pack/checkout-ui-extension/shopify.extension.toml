@@ -1,0 +1,35 @@
+api_version = "2024-04"
+
+[[extensions]]
+type = "ui_extension"
+name = "SurgeryCode Trust Badge"
+handle = "surgerycode-trust-badge"
+
+[[extensions.targeting]]
+module = "./src/Checkout.tsx"
+target = "purchase.checkout.payment-method-list.render-before"
+
+[extensions.capabilities]
+api_access = false
+
+[extensions.settings]
+  [[extensions.settings.fields]]
+  key = "message"
+  type = "single_line_text_field"
+  name = "Banner message"
+  description = "Text shown above the trust badges"
+
+  [[extensions.settings.fields]]
+  key = "show_secure_badge"
+  type = "boolean"
+  name = "Show 'Secure payment' badge"
+
+  [[extensions.settings.fields]]
+  key = "show_returns_badge"
+  type = "boolean"
+  name = "Show 'Easy returns' badge"
+
+  [[extensions.settings.fields]]
+  key = "show_shipping_badge"
+  type = "boolean"
+  name = "Show 'Fast shipping' badge"

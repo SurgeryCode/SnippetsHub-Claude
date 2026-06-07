@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nike — Just Do It 3D · Rotate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
+  <style>
+    /* ── Hero model-viewer — override pointer-events: none z style.css ── */
+
+    /* Wrap rozciąga się na pełną wysokość wiersza gridu — daje shoe-display
+       realną wysokość do wypełnienia przez width/height: 100% */
+    .hero-shoe-wrap {
+      align-self: stretch;
+      min-height: 480px;
+    }
+
+    .shoe-display {
+      pointer-events: auto;     /* nadpisuje pointer-events:none z style.css */
+      cursor: grab;
+      /* Zastępuje clamp(340px, 52vh, 560px) z style.css — canvas wypełnia
+         dostępną przestrzeń kolumny, brak twardego limitu 560 px */
+      width: 100%;
+      height: 100%;
+    }
+    .shoe-display:active,
+    .shoe-display.rotating {
+      cursor: grabbing;
+    }
+
+    /* Gdy użytkownik obraca — pauzuj unoszenie, żeby model nie "uciekał" */
+    .shoe-display.rotating {
+      animation-play-state: paused;
+    }
+
+    .shoe-display model-viewer {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      --poster-color: transparent;
+    }
+
+    /* Subtelna podpowiedź przy pierwszym załadowaniu */
+    .hero-rotate-hint {
+      position: absolute;
+      bottom: -36px;
+      left: 50%;
+      translate: -50% 0;
+      font-family: var(--font-display);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.28);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+      z-index: 4;
+    }
+    .hero-rotate-hint.hidden { opacity: 0; }
+
+    /* ── Card model-viewer — tylko dekoracja, brak interakcji ── */
+    .card-img {
+      background: none;
+    }
+    .card-img model-viewer {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      --poster-color: transparent;
+      pointer-events: none;
+    }
+
+    /* Ukryj loader na małych kartach (150×145 px) */
+    .card-img model-viewer::part(default-progress-bar),
+    .card-img model-viewer::part(default-progress-mask) {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="assets/Logo_NIKE.svg" class="nav-logo-img" alt="Nike" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">MEN</a></li>
+      <li><a href="#">WOMEN</a></li>
+      <li><a href="#">KIDS</a></li>
+      <li><a href="#">CUSTOMIZE</a></li>
+      <li><a href="#">FAVORITES</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-icon btn-search" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+      <button class="btn-icon btn-cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <span class="hero-watermark" aria-hidden="true">NIKE</span>
+
+    <div class="hero-left">
+      <h1 class="hero-headline">
+        <span>JUST</span>
+        <span>DO</span>
+        <span>IT</span>
+      </h1>
+      <p class="hero-desc">
+        With all of the biggest names in fashion, you'll be
+        amazed to find the best designer shoes.
+      </p>
+    </div>
+
+    <div class="hero-shoe-wrap">
+      <div class="shoe-ring shoe-ring--dashed"></div>
+      <div class="shoe-ring shoe-ring--solid"></div>
+
+      <div class="shoe-display" id="shoeDisplay">
+        <model-viewer
+          id="heroViewer"
+          src="assets/nike_10.glb"
+          loading="eager"
+          reveal="auto"
+          camera-controls
+          auto-rotate
+          auto-rotate-delay="1200"
+          rotation-per-second="14deg"
+          shadow-intensity="0.8"
+          shadow-softness="0.9"
+          exposure="1.1"
+          environment-image="neutral"
+          camera-orbit="30deg 74deg 130%"
+          min-camera-orbit="auto auto 70%"
+          max-camera-orbit="auto auto 220%"
+          interaction-prompt="none"
+          aria-label="Nike shoe 3D model — drag to rotate"
+        >
+          <div class="mv-loader" slot="progress-bar">
+            <div class="mv-loader__rings">
+              <div class="mv-loader__ring mv-loader__ring--outer"></div>
+              <div class="mv-loader__ring mv-loader__ring--inner"></div>
+              <div class="mv-loader__dot"></div>
+            </div>
+            <span class="mv-loader__text">Loading</span>
+          </div>
+        </model-viewer>
+        <span class="hero-rotate-hint" id="rotateHint">DRAG TO ROTATE</span>
+      </div>
+
+      <div class="shoe-shadow"></div>
+    </div>
+
+    <div class="hero-right">
+      <p class="product-label" id="heroLabel">NIKE ZOOM AIR</p>
+      <p class="product-price" id="heroPrice">$260</p>
+      <a href="#" class="btn-get">
+        GET IT NOW
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="slide-counter">
+      <span class="counter-current" id="counterCurrent">01</span>
+      <span class="counter-sep">/</span>
+      <span class="counter-total">05</span>
+    </div>
+
+  </section>
+
+  <!-- PRODUCTS STRIP -->
+  <section class="products-strip">
+
+    <div class="strip-controls">
+      <button class="slider-arrow slider-arrow--prev" id="sliderPrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <button class="slider-arrow slider-arrow--next" id="sliderNext" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+      <div class="strip-count">
+        <span class="strip-count__current" id="stripCountCurrent">01</span>
+        <span class="strip-count__sep">/</span>
+        <span class="strip-count__total">05</span>
+      </div>
+    </div>
+
+    <div class="products-viewport">
+      <div class="products-track" id="productsTrack">
+
+        <div class="product-card active" data-slide="0" data-orbit="30deg 74deg 130%">
+          <div class="card-img">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="lazy" reveal="auto"
+              auto-rotate auto-rotate-delay="800" rotation-per-second="18deg"
+              shadow-intensity="0.6" exposure="1.1" environment-image="neutral"
+              camera-orbit="30deg 74deg 130%"
+              interaction-prompt="none"
+              aria-label="Nike Air Huarnie Premium"
+            >
+              <div class="mv-loader mv-loader--sm" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Huarnie Premium</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span>
+            </div>
+            <p class="card-colors">5 COLORS</p>
+            <p class="card-price">$485</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+        <div class="product-card" data-slide="1" data-orbit="95deg 78deg 128%">
+          <div class="card-img">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="lazy" reveal="auto"
+              auto-rotate auto-rotate-delay="600" rotation-per-second="16deg"
+              shadow-intensity="0.6" exposure="1.05" environment-image="neutral"
+              camera-orbit="95deg 78deg 128%"
+              interaction-prompt="none"
+              aria-label="Nike Air Force 1 High"
+            >
+              <div class="mv-loader mv-loader--sm" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Force 1 High</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star">★</span>
+            </div>
+            <p class="card-colors">5 COLORS</p>
+            <p class="card-price">$225</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+        <div class="product-card" data-slide="2" data-orbit="165deg 72deg 125%">
+          <div class="card-img">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="lazy" reveal="auto"
+              auto-rotate auto-rotate-delay="700" rotation-per-second="20deg"
+              shadow-intensity="0.6" exposure="1.15" environment-image="neutral"
+              camera-orbit="165deg 72deg 125%"
+              interaction-prompt="none"
+              aria-label="Nike Air Span II Premium"
+            >
+              <div class="mv-loader mv-loader--sm" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Span II Premium</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star">★</span>
+              <span class="star">★</span>
+            </div>
+            <p class="card-colors">5 COLORS</p>
+            <p class="card-price">$48</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+        <div class="product-card" data-slide="3" data-orbit="-20deg 80deg 138%">
+          <div class="card-img">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="lazy" reveal="auto"
+              auto-rotate auto-rotate-delay="900" rotation-per-second="14deg"
+              shadow-intensity="0.6" exposure="1.0" environment-image="neutral"
+              camera-orbit="-20deg 80deg 138%"
+              interaction-prompt="none"
+              aria-label="Nike Air Huarnie Premium"
+            >
+              <div class="mv-loader mv-loader--sm" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Huarnie Premium</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star">★</span>
+            </div>
+            <p class="card-colors">3 COLORS</p>
+            <p class="card-price">$165</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+        <div class="product-card" data-slide="4" data-orbit="52deg 65deg 122%">
+          <div class="card-img">
+            <model-viewer
+              src="assets/nike_10.glb"
+              loading="lazy" reveal="auto"
+              auto-rotate auto-rotate-delay="500" rotation-per-second="22deg"
+              shadow-intensity="0.6" exposure="1.2" environment-image="neutral"
+              camera-orbit="52deg 65deg 122%"
+              interaction-prompt="none"
+              aria-label="Nike Air Max 270"
+            >
+              <div class="mv-loader mv-loader--sm" slot="progress-bar">
+                <div class="mv-loader__rings">
+                  <div class="mv-loader__ring mv-loader__ring--outer"></div>
+                  <div class="mv-loader__ring mv-loader__ring--inner"></div>
+                  <div class="mv-loader__dot"></div>
+                </div>
+              </div>
+            </model-viewer>
+          </div>
+          <div class="card-info">
+            <p class="card-name">Nike Air Max 270</p>
+            <div class="card-stars">
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span><span class="star filled">★</span>
+              <span class="star filled">★</span>
+            </div>
+            <p class="card-colors">4 COLORS</p>
+            <p class="card-price">$310</p>
+          </div>
+          <button class="card-add" aria-label="Add to cart">+</button>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════
+       ELEMENTS
+    ═══════════════════════════════════════════════════════ */
+    const cards      = document.querySelectorAll('.product-card');
+    const track      = document.getElementById('productsTrack');
+    const vp         = document.querySelector('.products-viewport');
+    const prevBtn    = document.getElementById('sliderPrev');
+    const nextBtn    = document.getElementById('sliderNext');
+    const counterEl  = document.getElementById('counterCurrent');
+    const stripEl    = document.getElementById('stripCountCurrent');
+    const heroViewer = document.getElementById('heroViewer');
+    const shoeDisplay= document.getElementById('shoeDisplay');
+    const heroLabel  = document.getElementById('heroLabel');
+    const heroPrice  = document.getElementById('heroPrice');
+    const rotateHint = document.getElementById('rotateHint');
+
+    /* ═══════════════════════════════════════════════════════
+       SLIDER CORE — identyczna mechanika jak script.js
+    ═══════════════════════════════════════════════════════ */
+    const TOTAL   = cards.length;
+    const VISIBLE = 3.5;
+    const GAP     = 12;
+    const SNAP    = 55;
+    let idx  = 0;
+    let step = 0;
+
+    function getStep() {
+      if (!step) step = cards[0].getBoundingClientRect().width + GAP;
+      return step;
+    }
+    window.addEventListener('resize', () => { step = 0; });
+
+    function maxOff() { return Math.max(0, (TOTAL - VISIBLE) * getStep()); }
+    function toOff(i) { return Math.min(Math.max(0, i * getStep()), maxOff()); }
+    function clamp(v) { return Math.max(0, Math.min(v, maxOff())); }
+
+    function go(i) {
+      idx = Math.max(0, Math.min(i, TOTAL - 1));
+      track.style.setProperty('--track-offset', `-${toOff(idx)}px`);
+      cards.forEach((c, n) => c.classList.toggle('active', n === idx));
+
+      const lbl = String(idx + 1).padStart(2, '0');
+      counterEl.textContent = lbl;
+      if (stripEl) stripEl.textContent = lbl;
+
+      const card = cards[idx];
+      if (heroLabel) heroLabel.textContent = card.querySelector('.card-name').textContent.toUpperCase();
+      if (heroPrice) heroPrice.textContent = card.querySelector('.card-price').textContent;
+
+      if (heroViewer && card.dataset.orbit) {
+        heroViewer.setAttribute('camera-orbit', card.dataset.orbit);
+      }
+
+      prevBtn.classList.toggle('disabled', idx === 0);
+      nextBtn.classList.toggle('disabled', idx === TOTAL - 1);
+    }
+
+    go(0);
+
+    /* ═══════════════════════════════════════════════════════
+       AUTOPLAY — zatrzymuje się gdy user obraca hero model
+    ═══════════════════════════════════════════════════════ */
+    let timer          = null;
+    let heroRotating   = false;
+    let resumeTimeout  = null;
+    let stripHovered   = false;
+
+    function startAutoplay() {
+      if (timer || heroRotating || stripHovered) return;
+      timer = setInterval(() => go(idx + 1 < TOTAL ? idx + 1 : 0), 4000);
+    }
+
+    function stopAutoplay() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    startAutoplay();
+
+    /* Hover nad stripem wstrzymuje autoplay (jak w oryginale) */
+    const strip = document.querySelector('.products-strip');
+    strip.addEventListener('mouseenter', () => { stripHovered = true;  stopAutoplay(); });
+    strip.addEventListener('mouseleave', () => { stripHovered = false; startAutoplay(); });
+
+    /* ═══════════════════════════════════════════════════════
+       HERO ROTATE — pause slider + pause float animation
+    ═══════════════════════════════════════════════════════ */
+
+    /* Ukryj hint po pierwszej interakcji */
+    function hideHint() {
+      rotateHint.classList.add('hidden');
+    }
+
+    /* Obsługa myszy */
+    shoeDisplay.addEventListener('pointerdown', () => {
+      heroRotating = true;
+      stopAutoplay();
+      clearTimeout(resumeTimeout);
+      shoeDisplay.classList.add('rotating');
+      hideHint();
+    });
+
+    document.addEventListener('pointerup', () => {
+      if (!heroRotating) return;
+      heroRotating = false;
+      shoeDisplay.classList.remove('rotating');
+      /* Wznów autoplay po 1.8 s od puszczenia — daje czas na "obejrzenie" */
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        if (!stripHovered) startAutoplay();
+      }, 1800);
+    });
+
+    /* Uodpornienie na pointercancel (np. scroll na mobile) */
+    document.addEventListener('pointercancel', () => {
+      if (!heroRotating) return;
+      heroRotating = false;
+      shoeDisplay.classList.remove('rotating');
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        if (!stripHovered) startAutoplay();
+      }, 1800);
+    });
+
+    /* ═══════════════════════════════════════════════════════
+       SLIDER ARROWS + KLAWISZE
+    ═══════════════════════════════════════════════════════ */
+    nextBtn.addEventListener('click', () => go(idx + 1));
+    prevBtn.addEventListener('click', () => go(idx - 1));
+    cards.forEach((c, i) => c.addEventListener('click', () => { if (!locked) go(i); }));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') go(idx + 1);
+      if (e.key === 'ArrowLeft')  go(idx - 1);
+    });
+
+    /* ═══════════════════════════════════════════════════════
+       DRAG / SWIPE — slider viewport
+    ═══════════════════════════════════════════════════════ */
+    let x0 = null, base = 0, moved = false, locked = false;
+
+    function begin(x)  {
+      x0 = x; base = toOff(idx); moved = false;
+      vp.classList.add('dragging');
+    }
+    function slide(x)  {
+      if (x0 === null) return;
+      if (Math.abs(x0 - x) > 5) moved = true;
+      if (!moved) return;
+      track.style.setProperty('--track-offset', `-${clamp(base + (x0 - x))}px`);
+    }
+    function finish(x) {
+      if (x0 === null) return;
+      const d = x0 - x, was = moved;
+      x0 = null; moved = false;
+      vp.classList.remove('dragging');
+      if (was) {
+        locked = true; setTimeout(() => { locked = false; }, 20);
+        go(idx + (Math.abs(d) >= SNAP ? (d > 0 ? 1 : -1) : 0));
+      }
+    }
+    function reset() {
+      x0 = null; moved = false;
+      vp.classList.remove('dragging');
+      track.style.setProperty('--track-offset', `-${toOff(idx)}px`);
+    }
+
+    vp.addEventListener('mousedown', e => { if (e.button) return; begin(e.clientX); });
+    document.addEventListener('mousemove', e => {
+      if (x0 === null) return;
+      e.preventDefault(); slide(e.clientX);
+    });
+    document.addEventListener('mouseup', e => {
+      if (x0 === null) return;
+      finish(e.clientX);
+    });
+    document.addEventListener('mouseleave', () => {
+      if (x0 === null) return;
+      finish(x0);
+    });
+
+    vp.addEventListener('touchstart', e => { begin(e.touches[0].clientX); }, { passive: true });
+    vp.addEventListener('touchmove', e => {
+      if (x0 === null) return;
+      e.preventDefault(); slide(e.touches[0].clientX);
+    }, { passive: false });
+    vp.addEventListener('touchend',    e => { if (x0 !== null) finish(e.changedTouches[0].clientX); });
+    vp.addEventListener('touchcancel', reset);
+
+    /* ═══════════════════════════════════════════════════════
+       CART BUTTON
+    ═══════════════════════════════════════════════════════ */
+    document.querySelectorAll('.card-add').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        btn.textContent = '✓';
+        btn.classList.add('is-added');
+        setTimeout(() => { btn.textContent = '+'; btn.classList.remove('is-added'); }, 1000);
+      });
+    });
+
+    /* Chowaj loader po załadowaniu modelu */
+    document.querySelectorAll('model-viewer').forEach(mv => {
+      const loader = mv.querySelector('.mv-loader');
+      if (!loader) return;
+      function hideLoader() {
+        loader.classList.add('is-hidden');
+        setTimeout(() => { loader.style.display = 'none'; }, 460);
+      }
+      if (mv.loaded) { hideLoader(); return; }
+      mv.addEventListener('load', hideLoader, { once: true });
+      mv.addEventListener('error', hideLoader, { once: true });
+    });
+  </script>
+
+</body>
+</html>

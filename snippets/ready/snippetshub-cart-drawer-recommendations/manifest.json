@@ -1,0 +1,19 @@
+{
+  "standardVersion": "1.0",
+  "name": "SnippetsHub Cart Drawer with Recommendations",
+  "slug": "snippetshub-cart-drawer-recommendations",
+  "version": "1.0.0",
+  "owner": "SnippetsHub",
+  "license": "License depends on the purchased plan. Default: Single Store License unless the purchased variant states otherwise.",
+  "supportEmail": "support@snippetshub.com",
+  "homepage": "https://snippetshub.com",
+  "minTheme": "Online Store 2.0",
+  "type": "section",
+  "entry": {
+    "section": "sections/snh-cart-drawer-recommendations.liquid",
+    "assets": [
+      "assets/snh-cart-drawer-recommendations.css",
+      "assets/snh-cart-drawer-recommendations.js"
+    ]
+  }
+}

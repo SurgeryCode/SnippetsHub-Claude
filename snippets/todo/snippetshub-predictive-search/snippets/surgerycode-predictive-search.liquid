@@ -1,0 +1,51 @@
+{%- comment -%}
+  🧩 Snippet: Predictive Search (v1.1)
+  🏪 Marketplace: https://SnippetsHub.com
+  💻 Developed by: SurgeryCode (https://SurgeryCode.com)
+  © 2025 SnippetsHub & SurgeryCode
+
+  Parametry opcjonalne:
+    limit        — maks. liczba wyników (domyślnie: 5)
+    placeholder  — placeholder inputa (domyślnie: tłumaczenie 'general.search.search')
+    show_price   — true/false, czy pokazywać cenę (domyślnie: true)
+
+  Przykład:
+    {% render 'surgerycode-predictive-search', limit: 6 %}
+{%- endcomment -%}
+
+{%- liquid
+  assign _limit       = limit | default: 5
+  assign _placeholder = placeholder | default: 'general.search.search' | t | default: 'Search'
+  assign _show_price  = show_price | default: true
+-%}
+
+<div
+  class="surgerycode-search"
+  data-sc-search
+  data-limit="{{ _limit }}"
+  data-show-price="{{ _show_price }}"
+  role="combobox"
+  aria-expanded="false"
+  aria-haspopup="listbox"
+>
+  <input
+    type="search"
+    class="surgerycode-search__input"
+    placeholder="{{ _placeholder }}"
+    aria-label="{{ _placeholder }}"
+    aria-autocomplete="list"
+    aria-controls="surgerycode-search-results"
+    autocomplete="off"
+    spellcheck="false"
+  >
+  <div
+    id="surgerycode-search-results"
+    class="surgerycode-search__results"
+    role="listbox"
+    aria-label="{{ 'general.search.results' | t | default: 'Search results' }}"
+    hidden
+  ></div>
+</div>
+
+<link rel="stylesheet" href="{{ 'surgerycode-predictive-search.css' | asset_url }}">
+<script src="{{ 'surgerycode-predictive-search.js' | asset_url }}" defer></script>

@@ -1,0 +1,236 @@
+{%- liquid
+  assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
+  assign media_items = product.media
+  assign media_total = media_items.size
+-%}
+
+<div
+  class="product-gallery"
+  data-product-gallery
+  {% if featured_media %}
+    data-featured-media-id="{{ featured_media.id }}"
+  {% endif %}
+>
+  <div class="surgerucode-badge-container">
+    <div class="badge badge-videocalls badge-SurgeruCode shadow-lg">
+      {{ 'snippetshub.pdp_tabs.gallery.official_badge' | t }}
+    </div>
+  </div>
+
+  <div class="main-image-container">
+    {% if media_total > 0 %}
+      {% for media in media_items %}
+        {% assign is_active = false %}
+        {% assign media_alt = media.alt | default: product.title %}
+        {% if featured_media %}
+          {% if media.id == featured_media.id %}
+            {% assign is_active = true %}
+          {% endif %}
+        {% elsif forloop.first %}
+          {% assign is_active = true %}
+        {% endif %}
+
+        <div
+          class="gallery-stage{% if is_active %} is-active{% endif %}"
+          data-gallery-stage
+          data-media-id="{{ media.id }}"
+          data-media-type="{{ media.media_type }}"
+          {% unless is_active %}
+            hidden
+          {% endunless %}
+        >
+          {% case media.media_type %}
+            {% when 'image' %}
+              {{
+                media
+                | image_url: width: 1200
+                | image_tag:
+                  class: 'gallery-stage__media w-full object-contain',
+                  loading: 'eager',
+                  fetchpriority: 'high',
+                  decoding: 'async',
+                  alt: media_alt,
+                  widths: '480,720,960,1200',
+                  sizes: '(min-width: 990px) 50vw, 100vw'
+              }}
+            {% when 'video' %}
+              {{
+                media
+                | media_tag: class: 'gallery-stage__media', image_size: '1200x', controls: false, preload: 'metadata'
+              }}
+              <div class="gallery-stage__controls" data-gallery-video-controls>
+                <button
+                  type="button"
+                  class="gallery-stage__control"
+                  data-gallery-video-play
+                  aria-label="Pause video"
+                  aria-pressed="true"
+                >
+                  <span data-gallery-video-play-label>Pause</span>
+                </button>
+                <button
+                  type="button"
+                  class="gallery-stage__control"
+                  data-gallery-video-mute
+                  aria-label="Unmute video"
+                  aria-pressed="true"
+                >
+                  <span data-gallery-video-mute-label>Unmute</span>
+                </button>
+              </div>
+              <div class="gallery-stage__progress" data-gallery-video-progress-wrap>
+                <input
+                  type="range"
+                  class="gallery-stage__progress-input"
+                  min="0"
+                  max="100"
+                  value="0"
+                  step="0.1"
+                  data-gallery-video-progress
+                  aria-label="Video progress"
+                >
+              </div>
+            {% when 'external_video' %}
+              <div class="gallery-stage__embed">
+                {% if media.host == 'youtube' %}
+                  {{
+                    media
+                    | external_video_url: autoplay: false, loop: false, playlist: media.external_id
+                    | external_video_tag: class: 'gallery-stage__iframe', loading: 'lazy'
+                  }}
+                {% else %}
+                  {{
+                    media
+                    | external_video_url: autoplay: false, loop: false
+                    | external_video_tag: class: 'gallery-stage__iframe', loading: 'lazy'
+                  }}
+                {% endif %}
+              </div>
+            {% else %}
+              {{
+                media.preview_image
+                | image_url: width: 1200
+                | image_tag:
+                  class: 'gallery-stage__media w-full object-contain',
+                  loading: 'eager',
+                  fetchpriority: 'high',
+                  decoding: 'async',
+                  alt: media_alt,
+                  widths: '480,720,960,1200',
+                  sizes: '(min-width: 990px) 50vw, 100vw'
+              }}
+          {% endcase %}
+          {% if media.media_type == 'video' or media.media_type == 'external_video' %}
+            <span class="gallery-stage__badge" aria-hidden="true">Video</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="text-huge">🚀</div>
+    {% endif %}
+
+    {% if media_total > 1 %}
+      <button
+        type="button"
+        class="gallery-nav gallery-nav--prev"
+        data-gallery-prev
+        aria-label="{{ 'snippetshub.pdp_tabs.gallery.prev_image' | t }}"
+      >
+        <span aria-hidden="true">‹</span>
+      </button>
+      <button
+        type="button"
+        class="gallery-nav gallery-nav--next"
+        data-gallery-next
+        aria-label="{{ 'snippetshub.pdp_tabs.gallery.next_image' | t }}"
+      >
+        <span aria-hidden="true">›</span>
+      </button>
+    {% endif %}
+  </div>
+
+  {% if media_total > 1 %}
+    <div class="gallery-thumbs">
+      {% for media in media_items %}
+        {% assign is_active = false %}
+        {% assign media_alt = media.alt | default: product.title %}
+        {% if featured_media %}
+          {% if media.id == featured_media.id %}
+            {% assign is_active = true %}
+          {% endif %}
+        {% elsif forloop.first %}
+          {% assign is_active = true %}
+        {% endif %}
+        <button
+          type="button"
+          class="thumb{% if is_active %} active{% endif %}"
+          data-gallery-thumb
+          data-media-id="{{ media.id }}"
+          data-media-type="{{ media.media_type }}"
+          aria-label="{{ product.title | escape }} media {{ forloop.index }} of {{ media_total }}"
+          aria-current="{% if is_active %}true{% else %}false{% endif %}"
+        >
+          {{
+            media.preview_image
+            | image_url: width: 150
+            | image_tag: class: 'w-full object-cover', alt: media_alt, loading: 'lazy', decoding: 'async'
+          }}
+          {% if media.media_type == 'video' or media.media_type == 'external_video' %}
+            <span class="thumb__badge" aria-hidden="true">▶</span>
+          {% elsif media.media_type == 'model' %}
+            <span class="thumb__badge" aria-hidden="true">3D</span>
+          {% endif %}
+        </button>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {%- liquid
+    assign gallery_extra_top_raw = product.metafields.custom.gallery_extra_top.value | default: product.metafields.custom.gallery_extra_top
+    assign gallery_extra_bottom_raw = product.metafields.custom.gallery_extra_bottom.value | default: product.metafields.custom.gallery_extra_bottom
+    assign gallery_extra_top_items = gallery_extra_top_raw | default: '' | newline_to_br | split: '<br />'
+    assign gallery_extra_bottom_items = gallery_extra_bottom_raw | default: '' | newline_to_br | split: '<br />'
+  -%}
+  <div class="gallery-extra">
+    <div class="gallery-extra__header">
+      <span class="gallery-extra__eyebrow">{{ 'snippetshub.pdp_tabs.gallery.expert_pick' | t }}</span>
+      <h5 class="gallery-extra__title">{{ 'snippetshub.pdp_tabs.gallery.why_title' | t }}</h5>
+    </div>
+    <ul class="gallery-extra__list">
+      {% for item in gallery_extra_top_items %}
+        {% assign item_text = item | strip %}
+        {% if item_text != blank %}
+          <li class="gallery-extra__item">
+            <span class="gallery-extra__icon" aria-hidden="true">✓</span>
+            <span>{{ item_text | escape }}</span>
+          </li>
+        {% endif %}
+      {% endfor %}
+      <li class="gallery-extra__item">
+        <span class="gallery-extra__icon" aria-hidden="true">✓</span>
+        <span>{{ 'snippetshub.pdp_tabs.gallery.benefit_1' | t }}</span>
+      </li>
+      <li class="gallery-extra__item">
+        <span class="gallery-extra__icon" aria-hidden="true">✓</span>
+        <span>{{ 'snippetshub.pdp_tabs.gallery.benefit_2' | t }}</span>
+      </li>
+      <li class="gallery-extra__item">
+        <span class="gallery-extra__icon" aria-hidden="true">✓</span>
+        <span>{{ 'snippetshub.pdp_tabs.gallery.benefit_3' | t }}</span>
+      </li>
+      <li class="gallery-extra__item">
+        <span class="gallery-extra__icon" aria-hidden="true">✓</span>
+        <span>{{ 'snippetshub.pdp_tabs.gallery.benefit_4' | t }}</span>
+      </li>
+      {% for item in gallery_extra_bottom_items %}
+        {% assign item_text = item | strip %}
+        {% if item_text != blank %}
+          <li class="gallery-extra__item">
+            <span class="gallery-extra__icon" aria-hidden="true">✓</span>
+            <span>{{ item_text | escape }}</span>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>

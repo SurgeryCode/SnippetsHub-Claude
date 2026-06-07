@@ -1,0 +1,179 @@
+/*
+ * SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+ */
+
+.SnippetsHub.SNH-snh-announcement-bar {
+  --snh-ab-bg: #111111;
+  --snh-ab-text: #ffffff;
+  --snh-ab-link: #f4b400;
+  --snh-ab-dot-active: #ffffff;
+  --snh-ab-dot-inactive: rgba(255, 255, 255, 0.35);
+  --snh-ab-speed: 4000ms;
+}
+
+/* Hidden when dismissed */
+.SnippetsHub.SNH-snh-announcement-bar[data-snh-dismissed="true"] {
+  display: none !important;
+}
+
+/* Bar shell */
+.SnippetsHub .SNH-AnnouncementBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--snh-ab-bg);
+  color: var(--snh-ab-text);
+  min-height: 40px;
+  padding: 0 2.5rem;
+}
+
+/* Track — clips slides */
+.SnippetsHub .SNH-AnnouncementBar__track {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Individual slide */
+.SnippetsHub .SNH-AnnouncementBar__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.SnippetsHub .SNH-AnnouncementBar__slide.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: relative;
+}
+
+/* Message — paragraph or link */
+.SnippetsHub .SNH-AnnouncementBar__message {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.5rem 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--snh-ab-text);
+  text-decoration: none;
+}
+
+a.SnippetsHub .SNH-AnnouncementBar__message,
+.SnippetsHub a.SNH-AnnouncementBar__message {
+  color: var(--snh-ab-text);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.SnippetsHub a.SNH-AnnouncementBar__message:hover,
+.SnippetsHub a.SNH-AnnouncementBar__message:focus-visible {
+  color: var(--snh-ab-link);
+  text-decoration: underline;
+}
+
+.SnippetsHub .SNH-AnnouncementBar__icon {
+  font-size: 1rem;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+/* Navigation dots */
+.SnippetsHub .SNH-AnnouncementBar__nav {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.SnippetsHub .SNH-AnnouncementBar__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: var(--snh-ab-dot-inactive);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.SnippetsHub .SNH-AnnouncementBar__dot.is-active {
+  background: var(--snh-ab-dot-active);
+  transform: scale(1.3);
+}
+
+/* Arrow buttons */
+.SnippetsHub .SNH-AnnouncementBar__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: var(--snh-ab-text);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.18s ease;
+}
+
+.SnippetsHub .SNH-AnnouncementBar__arrow:hover { opacity: 1; }
+
+.SnippetsHub .SNH-AnnouncementBar__arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.SnippetsHub .SNH-AnnouncementBar__arrow--prev { left: 0.5rem; }
+.SnippetsHub .SNH-AnnouncementBar__arrow--next { right: 0.5rem; }
+
+/* Close button */
+.SnippetsHub .SNH-AnnouncementBar__close {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: var(--snh-ab-btn-bg, #ffffff);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.18s ease;
+}
+
+.SnippetsHub .SNH-AnnouncementBar__close:hover { opacity: 1; }
+
+.SnippetsHub .SNH-AnnouncementBar__close svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Has dots — add bottom padding to make room */
+.SnippetsHub .SNH-AnnouncementBar:has(.SNH-AnnouncementBar__nav) {
+  padding-bottom: 14px;
+}

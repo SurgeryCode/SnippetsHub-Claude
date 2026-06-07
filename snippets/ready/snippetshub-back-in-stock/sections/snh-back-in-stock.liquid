@@ -1,0 +1,178 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.1.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-back-in-stock.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-back-in-stock.js' | asset_url }}" defer></script>
+
+{% style %}
+  #shopify-section-{{ section.id }} .snh-bis {
+    --snh-bis-border: {{ section.settings.border_color }};
+    --snh-bis-btn-bg: {{ section.settings.button_bg_color }};
+    --snh-bis-btn-text: {{ section.settings.button_text_color }};
+    --snh-bis-input-border: {{ section.settings.input_border_color }};
+    --snh-bis-label: {{ section.settings.label_color }};
+  }
+{% endstyle %}
+
+{% if product %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+
+  <div
+    class="snh-bis-wrapper"
+    data-snh-bis-wrapper
+    data-available="{{ current_variant.available }}"
+    style="{% if current_variant.available %}display:none{% endif %}"
+  >
+    <div
+      class="snh-bis"
+      data-snh-bis
+      data-snh="snippetshub-back-in-stock"
+      data-snh-version="1.1.0"
+      data-snh-owner="SnippetsHub"
+      data-endpoint="{{ section.settings.endpoint_url | escape }}"
+      data-product-id="{{ product.id }}"
+      data-variant-id="{{ current_variant.id }}"
+      role="form"
+    >
+      {% if section.settings.heading != blank %}
+        <p class="snh-bis__heading">{{ section.settings.heading }}</p>
+      {% endif %}
+
+      <div class="snh-bis__form" data-snh-bis-form>
+        <label for="snh-bis-email-{{ section.id }}" class="snh-bis__label">
+          {{ section.settings.email_label | default: 'Email address' }}
+        </label>
+        <div class="snh-bis__row">
+          <input
+            id="snh-bis-email-{{ section.id }}"
+            type="email"
+            class="snh-bis__input"
+            placeholder="{{ section.settings.email_placeholder | default: 'your@email.com' }}"
+            autocomplete="email"
+            required
+          >
+          <button
+            type="button"
+            class="snh-bis__btn"
+            data-snh-bis-btn
+          >
+            {{ section.settings.button_label | default: 'Notify me' }}
+          </button>
+        </div>
+        <div class="snh-bis__msg" data-snh-bis-msg role="alert" aria-live="polite"></div>
+      </div>
+
+      <div class="snh-bis__success" data-snh-bis-success hidden>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6 10l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{{ section.settings.success_message | default: "You're on the list! We'll notify you when this is back in stock." }}</span>
+      </div>
+    </div>
+  </div>
+
+{% elsif request.design_mode %}
+  <div class="snh-bis" data-snh="snippetshub-back-in-stock" data-snh-version="1.1.0" data-snh-owner="SnippetsHub">
+    <div class="snh-bis__empty-state">
+      Add this section to a product template to enable the Back in Stock form.
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "SNH Back in Stock",
+  "tag": "section",
+  "class": "section section-snh-back-in-stock",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Endpoint"
+    },
+    {
+      "type": "text",
+      "id": "endpoint_url",
+      "label": "Notification endpoint URL",
+      "info": "The URL your form POSTs to. Use a Shopify App Proxy, Klaviyo Back in Stock API, or a serverless function (Zapier, Make, etc.). See README for setup options."
+    },
+    {
+      "type": "header",
+      "content": "Labels"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading above form",
+      "default": "Get notified when this is back"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email input label",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email input placeholder",
+      "default": "your@email.com"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Notify me"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "You're on the list! We'll notify you when this is back in stock."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card border",
+      "default": "#E8E8E8"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Input border",
+      "default": "#DDDDDD"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Back in Stock"
+    }
+  ]
+}
+{% endschema %}

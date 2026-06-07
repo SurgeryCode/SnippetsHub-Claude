@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#0f172a"/>
+  <rect x="80" y="80" width="1440" height="1040" fill="none" stroke="#38bdf8" stroke-width="6"/>
+  <rect x="220" y="220" width="1160" height="760" fill="none" stroke="#22c55e" stroke-width="6"/>
+
+  <text x="800" y="140" font-family="Space Grotesk, Arial" font-size="28" fill="#e2e8f0" text-anchor="middle">SAFE AREA (All content should remain visible)</text>
+  <text x="800" y="1060" font-family="Space Grotesk, Arial" font-size="28" fill="#e2e8f0" text-anchor="middle">BLEED AREA (May be cropped with cover)</text>
+
+  <circle cx="240" cy="240" r="14" fill="#22c55e"/>
+  <circle cx="1360" cy="240" r="14" fill="#22c55e"/>
+  <circle cx="240" cy="960" r="14" fill="#22c55e"/>
+  <circle cx="1360" cy="960" r="14" fill="#22c55e"/>
+
+  <text x="800" y="600" font-family="Outfit, Arial" font-size="86" fill="#f8fafc" text-anchor="middle">MAIN VISUAL</text>
+  <text x="800" y="670" font-family="Outfit, Arial" font-size="30" fill="#94a3b8" text-anchor="middle">Keep key elements inside the green rectangle</text>
+</svg>

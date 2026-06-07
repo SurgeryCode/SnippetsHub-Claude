@@ -1,0 +1,12 @@
+<div class="surgerycode-lite-video" data-provider="{{ provider | default: 'youtube' }}" data-video-id="{{ id }}" data-title="{{ title }}">
+  <button class="surgerycode-lite-video__poster" type="button" aria-label="Play video: {{ title }}">
+    {% if thumbnail %}
+      <img src="{{ thumbnail }}" alt="{{ title }}" loading="lazy">
+    {% else %}
+      <div class="surgerycode-lite-video__placeholder">{{ title | default: 'Video' }}</div>
+    {% endif %}
+    <span class="surgerycode-lite-video__play">▶</span>
+  </button>
+</div>
+<link rel="stylesheet" href="{{ 'surgerycode-lite-video-embed.css' | asset_url }}">
+<script src="{{ 'surgerycode-lite-video-embed.js' | asset_url }}" defer></script>

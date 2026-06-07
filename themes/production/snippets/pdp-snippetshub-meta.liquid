@@ -1,0 +1,22 @@
+{% comment %}
+  PDP Meta (SnippetsHub)
+{% endcomment %}
+{% assign sales_count = product.metafields.custom.sales_count | default: '1,842' %}
+
+<div class="product-meta">
+  <div class="meta-item">
+    <span class="meta-label">{{ 'snippetshub.pdp_meta.rating' | t }}</span>
+    <div class="rating">
+      <span class="stars">★★★★★</span>
+      <span class="rating-count">{{ 'snippetshub.pdp_meta.reviews_count' | t: count: 247 }}</span>
+    </div>
+  </div>
+  <div class="meta-item">
+    <span class="meta-label">{{ 'snippetshub.pdp_meta.sales' | t }}</span>
+    <span class="meta-value">{{ 'snippetshub.pdp_meta.downloads_count' | t: count: sales_count }}</span>
+  </div>
+  <div class="meta-item">
+    <span class="meta-label">{{ 'snippetshub.pdp_meta.updated' | t }}</span>
+    <span class="meta-value">{{ product.metafields.custom.last_updated | default: 'January 2026' }}</span>
+  </div>
+</div>

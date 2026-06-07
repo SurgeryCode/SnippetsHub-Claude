@@ -1,0 +1,251 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-upsell-cross-sell.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-upsell-cross-sell.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-Upsell {
+    --snh-up-bg: {{ section.settings.background_color }};
+    --snh-up-card-bg: {{ section.settings.card_background }};
+    --snh-up-border: {{ section.settings.border_color }};
+    --snh-up-text: {{ section.settings.text_color }};
+    --snh-up-subtext: {{ section.settings.subtext_color }};
+    --snh-up-badge-bg: {{ section.settings.badge_color }};
+    --snh-up-badge-text: {{ section.settings.badge_text_color }};
+    --snh-up-btn-bg: {{ section.settings.button_color }};
+    --snh-up-btn-text: {{ section.settings.button_text_color }};
+    --snh-up-cols: {{ section.settings.columns }};
+  }
+{% endstyle %}
+
+{%- assign product_blocks = section.blocks | where: 'type', 'product' -%}
+
+<div
+  class="SnippetsHub SNH-snh-upsell-cross-sell"
+  data-snh="snippetshub-upsell-cross-sell"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-routes-root="{{ routes.root }}"
+  data-add-label="{{ section.settings.add_label | escape }}"
+  data-adding-label="{{ section.settings.adding_label | escape }}"
+  data-added-label="{{ section.settings.added_label | escape }}"
+>
+
+  {%- if product_blocks.size > 0 -%}
+    <div class="SNH-Upsell">
+      {%- unless section.settings.title == blank -%}
+        <h2 class="SNH-Upsell__title">{{ section.settings.title }}</h2>
+      {%- endunless -%}
+
+      <ul class="SNH-Upsell__grid" role="list">
+        {%- for block in product_blocks -%}
+          {%- assign up_product = block.settings.product -%}
+          {%- if up_product != blank -%}
+            {%- assign first_variant = up_product.first_available_variant | default: up_product.variants.first -%}
+            <li class="SNH-Upsell__card" {{ block.shopify_attributes }}>
+
+              {%- if block.settings.badge != blank -%}
+                <span class="SNH-Upsell__badge">{{ block.settings.badge }}</span>
+              {%- endif -%}
+
+              <a class="SNH-Upsell__image-link" href="{{ up_product.url }}" tabindex="-1" aria-hidden="true">
+                {%- if up_product.featured_image -%}
+                  <img
+                    class="SNH-Upsell__image"
+                    src="{{ up_product.featured_image | image_url: width: 400 }}"
+                    alt="{{ up_product.featured_image.alt | escape }}"
+                    width="200"
+                    height="200"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </a>
+
+              <div class="SNH-Upsell__info">
+                <a class="SNH-Upsell__name" href="{{ up_product.url }}">{{ up_product.title }}</a>
+
+                {%- unless block.settings.custom_description == blank -%}
+                  <p class="SNH-Upsell__desc">{{ block.settings.custom_description }}</p>
+                {%- endunless -%}
+
+                <div class="SNH-Upsell__price-row">
+                  <span class="SNH-Upsell__price">{{ up_product.price | money }}</span>
+                  {%- if up_product.compare_at_price > up_product.price -%}
+                    <s class="SNH-Upsell__compare">{{ up_product.compare_at_price | money }}</s>
+                    {%- assign savings_pct = up_product.compare_at_price | minus: up_product.price | times: 100 | divided_by: up_product.compare_at_price -%}
+                    <span class="SNH-Upsell__savings">−{{ savings_pct }}%</span>
+                  {%- endif -%}
+                </div>
+
+                <button
+                  class="SNH-Upsell__atc"
+                  data-snh-atc
+                  data-variant-id="{{ first_variant.id }}"
+                  data-product-title="{{ up_product.title | escape }}"
+                  {% unless first_variant.available %}disabled aria-disabled="true"{% endunless %}
+                >
+                  {%- if first_variant.available -%}
+                    {{ section.settings.add_label }}
+                  {%- else -%}
+                    Sold out
+                  {%- endif -%}
+                </button>
+              </div>
+
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  {%- elsif request.design_mode -%}
+    <div class="SNH-Upsell SNH-Upsell--empty">
+      <p>Add products using the "+" button in the Theme Editor.</p>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "SNH Upsell / Cross-sell",
+  "tag": "section",
+  "class": "section section-snh-upsell-cross-sell",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "You might also like"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "default": "3",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Add to cart labels"
+    },
+    {
+      "type": "text",
+      "id": "add_label",
+      "label": "Add to cart",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "adding_label",
+      "label": "Adding…",
+      "default": "Adding…"
+    },
+    {
+      "type": "text",
+      "id": "added_label",
+      "label": "Added!",
+      "default": "Added!"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card border",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext / price meta",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge background",
+      "default": "#F4B400"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Add to cart button",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge (optional)",
+          "placeholder": "Best seller"
+        },
+        {
+          "type": "text",
+          "id": "custom_description",
+          "label": "Custom description (optional)",
+          "info": "Short selling point shown below the product name."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Upsell / Cross-sell"
+    }
+  ]
+}
+{% endschema %}

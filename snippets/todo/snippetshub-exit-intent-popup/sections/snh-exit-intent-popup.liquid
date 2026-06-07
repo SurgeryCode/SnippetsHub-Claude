@@ -1,0 +1,241 @@
+{% comment %}
+SnippetsHub | License: Default is Single Store License unless the purchased product variant states otherwise. | Version: 1.0.0 | Support: support@snippetshub.com
+{% endcomment %}
+
+{{ 'snh-exit-intent-popup.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'snh-exit-intent-popup.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  #shopify-section-{{ section.id }} .SNH-ExitPopup {
+    --snh-ep-bg: {{ section.settings.background_color }};
+    --snh-ep-text: {{ section.settings.text_color }};
+    --snh-ep-subtext: {{ section.settings.subtext_color }};
+    --snh-ep-btn-bg: {{ section.settings.button_color }};
+    --snh-ep-btn-text: {{ section.settings.button_text_color }};
+    --snh-ep-code-bg: {{ section.settings.code_background }};
+    --snh-ep-code-text: {{ section.settings.code_text_color }};
+    --snh-ep-overlay: {{ section.settings.overlay_color }};
+    --snh-ep-accent: {{ section.settings.accent_color }};
+  }
+{% endstyle %}
+
+<div
+  class="SnippetsHub SNH-snh-exit-intent-popup"
+  data-snh="snippetshub-exit-intent-popup"
+  data-snh-version="1.0.0"
+  data-snh-owner="SnippetsHub"
+  data-session-key="snh-exit-{{ section.id }}"
+  data-desktop-trigger="{{ section.settings.desktop_trigger }}"
+  data-mobile-delay="{{ section.settings.mobile_delay_seconds | times: 1000 }}"
+  data-show-once="{{ section.settings.show_once }}"
+  data-has-code="{% if section.settings.discount_code != blank %}true{% else %}false{% endif %}"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="{{ section.settings.headline | escape }}"
+>
+  <div class="SNH-ExitPopup__overlay" data-snh-overlay></div>
+
+  <div class="SNH-ExitPopup__modal" data-snh-modal>
+
+    <button class="SNH-ExitPopup__close" data-snh-close aria-label="Close popup">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    {%- unless section.settings.badge_text == blank -%}
+      <p class="SNH-ExitPopup__badge">{{ section.settings.badge_text }}</p>
+    {%- endunless -%}
+
+    <h2 class="SNH-ExitPopup__headline">{{ section.settings.headline }}</h2>
+
+    {%- unless section.settings.subtext == blank -%}
+      <p class="SNH-ExitPopup__subtext">{{ section.settings.subtext }}</p>
+    {%- endunless -%}
+
+    {%- unless section.settings.discount_code == blank -%}
+      <div class="SNH-ExitPopup__code-wrap">
+        <p class="SNH-ExitPopup__code-label">{{ section.settings.code_label }}</p>
+        <button class="SNH-ExitPopup__code" data-snh-copy aria-label="Copy code {{ section.settings.discount_code }}">
+          <span class="SNH-ExitPopup__code-value" data-snh-code>{{ section.settings.discount_code }}</span>
+          <span class="SNH-ExitPopup__copy-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </span>
+          <span class="SNH-ExitPopup__copy-feedback" data-snh-feedback aria-live="polite"></span>
+        </button>
+      </div>
+    {%- endunless -%}
+
+    {%- unless section.settings.cta_label == blank -%}
+      <a
+        class="SNH-ExitPopup__cta"
+        href="{{ section.settings.cta_url }}"
+        data-snh-cta
+      >
+        {{ section.settings.cta_label }}
+      </a>
+    {%- endunless -%}
+
+    {%- unless section.settings.dismiss_label == blank -%}
+      <button class="SNH-ExitPopup__dismiss" data-snh-close>
+        {{ section.settings.dismiss_label }}
+      </button>
+    {%- endunless -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SNH Exit Intent Popup",
+  "tag": "section",
+  "class": "section section-snh-exit-intent-popup",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Trigger"
+    },
+    {
+      "type": "select",
+      "id": "desktop_trigger",
+      "label": "Desktop trigger",
+      "default": "mouse_leave",
+      "options": [
+        { "value": "mouse_leave", "label": "Mouse leaves window (exit intent)" },
+        { "value": "timer", "label": "Timer (seconds on page)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_delay_seconds",
+      "label": "Mobile / timer trigger delay (seconds)",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "default": 15
+    },
+    {
+      "type": "checkbox",
+      "id": "show_once",
+      "label": "Show once per session",
+      "default": true,
+      "info": "Dismissed state saved in sessionStorage. Reappears on next browser session."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge (optional)",
+      "placeholder": "Limited offer",
+      "default": "Limited offer"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Wait — before you go!"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Use code below for 10% off your first order. Don't miss out."
+    },
+    {
+      "type": "text",
+      "id": "code_label",
+      "label": "Code label",
+      "default": "Your discount code:"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Discount code",
+      "default": "SAVE10",
+      "info": "Leave empty to hide the code block."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA button URL"
+    },
+    {
+      "type": "text",
+      "id": "dismiss_label",
+      "label": "Dismiss link text",
+      "default": "No thanks, I'll pay full price"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Modal background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / badge",
+      "default": "#F4B400"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Headline text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "CTA button background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "CTA button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "code_background",
+      "label": "Code block background",
+      "default": "#F5F5F5"
+    },
+    {
+      "type": "color",
+      "id": "code_text_color",
+      "label": "Code text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SNH Exit Intent Popup"
+    }
+  ]
+}
+{% endschema %}
