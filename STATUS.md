@@ -103,7 +103,7 @@ snh-post-purchase-upsell, snh-mega-menu
 
 | Data | Co zrobiono |
 |------|-------------|
-| 2026-06-14 | Przeniesiono wymagania z głównego CLAUDE.md do HTML-clear-ideas/CLAUDE.md (brand voice, persony, USP, cennik, dwa szablony opisów). Dodano SPEC.md, skrypt create:idea, placeholdery w _TEMPLATE. Przebudowano z zera Figma export burgerowni (hamburgery-landingpage) na czysty HTML/CSS — plik w /Inspiracje/Figma exports/figma-export/index.html. Użyto flat PNG jako CSS sprite; do dopracowania: pozycje sprite'ów, responsive, hover, JS dla slidera. |
+| 2026-06-14 | Przeniesiono wymagania z głównego CLAUDE.md do HTML-clear-ideas/CLAUDE.md (brand voice, persony, USP, cennik, dwa szablony opisów). Dodano SPEC.md, skrypt create:idea, placeholdery w _TEMPLATE. Przebudowano z zera Figma export burgerowni (hamburgery-landingpage) na czysty HTML/CSS — plik w HTML-clear-ideas/hamburger-landing/index.html. Użyto flat PNG jako CSS sprite; do dopracowania: pozycje sprite'ów, responsive, hover, JS dla slidera. |
 | 2026-06-13 | Stworzono folder design/ z pełną strukturą MVC (system/tokens, system/code-connect, snippets/_TEMPLATE, gtm/_TEMPLATE). Zaktualizowano CLAUDE.md o Design Workflow i nowe sekcje. |
 | 2026-06-07 | Stworzono zunifikowany workspace /SnippetsHub/ z obu starszych folderów. Dodano .gitignore, STATUS.md, zaktualizowano CLAUDE.md z nową strukturą. |
 | 2026-06-01 | Zbudowano TIER 3 (checkout-order-bump, post-purchase-upsell, mega-menu). Przeniesiono 12 snippetów do ready/. Napisano 15 opisów HTML. Community research — nowe pomysły: Size Chart, Product Tabs, FAQ Accordion. |

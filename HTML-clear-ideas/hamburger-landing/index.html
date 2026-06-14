@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hamburgery — Premium Burgers &amp; Fast Food</title>
+  <style>
+    /* ── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      overflow-x: hidden;
+    }
+    a  { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ── DESIGN TOKENS ──────────────────────────────────── */
+    :root {
+      --green:     #4CB85B;
+      --green-dk:  #3a9448;
+      --amber:     #FFA800;
+      --pink:      #E9237B;
+      --cyan:      #00B0CC;
+      --olive:     #3A3A28;
+      --ltgreen:   #89C44A;
+      --r-btn:     32px;
+      --max-w:     1200px;
+      /* The single flat export image used as CSS sprite */
+      --sprite:    url('images/hamburgery-landingpage_1_1200x3373.png');
+      --sprite-sz: 1200px 3373px;
+    }
+
+    /* ── SHARED UTILITIES ───────────────────────────────── */
+    .container {
+      max-width: var(--max-w);
+      margin-inline: auto;
+    }
+
+    /* ── BUTTON SYSTEM ──────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      border: none;
+      border-radius: var(--r-btn);
+      cursor: pointer;
+      transition: opacity .15s;
+      line-height: 1;
+    }
+    .btn:hover { opacity: .85; }
+
+    .btn--green  { background: var(--green); color: #fff; }
+    .btn--pink   { background: var(--pink);  color: #fff; }
+    .btn--white  { background: #fff; color: #1a1a1a; }
+
+    .btn--sm  { padding: 9px 22px;  font-size: 12px; }
+    .btn--md  { padding: 13px 34px; font-size: 13px; }
+    .btn--lg  { padding: 16px 44px; font-size: 14px; }
+
+    /* ══════════════════════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════════════════════ */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(0,0,0,.09);
+    }
+
+    .header-wrap {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: 32px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-shrink: 0;
+    }
+    .logo__icon {
+      width: 34px; height: 34px;
+      background: var(--green);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .logo__name {
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--green);
+    }
+
+    /* Primary nav */
+    .primary-nav { flex: 1; }
+    .primary-nav__list {
+      display: flex;
+      gap: 28px;
+    }
+    .primary-nav__list a {
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      transition: color .15s;
+    }
+    .primary-nav__list a:hover,
+    .primary-nav__list a[aria-current="page"] { color: var(--green); }
+
+    /* Header right */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+    .header-phone {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════════════ */
+    .hero {
+      background: var(--amber);
+      overflow: hidden;
+    }
+
+    .hero__inner {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 505px;
+    }
+
+    .hero__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-block: 60px 48px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 5px 16px;
+      border-radius: 20px;
+      align-self: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .hero__title {
+      font-size: 68px;
+      font-weight: 900;
+      line-height: .95;
+      text-transform: uppercase;
+      letter-spacing: -1.5px;
+      color: #1a1a1a;
+      margin-bottom: 14px;
+    }
+
+    .hero__stars {
+      margin-bottom: 10px;
+      font-size: 17px;
+      color: #1a1a1a;
+      letter-spacing: 2px;
+    }
+
+    .hero__price {
+      font-size: 30px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 28px;
+    }
+
+    /* Thumbnail strip */
+    .hero__thumbs {
+      display: flex;
+      gap: 10px;
+      margin-top: 36px;
+    }
+    .hero__thumb {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.45);
+      background: rgba(255,255,255,.2) var(--sprite);
+      background-size: var(--sprite-sz);
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+    .hero__thumb--active { border-color: #1a1a1a; }
+    .hero__thumb:nth-child(1) { background-position: -616px -140px; }
+    .hero__thumb:nth-child(2) { background-position: -700px -100px; }
+    .hero__thumb:nth-child(3) { background-position: -680px -180px; }
+    .hero__thumb:nth-child(4) { background-position: -640px -220px; }
+
+    /* Hero burger image (right column = right 600px of hero band) */
+    .hero__visual {
+      background: var(--sprite);
+      background-size: var(--sprite-sz);
+      background-position: -594px -70px;
+      background-repeat: no-repeat;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       PROMO DUET  (Delivery / Join Us)
+    ══════════════════════════════════════════════════════ */
+    .promo { border-top: 1px solid #f0f0f0; }
+
+    .promo__grid {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .promo__card {
+      padding: 54px 56px 48px;
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .promo__card + .promo__card { border-left: 1px solid #f0f0f0; }
+
+    .promo__eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--green);
+    }
+    .promo__title {
+      font-size: 36px;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: #1a1a1a;
+      max-width: 240px;
+    }
+
+    /* Sprite illustrations (delivery rider / staff member) */
+    .promo__art {
+      position: absolute;
+      right: 16px;
+      bottom: 0;
+      width: 210px;
+      height: 250px;
+      background: var(--sprite);
+      background-size: var(--sprite-sz);
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+    .promo__art--delivery { background-position: -325px -575px; }
+    .promo__art--staff    { background-position: -935px -575px; }
+
+    /* ══════════════════════════════════════════════════════
+       CATEGORY GRID
+    ══════════════════════════════════════════════════════ */
+    .categories { max-width: var(--max-w); margin-inline: auto; }
+
+    .cat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cat-card {
+      padding: 36px 32px 30px;
+      min-height: 235px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cat-card--green   { background: var(--green); }
+    .cat-card--amber   { background: var(--amber); }
+    .cat-card--ltgreen { background: var(--ltgreen); }
+    .cat-card--cyan    { background: var(--cyan); }
+    .cat-card--pink    { background: var(--pink); }
+    .cat-card--olive   { background: var(--olive); }
+
+    .cat-title {
+      font-size: 28px;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn--cat {
+      position: relative;
+      z-index: 1;
+      align-self: flex-start;
+    }
+
+    /* Food photo sprites inside category cards */
+    .cat-photo {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 200px;
+      height: 180px;
+      background: var(--sprite);
+      background-size: var(--sprite-sz);
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+    .cat-photo--burgers  { background-position: -415px -880px; }
+    .cat-photo--salads   { background-position: -810px -880px; }
+    .cat-photo--kids     { background-position: -10px  -1120px; }
+    .cat-photo--desserts { background-position: -410px -1120px; }
+
+    /* ══════════════════════════════════════════════════════
+       BEST QUALITY INGREDIENTS
+    ══════════════════════════════════════════════════════ */
+    .ingredients {
+      padding: 80px 48px;
+      max-width: var(--max-w);
+      margin-inline: auto;
+    }
+
+    .section-title {
+      font-size: 46px;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.05;
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .ingredients__grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      align-items: center;
+    }
+
+    .ing-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .ing-photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #f5f5f5 var(--sprite);
+      background-size: var(--sprite-sz);
+      background-repeat: no-repeat;
+    }
+    .ing-photo--buns   { background-position: -30px  -1405px; }
+    .ing-photo--beef   { background-position: -30px  -1570px; }
+    .ing-photo--fresh  { background-position: -1020px -1405px; }
+    .ing-photo--turkey { background-position: -1020px -1570px; }
+
+    .ing-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #333;
+      text-align: center;
+    }
+
+    /* Center brand badge */
+    .ing-badge {
+      width: 110px;
+      height: 110px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      line-height: 1.5;
+      padding: 8px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       FAMILY SECTION
+    ══════════════════════════════════════════════════════ */
+    .family {
+      position: relative;
+      overflow: hidden;
+      min-height: 490px;
+      display: flex;
+      align-items: stretch;
+    }
+
+    /* Full-section background from the sprite, dimmed */
+    .family__bg {
+      position: absolute;
+      inset: 0;
+      background: var(--sprite);
+      background-size: var(--sprite-sz);
+      background-position: 0 -1790px;
+      background-repeat: no-repeat;
+      filter: brightness(.4) saturate(.8);
+    }
+
+    .family__inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding: 80px 48px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .family__title {
+      font-size: 96px;
+      font-weight: 900;
+      font-style: italic;
+      text-transform: uppercase;
+      color: var(--green);
+      line-height: .88;
+      margin-bottom: 22px;
+    }
+
+    .family__text {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,.82);
+      margin-bottom: 32px;
+      max-width: 380px;
+    }
+
+    .family__features {
+      display: flex;
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .ftr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,.65);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .ftr__icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.1);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       BOTTOM CTA STRIP
+    ══════════════════════════════════════════════════════ */
+    .cta-strip {
+      background: #f9f9f9;
+      border-top: 1px solid #eee;
+      padding: 32px 48px;
+    }
+    .cta-strip__inner {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cta-strip__text {
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      color: #1a1a1a;
+    }
+    .cta-strip__sub {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════ */
+    .site-footer {
+      background: #1a1a1a;
+      color: #aaa;
+      padding: 52px 0 24px;
+    }
+    .footer__inner {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: 48px;
+    }
+    .footer__top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 40px;
+      padding-bottom: 28px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .footer__nav {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+    }
+    .footer__nav a {
+      font-size: 13px;
+      color: #888;
+      transition: color .15s;
+    }
+    .footer__nav a:hover { color: var(--green); }
+
+    .footer__phone {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #555;
+    }
+
+    /* Footer logo overrides */
+    .footer__logo .logo__name { color: var(--green); }
+    .footer__logo .logo__icon { width: 30px; height: 30px; font-size: 15px; }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="header-wrap">
+      <a href="#" class="logo" aria-label="Hamburgery — home">
+        <div class="logo__icon" aria-hidden="true">🍔</div>
+        <span class="logo__name">Hamburgery</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <ul class="primary-nav__list">
+          <li><a href="#"      aria-current="page">Home</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="tel:+441234567890" class="header-phone">☎ +44 123 456 789</a>
+        <a href="#menu" class="btn btn--green btn--sm">Order Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════ -->
+  <section class="hero" aria-label="Featured item — The Double Decker">
+    <div class="hero__inner">
+
+      <div class="hero__content">
+        <span class="badge">Promotion</span>
+        <h1 class="hero__title">The Double<br>Decker</h1>
+        <div class="hero__stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="hero__price">£16.99</p>
+        <a href="#" class="btn btn--green btn--lg">Order Now</a>
+
+        <div class="hero__thumbs" role="list" aria-label="Other featured items">
+          <button class="hero__thumb hero__thumb--active" role="listitem" aria-label="Double Decker"></button>
+          <button class="hero__thumb" role="listitem" aria-label="Item 2"></button>
+          <button class="hero__thumb" role="listitem" aria-label="Item 3"></button>
+          <button class="hero__thumb" role="listitem" aria-label="Item 4"></button>
+        </div>
+      </div>
+
+      <!-- Right column: burger image clipped from sprite -->
+      <div class="hero__visual" role="img" aria-label="Double Decker burger"></div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       PROMO DUET
+  ════════════════════════════════════════════════ -->
+  <section class="promo" aria-label="Promotions">
+    <div class="promo__grid">
+
+      <div class="promo__card">
+        <p class="promo__eyebrow">Fast &amp; Fresh</p>
+        <h2 class="promo__title">Realy<br>Faaaaaast<br>Delivery!</h2>
+        <a href="#" class="btn btn--green btn--md">Order Now</a>
+        <div class="promo__art promo__art--delivery" aria-hidden="true"></div>
+      </div>
+
+      <div class="promo__card">
+        <p class="promo__eyebrow">Join Our Team</p>
+        <h2 class="promo__title">Don't Wait<br>Become One<br>Of Us Now!</h2>
+        <a href="#" class="btn btn--pink btn--md">Join Now</a>
+        <div class="promo__art promo__art--staff" aria-hidden="true"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CATEGORY GRID
+  ════════════════════════════════════════════════ -->
+  <section id="menu" aria-label="Menu categories">
+    <div class="categories">
+
+      <!-- Row 1 -->
+      <div class="cat-row">
+        <article class="cat-card cat-card--green">
+          <h3 class="cat-title">Sand-<br>wiches</h3>
+          <a href="#" class="btn btn--white btn--sm btn--cat">See More</a>
+        </article>
+
+        <article class="cat-card cat-card--amber">
+          <h3 class="cat-title">House<br>Burgers</h3>
+          <a href="#" class="btn btn--white btn--sm btn--cat">Order Now</a>
+          <div class="cat-photo cat-photo--burgers" aria-hidden="true"></div>
+        </article>
+
+        <article class="cat-card cat-card--ltgreen">
+          <h3 class="cat-title">Fresh<br>Salads</h3>
+          <a href="#" class="btn btn--white btn--sm btn--cat">Shop</a>
+          <div class="cat-photo cat-photo--salads" aria-hidden="true"></div>
+        </article>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="cat-row">
+        <article class="cat-card cat-card--cyan">
+          <h3 class="cat-title">For All<br>Kids</h3>
+          <a href="#" class="btn btn--white btn--sm btn--cat">See More</a>
+          <div class="cat-photo cat-photo--kids" aria-hidden="true"></div>
+        </article>
+
+        <article class="cat-card cat-card--pink">
+          <h3 class="cat-title">Sweet<br>Desserts</h3>
+          <a href="#" class="btn btn--white btn--sm btn--cat">Order Now</a>
+          <div class="cat-photo cat-photo--desserts" aria-hidden="true"></div>
+        </article>
+
+        <article class="cat-card cat-card--olive">
+          <h3 class="cat-title">And<br>Much,<br>Much<br>More…</h3>
+          <a href="#" class="btn btn--white btn--sm btn--cat">View All</a>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       BEST QUALITY INGREDIENTS
+  ════════════════════════════════════════════════ -->
+  <section aria-label="Our ingredients">
+    <div class="ingredients">
+      <h2 class="section-title">Best Quality<br>Ingredients</h2>
+
+      <div class="ingredients__grid">
+
+        <div class="ing-item">
+          <div class="ing-photo ing-photo--buns" role="img" aria-label="Artisan buns"></div>
+          <span class="ing-label">Artisan Buns</span>
+        </div>
+
+        <div class="ing-item">
+          <div class="ing-photo ing-photo--beef" role="img" aria-label="Ground beef"></div>
+          <span class="ing-label">Ground Beef</span>
+        </div>
+
+        <div class="ing-item" aria-hidden="true">
+          <div class="ing-badge">Premium<br>Quality<br>★★★★★</div>
+        </div>
+
+        <div class="ing-item">
+          <div class="ing-photo ing-photo--fresh" role="img" aria-label="Fresh produce"></div>
+          <span class="ing-label">Fresh Produce</span>
+        </div>
+
+        <div class="ing-item">
+          <div class="ing-photo ing-photo--turkey" role="img" aria-label="Ground turkey"></div>
+          <span class="ing-label">Ground Turkey</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       FAMILY SECTION
+  ════════════════════════════════════════════════ -->
+  <section class="family" id="about" aria-label="Our family">
+    <div class="family__bg" aria-hidden="true"></div>
+
+    <div class="family__inner">
+      <div class="family__content">
+        <h2 class="family__title">Family</h2>
+        <p class="family__text">
+          Is rich with flavor. It's people that surround us with gratitude,
+          authenticity &amp; values that satisfy the soul.
+        </p>
+        <a href="#contact" class="btn btn--green btn--md">Contact Us</a>
+
+        <div class="family__features">
+          <div class="ftr">
+            <div class="ftr__icon" aria-hidden="true">🚚</div>
+            <span>Fast<br>Delivery</span>
+          </div>
+          <div class="ftr">
+            <div class="ftr__icon" aria-hidden="true">⭐</div>
+            <span>Top<br>Quality</span>
+          </div>
+          <div class="ftr">
+            <div class="ftr__icon" aria-hidden="true">🍔</div>
+            <span>Fresh<br>Food</span>
+          </div>
+          <div class="ftr">
+            <div class="ftr__icon" aria-hidden="true">💚</div>
+            <span>Healthy<br>Choices</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column intentionally empty — filled by the dimmed background image -->
+      <div aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       BOTTOM CTA STRIP
+  ════════════════════════════════════════════════ -->
+  <div class="cta-strip" id="contact">
+    <div class="cta-strip__inner">
+      <div>
+        <p class="cta-strip__text">For Family — Our Story for Burgers</p>
+        <p class="cta-strip__sub">Taste the tradition. Visit us or order online.</p>
+      </div>
+      <a href="#menu" class="btn btn--green btn--md">Order Now</a>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer__inner">
+
+      <div class="footer__top">
+        <a href="#" class="logo footer__logo" aria-label="Hamburgery — home">
+          <div class="logo__icon" aria-hidden="true">🍔</div>
+          <span class="logo__name">Hamburgery</span>
+        </a>
+
+        <nav class="footer__nav" aria-label="Footer navigation">
+          <a href="#">Home</a>
+          <a href="#menu">Menu</a>
+          <a href="#about">About Us</a>
+          <a href="#">Blog</a>
+          <a href="#">Our Team</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <a href="tel:+441234567890" class="footer__phone">☎ +44 123 456 789</a>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2024 Hamburgery. All rights reserved.</span>
+        <span>Premium burgers &amp; fast food delivered to your door.</span>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
