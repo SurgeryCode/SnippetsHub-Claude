@@ -66,6 +66,25 @@ SnippetsHub/                    ← ROOT — otwierasz to w Claude Code
 │   ├── SNIPPET_STANDARD.md    ← Standard techniczny każdego snippetu
 │   ├── DEPLOY_SNIPPET.md      ← Komendy do buildowania i deployowania
 │   └── products_export.csv    ← Live export z Shopify (ground truth)
+├── HTML-clear-ideas/          ← Warsztat szablonów: HTML/CSS → JS → Shopify (3 iteracje)
+│   ├── CLAUDE.md              ← Context workspace'u i flow iteracji
+│   ├── STATUS.md              ← Index wszystkich projektów + etap każdego
+│   └── _TEMPLATE/             ← Kopiuj dla każdego nowego projektu
+│       ├── CLAUDE.md, STATUS.md, PRD.md
+│       ├── index.html, style.css, script.js
+│       └── description.html
+├── design/                    ← Pre-produkcja: Figma → Design System → GTM
+│   ├── DESIGN_SYSTEM.md       ← Index zasobów designu, linki Figma, MVC workflow
+│   ├── system/
+│   │   ├── tokens/            ← Tokeny z Figma Variables (colors, typography, spacing)
+│   │   └── code-connect/      ← .figma.ts mappings → Liquid/CSS (Figma Code Connect)
+│   ├── snippets/              ← Pre-prod workspace per snippet
+│   │   └── {snh-slug}/
+│   │       ├── PRD.md         ← Wymagania + tech spec + GTM decyzje
+│   │       ├── figma.md       ← Linki do Figma frames + tokeny
+│   │       └── exports/       ← Assets wyeksportowane z Figma
+│   └── gtm/                   ← Launch checklisty przed wystawieniem w Shopify
+│       └── {snh-slug}-LAUNCH.md
 ├── workflow/                  ← Szablony pracy projektowej
 │   ├── PRD_LITE_TEMPLATE_PL.md
 │   ├── DELIVERY_CHECKLIST.md
@@ -305,6 +324,49 @@ shopify theme push --store snippetshubdev.myshopify.com --theme 186465550709
 # Push dev theme
 shopify theme push --store snippetshubdev.myshopify.com --theme 186471678325
 ```
+
+---
+
+## Design Workflow — Figma → Snippet → GTM
+
+### MVC z Figmy (kolejność pracy)
+
+```
+1. DESIGN (Figma)
+   → Narysuj snippet w Figma, użyj komponentów SNH/* i tokenów snh/*
+
+2. MODEL (design/system/tokens/)
+   → Tokeny Figma Variables → colors.json / typography.json / spacing.json
+   → Mapują się na CSS --snh-* custom properties
+
+3. VIEW (design/snippets/{slug}/)
+   → Utwórz PRD.md (kopiuj z design/snippets/_TEMPLATE/PRD.md)
+   → Utwórz figma.md z linkami do frames
+   → Eksportuj assets do exports/
+
+4. CODE CONNECT (design/system/code-connect/)
+   → Opcjonalnie: utwórz snh-{slug}.figma.ts dla komponentu
+
+5. BUILD (snippets/ready/{slug}/)
+   → Zbuduj snippet wg konwencji kodu (patrz sekcja poniżej)
+   → Użyj tokenów z design/system/tokens/ jako --snh-* CSS vars
+
+6. GTM (design/gtm/{slug}-LAUNCH.md)
+   → Wypełnij launch checklist
+   → Przygotuj ZIP, screenshots, opis HTML
+   → Wystaw w Shopify Admin
+```
+
+### Tworzenie PRD dla nowego snippetu
+1. Skopiuj `design/snippets/_TEMPLATE/` → `design/snippets/snh-{slug}/`
+2. Wypełnij `PRD.md` — problem, use cases, tech spec, GTM
+3. Wypełnij `figma.md` — linki do Figma frames
+4. Po zakończeniu designu: eksportuj assets do `exports/`
+
+### Launch checklist
+1. Skopiuj `design/gtm/_TEMPLATE-LAUNCH.md` → `design/gtm/snh-{slug}-LAUNCH.md`
+2. Przejdź przez checklistę punkt po punkcie
+3. Po wystawieniu zaktualizuj STATUS.md
 
 ---
 

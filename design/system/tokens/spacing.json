@@ -1,0 +1,77 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "source": "Figma Variables",
+    "lastUpdated": "2026-06-13",
+    "cssPrefix": "--snh-space-"
+  },
+  "space": {
+    "xs": {
+      "$value": "4px",
+      "$type": "dimension"
+    },
+    "sm": {
+      "$value": "8px",
+      "$type": "dimension"
+    },
+    "md": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "Default padding unit."
+    },
+    "lg": {
+      "$value": "24px",
+      "$type": "dimension"
+    },
+    "xl": {
+      "$value": "40px",
+      "$type": "dimension"
+    },
+    "xxl": {
+      "$value": "64px",
+      "$type": "dimension"
+    }
+  },
+  "radius": {
+    "sm": {
+      "$value": "4px",
+      "$type": "dimension"
+    },
+    "md": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Default border-radius for cards, panels."
+    },
+    "lg": {
+      "$value": "16px",
+      "$type": "dimension"
+    },
+    "full": {
+      "$value": "9999px",
+      "$type": "dimension",
+      "$description": "Pills, badges, fully rounded buttons."
+    }
+  },
+  "z-index": {
+    "bar": {
+      "$value": "100",
+      "$type": "number",
+      "$description": "Announcement bars, sticky elements."
+    },
+    "drawer": {
+      "$value": "200",
+      "$type": "number",
+      "$description": "Cart drawer, side panels."
+    },
+    "popup": {
+      "$value": "300",
+      "$type": "number",
+      "$description": "Exit intent popups, modals."
+    },
+    "overlay": {
+      "$value": "290",
+      "$type": "number",
+      "$description": "Backdrop overlay behind popups/drawers."
+    }
+  }
+}

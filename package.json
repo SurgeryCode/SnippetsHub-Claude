@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "create-snippet": "node ./tools/create-snippet.js",
+    "create:idea": "node ./tools/create-html-idea.js",
     "build": "node ./tools/build-snippet.js",
     "build:all": "node ./tools/build-all.js",
     "deploy:themes": "node ./tools/deploy-snippet-to-themes.js",

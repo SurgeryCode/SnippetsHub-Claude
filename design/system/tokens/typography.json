@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "source": "Figma Variables",
+    "lastUpdated": "2026-06-13",
+    "cssPrefix": "--snh-font-"
+  },
+  "font": {
+    "family-base": {
+      "$value": "inherit",
+      "$type": "fontFamily",
+      "$description": "Inherits from Shopify theme — zero font bloat."
+    },
+    "size-xs": {
+      "$value": "11px",
+      "$type": "dimension"
+    },
+    "size-sm": {
+      "$value": "13px",
+      "$type": "dimension"
+    },
+    "size-md": {
+      "$value": "15px",
+      "$type": "dimension",
+      "$description": "Default body text size."
+    },
+    "size-lg": {
+      "$value": "18px",
+      "$type": "dimension"
+    },
+    "size-xl": {
+      "$value": "22px",
+      "$type": "dimension",
+      "$description": "Section headings."
+    },
+    "weight-regular": {
+      "$value": "400",
+      "$type": "fontWeight"
+    },
+    "weight-medium": {
+      "$value": "500",
+      "$type": "fontWeight"
+    },
+    "weight-bold": {
+      "$value": "700",
+      "$type": "fontWeight"
+    },
+    "line-height-tight": {
+      "$value": "1.2",
+      "$type": "number"
+    },
+    "line-height-base": {
+      "$value": "1.5",
+      "$type": "number"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "source": "Figma Variables",
+    "lastUpdated": "2026-06-13",
+    "cssPrefix": "--snh-color-"
+  },
+  "color": {
+    "primary": {
+      "$value": "#000000",
+      "$type": "color",
+      "$description": "Brand primary — black. Used for CTAs, headings."
+    },
+    "primary-hover": {
+      "$value": "#1a1a1a",
+      "$type": "color"
+    },
+    "surface": {
+      "$value": "#ffffff",
+      "$type": "color",
+      "$description": "Default background surface."
+    },
+    "surface-alt": {
+      "$value": "#f8f8f8",
+      "$type": "color",
+      "$description": "Secondary surface — light grey."
+    },
+    "text": {
+      "$value": "#111111",
+      "$type": "color",
+      "$description": "Primary text."
+    },
+    "text-muted": {
+      "$value": "#666666",
+      "$type": "color",
+      "$description": "Secondary / muted text."
+    },
+    "border": {
+      "$value": "#e5e5e5",
+      "$type": "color",
+      "$description": "Default border color."
+    },
+    "success": {
+      "$value": "#2d7a2d",
+      "$type": "color",
+      "$description": "Success states, free shipping reached."
+    },
+    "accent": {
+      "$value": "#e63a00",
+      "$type": "color",
+      "$description": "Urgency accent — countdown, sale badges."
+    }
+  }
+}

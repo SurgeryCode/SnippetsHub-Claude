@@ -1,0 +1,130 @@
+/* =========================================
+   Testowy Landing Page
+   Slug: cart-drawer
+   Iteration: v1 HTML+CSS
+   Spec: ../SPEC.md — prefiksy, tokeny, konwencje
+   ========================================= */
+
+/* --- Design Tokens (projekt-specyficzne na wrapperze) --- */
+.hci-cart-drawer {
+  /* Kolory — patrz SPEC.md dla pełnej listy */
+  --hci-color-primary:    #000000;
+  --hci-color-surface:    #ffffff;
+  --hci-color-text:       #111111;
+  --hci-color-text-muted: #666666;
+  --hci-color-border:     #e5e5e5;
+  --hci-color-accent:     #e63a00;
+  --hci-color-success:    #2d7a2d;
+
+  /* Typografia */
+  --hci-font-size-sm:  13px;
+  --hci-font-size-md:  15px;
+  --hci-font-size-lg:  18px;
+  --hci-font-size-xl:  22px;
+  --hci-font-weight-regular: 400;
+  --hci-font-weight-bold:    700;
+  --hci-line-height:   1.5;
+
+  /* Spacing */
+  --hci-space-xs:  4px;
+  --hci-space-sm:  8px;
+  --hci-space-md:  16px;
+  --hci-space-lg:  24px;
+  --hci-space-xl:  40px;
+
+  /* Radius & transitions */
+  --hci-radius-sm:   4px;
+  --hci-radius-md:   8px;
+  --hci-radius-full: 9999px;
+  --hci-transition:  0.2s ease;
+
+  /* Tokeny specyficzne dla tego projektu */
+  /* --hci-cart-drawer-width: 420px; */
+}
+
+/* --- Reset (scoped) --- */
+.hci-cart-drawer *,
+.hci-cart-drawer *::before,
+.hci-cart-drawer *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Base --- */
+.hci-cart-drawer {
+  font-family: inherit;
+  font-size: var(--hci-font-size-md);
+  color: var(--hci-color-text);
+  line-height: var(--hci-line-height);
+  background-color: var(--hci-color-surface);
+}
+
+/* --- Inner container --- */
+.hci-cart-drawer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--hci-space-lg) var(--hci-space-md);
+}
+
+/* --- Heading --- */
+.hci-cart-drawer__heading {
+  font-size: var(--hci-font-size-xl);
+  font-weight: var(--hci-font-weight-bold);
+  line-height: 1.2;
+  margin-bottom: var(--hci-space-sm);
+}
+
+/* --- Text --- */
+.hci-cart-drawer__text {
+  font-size: var(--hci-font-size-md);
+  color: var(--hci-color-text-muted);
+  margin-bottom: var(--hci-space-md);
+}
+
+/* --- Button --- */
+.hci-cart-drawer__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--hci-space-sm) var(--hci-space-lg);
+  background-color: var(--hci-color-primary);
+  color: var(--hci-color-surface);
+  font-size: var(--hci-font-size-md);
+  font-weight: var(--hci-font-weight-bold);
+  border: none;
+  border-radius: var(--hci-radius-sm);
+  cursor: pointer;
+  transition: opacity var(--hci-transition);
+}
+
+.hci-cart-drawer__btn:hover {
+  opacity: 0.85;
+}
+
+/* --- Stan: visible (dodawany przez JS w v2) --- */
+.hci-cart-drawer {
+  opacity: 0;
+  transition: opacity var(--hci-transition);
+}
+
+.hci-__IDEA_SLUG--.hci-cart-drawer__visible {
+  opacity: 1;
+}
+
+/* --- Animacje v2 (dodajesz w iteracji v2) --- */
+/* @keyframes hci-cart-drawer-fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+} */
+
+/* --- Mobile --- */
+@media (max-width: 767px) {
+  .hci-cart-drawer__inner {
+    padding: var(--hci-space-md) var(--hci-space-sm);
+  }
+
+  .hci-cart-drawer__heading {
+    font-size: var(--hci-font-size-lg);
+  }
+}
