@@ -1,0 +1,34 @@
+{
+  "payload": {
+    "export": "cart-validations-generate-run",
+    "target": "cart.validations.generate.run",
+    "input": {
+      "cart": {
+        "billingAddress": {
+          "address1": "1 Main St",
+          "address2": null,
+          "city": "Warsaw",
+          "provinceCode": "MZ",
+          "zip": "00-001",
+          "countryCode": "PL",
+          "phone": null
+        },
+        "deliveryGroups": [
+          {
+            "deliveryAddress": {
+              "address1": "1 Main St",
+              "address2": null,
+              "city": "Warsaw",
+              "provinceCode": "MZ",
+              "zip": "00-001",
+              "countryCode": "PL"
+            }
+          }
+        ]
+      }
+    },
+    "output": {
+      "operations": []
+    }
+  }
+}

@@ -1,0 +1,23 @@
+query CartValidationsGenerateRunInput {
+  cart {
+    billingAddress {
+      address1
+      address2
+      city
+      provinceCode
+      zip
+      countryCode
+      phone
+    }
+    deliveryGroups {
+      deliveryAddress {
+        address1
+        address2
+        city
+        provinceCode
+        zip
+        countryCode
+      }
+    }
+  }
+}

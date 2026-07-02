@@ -1,0 +1,23 @@
+{
+  "payload": {
+    "export": "cart-validations-generate-run",
+    "target": "cart.validations.generate.run",
+    "input": {
+      "cart": {
+        "billingAddress": {
+          "address1": "2 Invoice Ave",
+          "address2": null,
+          "city": "Krakow",
+          "provinceCode": "MA",
+          "zip": "30-001",
+          "countryCode": "PL",
+          "phone": null
+        },
+        "deliveryGroups": []
+      }
+    },
+    "output": {
+      "operations": []
+    }
+  }
+}
