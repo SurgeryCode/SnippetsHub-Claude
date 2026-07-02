@@ -27,15 +27,8 @@
       --ltgreen:   #89C44A;
       --r-btn:     32px;
       --max-w:     1200px;
-      /* The single flat export image used as CSS sprite */
       --sprite:    url('images/hamburgery-landingpage_1_1200x3373.png');
       --sprite-sz: 1200px 3373px;
-    }
-
-    /* ── SHARED UTILITIES ───────────────────────────────── */
-    .container {
-      max-width: var(--max-w);
-      margin-inline: auto;
     }
 
     /* ── BUTTON SYSTEM ──────────────────────────────────── */
@@ -54,11 +47,9 @@
       line-height: 1;
     }
     .btn:hover { opacity: .85; }
-
     .btn--green  { background: var(--green); color: #fff; }
     .btn--pink   { background: var(--pink);  color: #fff; }
     .btn--white  { background: #fff; color: #1a1a1a; }
-
     .btn--sm  { padding: 9px 22px;  font-size: 12px; }
     .btn--md  { padding: 13px 34px; font-size: 13px; }
     .btn--lg  { padding: 16px 44px; font-size: 14px; }
@@ -73,7 +64,6 @@
       background: #fff;
       box-shadow: 0 1px 0 rgba(0,0,0,.09);
     }
-
     .header-wrap {
       max-width: var(--max-w);
       margin-inline: auto;
@@ -83,8 +73,6 @@
       align-items: center;
       gap: 32px;
     }
-
-    /* Logo */
     .logo {
       display: flex;
       align-items: center;
@@ -108,13 +96,8 @@
       letter-spacing: .8px;
       color: var(--green);
     }
-
-    /* Primary nav */
     .primary-nav { flex: 1; }
-    .primary-nav__list {
-      display: flex;
-      gap: 28px;
-    }
+    .primary-nav__list { display: flex; gap: 28px; }
     .primary-nav__list a {
       font-size: 13px;
       font-weight: 500;
@@ -123,8 +106,6 @@
     }
     .primary-nav__list a:hover,
     .primary-nav__list a[aria-current="page"] { color: var(--green); }
-
-    /* Header right */
     .header-actions {
       display: flex;
       align-items: center;
@@ -145,21 +126,21 @@
       background: var(--amber);
       overflow: hidden;
     }
-
     .hero__inner {
       max-width: var(--max-w);
       margin-inline: auto;
       padding-inline: 48px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 505px;
+      min-height: 580px;
     }
 
+    /* ── Left column ── */
     .hero__content {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-block: 60px 48px;
+      padding-block: 52px 44px;
     }
 
     .badge {
@@ -173,75 +154,167 @@
       padding: 5px 16px;
       border-radius: 20px;
       align-self: flex-start;
-      margin-bottom: 18px;
+      margin-bottom: 12px;
     }
 
+    /* CHILI RATING */
+    .hero__chili {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+    .chili {
+      font-size: 17px;
+      line-height: 1;
+      transition: filter .25s, transform .25s;
+    }
+    .chili--off {
+      filter: grayscale(1) opacity(.28);
+    }
+    .hero__chili-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(0,0,0,.45);
+      margin-left: 8px;
+    }
+
+    /* TITLE */
     .hero__title {
-      font-size: 68px;
+      font-size: 64px;
       font-weight: 900;
       line-height: .95;
       text-transform: uppercase;
       letter-spacing: -1.5px;
       color: #1a1a1a;
       margin-bottom: 14px;
+      transition: opacity .2s;
+    }
+
+    /* PRODUCT DESCRIPTION */
+    .hero__desc {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: rgba(0,0,0,.58);
+      margin-bottom: 14px;
+      max-width: 340px;
+      transition: opacity .2s;
     }
 
     .hero__stars {
-      margin-bottom: 10px;
-      font-size: 17px;
+      margin-bottom: 8px;
+      font-size: 16px;
       color: #1a1a1a;
       letter-spacing: 2px;
     }
-
     .hero__price {
       font-size: 30px;
       font-weight: 800;
       color: #1a1a1a;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
+      transition: opacity .2s;
     }
 
-    /* Thumbnail strip */
+    /* Thumbnail slider strip */
     .hero__thumbs {
       display: flex;
       gap: 10px;
-      margin-top: 36px;
+      margin-top: 32px;
     }
     .hero__thumb {
-      width: 58px;
-      height: 58px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       border: 3px solid rgba(255,255,255,.45);
       background: rgba(255,255,255,.2) var(--sprite);
       background-size: var(--sprite-sz);
       cursor: pointer;
-      transition: border-color .2s;
+      transition: border-color .2s, transform .15s;
+      flex-shrink: 0;
     }
-    .hero__thumb--active { border-color: #1a1a1a; }
+    .hero__thumb:hover { transform: scale(1.08); }
+    .hero__thumb--active {
+      border-color: #1a1a1a;
+      transform: scale(1.1);
+    }
     .hero__thumb:nth-child(1) { background-position: -616px -140px; }
     .hero__thumb:nth-child(2) { background-position: -700px -100px; }
     .hero__thumb:nth-child(3) { background-position: -680px -180px; }
     .hero__thumb:nth-child(4) { background-position: -640px -220px; }
 
-    /* Hero burger image (right column = right 600px of hero band) */
+    /* ── Right column ── */
+    .hero__visual-wrap {
+      position: relative;
+      overflow: hidden;
+    }
     .hero__visual {
+      position: absolute;
+      inset: 0;
       background: var(--sprite);
       background-size: var(--sprite-sz);
       background-position: -594px -70px;
       background-repeat: no-repeat;
+      transition: background-position .35s ease;
+    }
+
+    /* NUTRITIONAL FLAGS */
+    .hero__nutrition {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      z-index: 2;
+    }
+    .nut-flag {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: rgba(255,255,255,.96);
+      /* Left-pointing pennant: point on left, straight on right */
+      clip-path: polygon(18px 0%, 100% 0%, 100% 100%, 18px 100%, 0% 50%);
+      padding: 8px 18px 8px 26px;
+      min-width: 105px;
+    }
+    .nut-flag__icon {
+      font-size: 15px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .nut-flag__body {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .nut-flag__val {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1a1a1a;
+      transition: opacity .2s;
+    }
+    .nut-flag__label {
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #aaa;
+      margin-top: 2px;
     }
 
     /* ══════════════════════════════════════════════════════
-       PROMO DUET  (Delivery / Join Us)
+       PROMO DUET
     ══════════════════════════════════════════════════════ */
     .promo { border-top: 1px solid #f0f0f0; }
-
     .promo__grid {
       max-width: var(--max-w);
       margin-inline: auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
-
     .promo__card {
       padding: 54px 56px 48px;
       position: relative;
@@ -252,7 +325,6 @@
       gap: 18px;
     }
     .promo__card + .promo__card { border-left: 1px solid #f0f0f0; }
-
     .promo__eyebrow {
       font-size: 11px;
       font-weight: 700;
@@ -268,8 +340,6 @@
       color: #1a1a1a;
       max-width: 240px;
     }
-
-    /* Sprite illustrations (delivery rider / staff member) */
     .promo__art {
       position: absolute;
       right: 16px;
@@ -288,12 +358,7 @@
        CATEGORY GRID
     ══════════════════════════════════════════════════════ */
     .categories { max-width: var(--max-w); margin-inline: auto; }
-
-    .cat-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-    }
-
+    .cat-row { display: grid; grid-template-columns: repeat(3, 1fr); }
     .cat-card {
       padding: 36px 32px 30px;
       min-height: 235px;
@@ -303,14 +368,12 @@
       flex-direction: column;
       justify-content: space-between;
     }
-
     .cat-card--green   { background: var(--green); }
     .cat-card--amber   { background: var(--amber); }
     .cat-card--ltgreen { background: var(--ltgreen); }
     .cat-card--cyan    { background: var(--cyan); }
     .cat-card--pink    { background: var(--pink); }
     .cat-card--olive   { background: var(--olive); }
-
     .cat-title {
       font-size: 28px;
       font-weight: 900;
@@ -320,20 +383,11 @@
       position: relative;
       z-index: 1;
     }
-
-    .btn--cat {
-      position: relative;
-      z-index: 1;
-      align-self: flex-start;
-    }
-
-    /* Food photo sprites inside category cards */
+    .btn--cat { position: relative; z-index: 1; align-self: flex-start; }
     .cat-photo {
       position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 200px;
-      height: 180px;
+      right: 0; bottom: 0;
+      width: 200px; height: 180px;
       background: var(--sprite);
       background-size: var(--sprite-sz);
       background-repeat: no-repeat;
@@ -352,7 +406,6 @@
       max-width: var(--max-w);
       margin-inline: auto;
     }
-
     .section-title {
       font-size: 46px;
       font-weight: 900;
@@ -361,34 +414,24 @@
       text-align: center;
       margin-bottom: 52px;
     }
-
     .ingredients__grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 20px;
       align-items: center;
     }
-
-    .ing-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-
+    .ing-item { display: flex; flex-direction: column; align-items: center; gap: 14px; }
     .ing-photo {
-      width: 140px;
-      height: 140px;
+      width: 140px; height: 140px;
       border-radius: 50%;
       background: #f5f5f5 var(--sprite);
       background-size: var(--sprite-sz);
       background-repeat: no-repeat;
     }
-    .ing-photo--buns   { background-position: -30px  -1405px; }
-    .ing-photo--beef   { background-position: -30px  -1570px; }
+    .ing-photo--buns   { background-position: -30px   -1405px; }
+    .ing-photo--beef   { background-position: -30px   -1570px; }
     .ing-photo--fresh  { background-position: -1020px -1405px; }
     .ing-photo--turkey { background-position: -1020px -1570px; }
-
     .ing-label {
       font-size: 11px;
       font-weight: 700;
@@ -397,11 +440,8 @@
       color: #333;
       text-align: center;
     }
-
-    /* Center brand badge */
     .ing-badge {
-      width: 110px;
-      height: 110px;
+      width: 110px; height: 110px;
       background: var(--green);
       border-radius: 50%;
       display: flex;
@@ -428,8 +468,6 @@
       display: flex;
       align-items: stretch;
     }
-
-    /* Full-section background from the sprite, dimmed */
     .family__bg {
       position: absolute;
       inset: 0;
@@ -439,7 +477,6 @@
       background-repeat: no-repeat;
       filter: brightness(.4) saturate(.8);
     }
-
     .family__inner {
       position: relative;
       z-index: 1;
@@ -452,7 +489,6 @@
       gap: 40px;
       align-items: center;
     }
-
     .family__title {
       font-size: 96px;
       font-weight: 900;
@@ -462,7 +498,6 @@
       line-height: .88;
       margin-bottom: 22px;
     }
-
     .family__text {
       font-size: 15px;
       line-height: 1.75;
@@ -470,13 +505,7 @@
       margin-bottom: 32px;
       max-width: 380px;
     }
-
-    .family__features {
-      display: flex;
-      gap: 32px;
-      margin-top: 48px;
-    }
-
+    .family__features { display: flex; gap: 32px; margin-top: 48px; }
     .ftr {
       display: flex;
       flex-direction: column;
@@ -490,8 +519,7 @@
       text-align: center;
     }
     .ftr__icon {
-      width: 46px;
-      height: 46px;
+      width: 46px; height: 46px;
       border-radius: 50%;
       border: 1.5px solid rgba(255,255,255,.25);
       background: rgba(255,255,255,.1);
@@ -523,11 +551,7 @@
       letter-spacing: .4px;
       color: #1a1a1a;
     }
-    .cta-strip__sub {
-      font-size: 13px;
-      color: #666;
-      margin-top: 4px;
-    }
+    .cta-strip__sub { font-size: 13px; color: #666; margin-top: 4px; }
 
     /* ══════════════════════════════════════════════════════
        FOOTER
@@ -537,11 +561,7 @@
       color: #aaa;
       padding: 52px 0 24px;
     }
-    .footer__inner {
-      max-width: var(--max-w);
-      margin-inline: auto;
-      padding-inline: 48px;
-    }
+    .footer__inner { max-width: var(--max-w); margin-inline: auto; padding-inline: 48px; }
     .footer__top {
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -551,23 +571,10 @@
       margin-bottom: 20px;
       border-bottom: 1px solid #2a2a2a;
     }
-    .footer__nav {
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-    }
-    .footer__nav a {
-      font-size: 13px;
-      color: #888;
-      transition: color .15s;
-    }
+    .footer__nav { display: flex; gap: 24px; justify-content: center; }
+    .footer__nav a { font-size: 13px; color: #888; transition: color .15s; }
     .footer__nav a:hover { color: var(--green); }
-
-    .footer__phone {
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-    }
+    .footer__phone { font-size: 14px; font-weight: 700; color: #fff; }
     .footer__bottom {
       display: flex;
       align-items: center;
@@ -575,8 +582,6 @@
       font-size: 12px;
       color: #555;
     }
-
-    /* Footer logo overrides */
     .footer__logo .logo__name { color: var(--green); }
     .footer__logo .logo__icon { width: 30px; height: 30px; font-size: 15px; }
   </style>
@@ -592,10 +597,9 @@
         <div class="logo__icon" aria-hidden="true">🍔</div>
         <span class="logo__name">Hamburgery</span>
       </a>
-
       <nav class="primary-nav" aria-label="Primary navigation">
         <ul class="primary-nav__list">
-          <li><a href="#"      aria-current="page">Home</a></li>
+          <li><a href="#" aria-current="page">Home</a></li>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#">Blog</a></li>
@@ -603,7 +607,6 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
-
       <div class="header-actions">
         <a href="tel:+441234567890" class="header-phone">☎ +44 123 456 789</a>
         <a href="#menu" class="btn btn--green btn--sm">Order Now</a>
@@ -614,26 +617,92 @@
   <!-- ════════════════════════════════════════════════
        HERO
   ════════════════════════════════════════════════ -->
-  <section class="hero" aria-label="Featured item — The Double Decker">
+  <section class="hero" aria-label="Featured burger">
     <div class="hero__inner">
 
+      <!-- LEFT: content + slider controls -->
       <div class="hero__content">
+
         <span class="badge">Promotion</span>
+
+        <!-- Chili spiciness rating -->
+        <div class="hero__chili" aria-label="Spiciness: 3 out of 5 — Medium Hot">
+          <span class="chili chili--on"  aria-hidden="true">🌶️</span>
+          <span class="chili chili--on"  aria-hidden="true">🌶️</span>
+          <span class="chili chili--on"  aria-hidden="true">🌶️</span>
+          <span class="chili chili--off" aria-hidden="true">🌶️</span>
+          <span class="chili chili--off" aria-hidden="true">🌶️</span>
+          <span class="hero__chili-label">Medium Hot</span>
+        </div>
+
         <h1 class="hero__title">The Double<br>Decker</h1>
+
+        <p class="hero__desc">Two juicy beef patties, caramelised onions, double cheddar and our secret smoky sauce — stacked high and served hot.</p>
+
         <div class="hero__stars" aria-label="5 out of 5 stars">★★★★★</div>
         <p class="hero__price">£16.99</p>
         <a href="#" class="btn btn--green btn--lg">Order Now</a>
 
-        <div class="hero__thumbs" role="list" aria-label="Other featured items">
-          <button class="hero__thumb hero__thumb--active" role="listitem" aria-label="Double Decker"></button>
-          <button class="hero__thumb" role="listitem" aria-label="Item 2"></button>
-          <button class="hero__thumb" role="listitem" aria-label="Item 3"></button>
-          <button class="hero__thumb" role="listitem" aria-label="Item 4"></button>
+        <!-- Thumbnail slider -->
+        <div class="hero__thumbs" role="list" aria-label="Select burger">
+          <button class="hero__thumb hero__thumb--active" data-slide="0" aria-label="The Double Decker" aria-pressed="true"></button>
+          <button class="hero__thumb" data-slide="1" aria-label="BBQ Smoky Beast" aria-pressed="false"></button>
+          <button class="hero__thumb" data-slide="2" aria-label="Classic Cheese" aria-pressed="false"></button>
+          <button class="hero__thumb" data-slide="3" aria-label="Spicy Inferno" aria-pressed="false"></button>
         </div>
+
       </div>
 
-      <!-- Right column: burger image clipped from sprite -->
-      <div class="hero__visual" role="img" aria-label="Double Decker burger"></div>
+      <!-- RIGHT: burger image + nutritional flags -->
+      <div class="hero__visual-wrap">
+
+        <div class="hero__visual" role="img" aria-label="The Double Decker burger"></div>
+
+        <!-- Nutritional pennant flags -->
+        <div class="hero__nutrition" aria-label="Nutritional information">
+
+          <div class="nut-flag">
+            <span class="nut-flag__icon" aria-hidden="true">🔥</span>
+            <div class="nut-flag__body">
+              <span class="nut-flag__val" data-nut="kcal">850</span>
+              <span class="nut-flag__label">Kcal</span>
+            </div>
+          </div>
+
+          <div class="nut-flag">
+            <span class="nut-flag__icon" aria-hidden="true">💪</span>
+            <div class="nut-flag__body">
+              <span class="nut-flag__val" data-nut="protein">45g</span>
+              <span class="nut-flag__label">Protein</span>
+            </div>
+          </div>
+
+          <div class="nut-flag">
+            <span class="nut-flag__icon" aria-hidden="true">⚖️</span>
+            <div class="nut-flag__body">
+              <span class="nut-flag__val" data-nut="weight">320g</span>
+              <span class="nut-flag__label">Weight</span>
+            </div>
+          </div>
+
+          <div class="nut-flag">
+            <span class="nut-flag__icon" aria-hidden="true">🥑</span>
+            <div class="nut-flag__body">
+              <span class="nut-flag__val" data-nut="fat">38g</span>
+              <span class="nut-flag__label">Fat</span>
+            </div>
+          </div>
+
+          <div class="nut-flag">
+            <span class="nut-flag__icon" aria-hidden="true">🌾</span>
+            <div class="nut-flag__body">
+              <span class="nut-flag__val" data-nut="carbs">28g</span>
+              <span class="nut-flag__label">Carbs</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
 
     </div>
   </section>
@@ -643,21 +712,18 @@
   ════════════════════════════════════════════════ -->
   <section class="promo" aria-label="Promotions">
     <div class="promo__grid">
-
       <div class="promo__card">
         <p class="promo__eyebrow">Fast &amp; Fresh</p>
         <h2 class="promo__title">Realy<br>Faaaaaast<br>Delivery!</h2>
         <a href="#" class="btn btn--green btn--md">Order Now</a>
         <div class="promo__art promo__art--delivery" aria-hidden="true"></div>
       </div>
-
       <div class="promo__card">
         <p class="promo__eyebrow">Join Our Team</p>
         <h2 class="promo__title">Don't Wait<br>Become One<br>Of Us Now!</h2>
         <a href="#" class="btn btn--pink btn--md">Join Now</a>
         <div class="promo__art promo__art--staff" aria-hidden="true"></div>
       </div>
-
     </div>
   </section>
 
@@ -666,47 +732,38 @@
   ════════════════════════════════════════════════ -->
   <section id="menu" aria-label="Menu categories">
     <div class="categories">
-
-      <!-- Row 1 -->
       <div class="cat-row">
         <article class="cat-card cat-card--green">
           <h3 class="cat-title">Sand-<br>wiches</h3>
           <a href="#" class="btn btn--white btn--sm btn--cat">See More</a>
         </article>
-
         <article class="cat-card cat-card--amber">
           <h3 class="cat-title">House<br>Burgers</h3>
           <a href="#" class="btn btn--white btn--sm btn--cat">Order Now</a>
           <div class="cat-photo cat-photo--burgers" aria-hidden="true"></div>
         </article>
-
         <article class="cat-card cat-card--ltgreen">
           <h3 class="cat-title">Fresh<br>Salads</h3>
           <a href="#" class="btn btn--white btn--sm btn--cat">Shop</a>
           <div class="cat-photo cat-photo--salads" aria-hidden="true"></div>
         </article>
       </div>
-
-      <!-- Row 2 -->
       <div class="cat-row">
         <article class="cat-card cat-card--cyan">
           <h3 class="cat-title">For All<br>Kids</h3>
           <a href="#" class="btn btn--white btn--sm btn--cat">See More</a>
           <div class="cat-photo cat-photo--kids" aria-hidden="true"></div>
         </article>
-
         <article class="cat-card cat-card--pink">
           <h3 class="cat-title">Sweet<br>Desserts</h3>
           <a href="#" class="btn btn--white btn--sm btn--cat">Order Now</a>
           <div class="cat-photo cat-photo--desserts" aria-hidden="true"></div>
         </article>
-
         <article class="cat-card cat-card--olive">
           <h3 class="cat-title">And<br>Much,<br>Much<br>More…</h3>
           <a href="#" class="btn btn--white btn--sm btn--cat">View All</a>
         </article>
       </div>
-
     </div>
   </section>
 
@@ -716,33 +773,26 @@
   <section aria-label="Our ingredients">
     <div class="ingredients">
       <h2 class="section-title">Best Quality<br>Ingredients</h2>
-
       <div class="ingredients__grid">
-
         <div class="ing-item">
           <div class="ing-photo ing-photo--buns" role="img" aria-label="Artisan buns"></div>
           <span class="ing-label">Artisan Buns</span>
         </div>
-
         <div class="ing-item">
           <div class="ing-photo ing-photo--beef" role="img" aria-label="Ground beef"></div>
           <span class="ing-label">Ground Beef</span>
         </div>
-
         <div class="ing-item" aria-hidden="true">
           <div class="ing-badge">Premium<br>Quality<br>★★★★★</div>
         </div>
-
         <div class="ing-item">
           <div class="ing-photo ing-photo--fresh" role="img" aria-label="Fresh produce"></div>
           <span class="ing-label">Fresh Produce</span>
         </div>
-
         <div class="ing-item">
           <div class="ing-photo ing-photo--turkey" role="img" aria-label="Ground turkey"></div>
           <span class="ing-label">Ground Turkey</span>
         </div>
-
       </div>
     </div>
   </section>
@@ -752,7 +802,6 @@
   ════════════════════════════════════════════════ -->
   <section class="family" id="about" aria-label="Our family">
     <div class="family__bg" aria-hidden="true"></div>
-
     <div class="family__inner">
       <div class="family__content">
         <h2 class="family__title">Family</h2>
@@ -761,7 +810,6 @@
           authenticity &amp; values that satisfy the soul.
         </p>
         <a href="#contact" class="btn btn--green btn--md">Contact Us</a>
-
         <div class="family__features">
           <div class="ftr">
             <div class="ftr__icon" aria-hidden="true">🚚</div>
@@ -781,8 +829,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Right column intentionally empty — filled by the dimmed background image -->
       <div aria-hidden="true"></div>
     </div>
   </section>
@@ -805,13 +851,11 @@
   ════════════════════════════════════════════════ -->
   <footer class="site-footer">
     <div class="footer__inner">
-
       <div class="footer__top">
         <a href="#" class="logo footer__logo" aria-label="Hamburgery — home">
           <div class="logo__icon" aria-hidden="true">🍔</div>
           <span class="logo__name">Hamburgery</span>
         </a>
-
         <nav class="footer__nav" aria-label="Footer navigation">
           <a href="#">Home</a>
           <a href="#menu">Menu</a>
@@ -820,17 +864,110 @@
           <a href="#">Our Team</a>
           <a href="#contact">Contact</a>
         </nav>
-
         <a href="tel:+441234567890" class="footer__phone">☎ +44 123 456 789</a>
       </div>
-
       <div class="footer__bottom">
         <span>© 2024 Hamburgery. All rights reserved.</span>
         <span>Premium burgers &amp; fast food delivered to your door.</span>
       </div>
-
     </div>
   </footer>
+
+  <!-- ════════════════════════════════════════════════
+       HERO SLIDER JS
+  ════════════════════════════════════════════════ -->
+  <script>
+  (function () {
+    const slides = [
+      {
+        title:      'The Double<br>Decker',
+        desc:       'Two juicy beef patties, caramelised onions, double cheddar and our secret smoky sauce — stacked high and served hot.',
+        price:      '£16.99',
+        chili:      3,
+        chiliLabel: 'Medium Hot',
+        bgPos:      '-594px -70px',
+        kcal: '850', protein: '45g', weight: '320g', fat: '38g', carbs: '28g'
+      },
+      {
+        title:      'BBQ Smoky<br>Beast',
+        desc:       'Pulled BBQ beef, crispy bacon, jalapeños and tangy smoky sauce on a toasted brioche bun.',
+        price:      '£18.99',
+        chili:      4,
+        chiliLabel: 'Hot',
+        bgPos:      '-594px -120px',
+        kcal: '920', protein: '52g', weight: '380g', fat: '45g', carbs: '32g'
+      },
+      {
+        title:      'Classic<br>Cheese',
+        desc:       'The original. Single beef patty, American cheese, pickles, ketchup and mustard. Simple. Perfect.',
+        price:      '£12.99',
+        chili:      1,
+        chiliLabel: 'Mild',
+        bgPos:      '-594px -160px',
+        kcal: '720', protein: '38g', weight: '280g', fat: '32g', carbs: '24g'
+      },
+      {
+        title:      'Spicy<br>Inferno',
+        desc:       'Ghost pepper beef patty, scorched jalapeños and sriracha mayo. For the brave only.',
+        price:      '£19.99',
+        chili:      5,
+        chiliLabel: 'Extra Hot',
+        bgPos:      '-594px -200px',
+        kcal: '880', protein: '48g', weight: '350g', fat: '42g', carbs: '30g'
+      }
+    ];
+
+    const thumbs      = document.querySelectorAll('.hero__thumb');
+    const visual      = document.querySelector('.hero__visual');
+    const titleEl     = document.querySelector('.hero__title');
+    const descEl      = document.querySelector('.hero__desc');
+    const priceEl     = document.querySelector('.hero__price');
+    const chiliSpans  = document.querySelectorAll('.hero__chili .chili');
+    const chiliLabel  = document.querySelector('.hero__chili-label');
+    const nutEls      = {};
+    document.querySelectorAll('[data-nut]').forEach(el => {
+      nutEls[el.dataset.nut] = el;
+    });
+
+    function goTo(index) {
+      const s = slides[index];
+
+      /* Thumbs */
+      thumbs.forEach((t, i) => {
+        t.classList.toggle('hero__thumb--active', i === index);
+        t.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+
+      /* Image */
+      visual.style.backgroundPosition = s.bgPos;
+      visual.setAttribute('aria-label', s.title.replace('<br>', ' '));
+
+      /* Text */
+      titleEl.innerHTML  = s.title;
+      descEl.textContent = s.desc;
+      priceEl.textContent = s.price;
+
+      /* Chili rating */
+      chiliSpans.forEach((c, i) => {
+        c.classList.toggle('chili--on',  i < s.chili);
+        c.classList.toggle('chili--off', i >= s.chili);
+      });
+      chiliLabel.textContent = s.chiliLabel;
+      chiliLabel.closest('.hero__chili').setAttribute(
+        'aria-label', `Spiciness: ${s.chili} out of 5 — ${s.chiliLabel}`
+      );
+
+      /* Nutrition flags */
+      Object.entries(nutEls).forEach(([key, el]) => {
+        el.textContent = s[key] ?? el.textContent;
+      });
+    }
+
+    thumbs.forEach((thumb, i) => {
+      thumb.addEventListener('click', () => goTo(i));
+    });
+  })();
+  </script>
 
 </body>
 </html>
