@@ -103,6 +103,8 @@ snh-post-purchase-upsell, snh-mega-menu
 
 | Data | Co zrobiono |
 |------|-------------|
+| 2026-07-07 | Analiza zagrożeń sp. z o.o. + analiza wzoru umowy B2B Hyper Effekt — zapisano w `docs/SPOLKA_ZOO_I_UMOWA_B2B_ANALIZA.md` (wnioski: snippety sprzedawać pod JDG, spółka później; 2 punkty MUST do negocjacji w umowie: carve-out IP dla SnippetsHub i wyłączenie sklepu z zakazu konkurencji). |
+| 2026-07-06 | Audyt całego projektu — utworzono `docs/AUDIT_RECOMMENDATIONS.md`: diagnoza (15 snippetów gotowych, 1 live — wąskie gardło to publikacja), rekomendacje ulepszeń, plan skalowania (bundles, All-Access, SEO, demo store) i 4-tygodniowy plan launchu. |
 | 2026-06-14 | Przeniesiono wymagania z głównego CLAUDE.md do HTML-clear-ideas/CLAUDE.md (brand voice, persony, USP, cennik, dwa szablony opisów). Dodano SPEC.md, skrypt create:idea, placeholdery w _TEMPLATE. Przebudowano z zera Figma export burgerowni (hamburgery-landingpage) na czysty HTML/CSS — plik w HTML-clear-ideas/hamburger-landing/index.html. Użyto flat PNG jako CSS sprite; do dopracowania: pozycje sprite'ów, responsive, hover, JS dla slidera. |
 | 2026-06-13 | Stworzono folder design/ z pełną strukturą MVC (system/tokens, system/code-connect, snippets/_TEMPLATE, gtm/_TEMPLATE). Zaktualizowano CLAUDE.md o Design Workflow i nowe sekcje. |
 | 2026-06-07 | Stworzono zunifikowany workspace /SnippetsHub/ z obu starszych folderów. Dodano .gitignore, STATUS.md, zaktualizowano CLAUDE.md z nową strukturą. |

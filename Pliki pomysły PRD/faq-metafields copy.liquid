@@ -1,0 +1,162 @@
+{{ 'faq.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign faq_collection = section.settings.collection | default: collection
+  assign mf_namespace = section.settings.metafield_namespace | default: 'custom'
+  assign mf_key = section.settings.metafield_key | default: 'faqs'
+  assign faq_items = faq_collection.metafields[mf_namespace][mf_key].value
+  assign question_count = faq_items | size
+  assign show_all = section.settings.show_all
+-%}
+
+{%- if question_count > 0 -%}
+  <div class="faq-section" id="{{ section.id }}" style="background-color: {{ section.settings.background_color }}">
+    <div class="faq-section__inner container">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="faq-section__heading heading-h2">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      <div class="faq-section__list">
+        {%- for item in faq_items limit: 50 -%}
+          {%- unless show_all -%}
+            {%- if forloop.index == 5 and question_count > 4 -%}
+              <div id="faq-more-{{ section.id }}" hidden>
+            {%- endif -%}
+          {%- endunless -%}
+          <details-disclosure>
+            <details class="faq-item disclosure">
+              <summary class="faq-item__header">
+                <span class="faq-item__title body-semibold-m">{{ item.question.value | escape }}</span>
+                <span class="faq-item__icon disclosure__toggle">
+                  {%- render 'icon-plus' -%}
+                </span>
+              </summary>
+              <div class="faq-item__panel disclosure__panel has-motion">
+                <div class="faq-item__content body-medium-m rte disclosure__content">
+                  {{ item.answer | metafield_tag }}
+                </div>
+              </div>
+            </details>
+          </details-disclosure>
+          {%- unless show_all -%}
+            {%- if forloop.last and question_count > 4 -%}
+              </div>
+            {%- endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if show_all -%}
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_url | default: '#' }}" class="btn btn-outline faq-section__show-all"{% if section.settings.button_url != blank %} target="_blank" rel="noopener noreferrer"{% endif %}>
+            {{ section.settings.button_label | escape }}
+          </a>
+        {%- endif -%}
+      {%- elsif question_count > 4 -%}
+        <a href="#" class="btn btn-outline faq-section__show-all" id="faq-toggle-{{ section.id }}" data-target="faq-more-{{ section.id }}">
+          {{ section.settings.button_label | default: 'ZOBACZ WSZYSTKIE PYTANIA' | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- unless show_all -%}
+    <script>
+      (function () {
+        var btn = document.getElementById('faq-toggle-{{ section.id }}');
+        if (!btn) return;
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          var more = document.getElementById(this.dataset.target);
+          if (more) {
+            more.removeAttribute('hidden');
+            this.style.display = 'none';
+          }
+        });
+      })();
+    </script>
+  {%- endunless -%}
+{%- elsif request.design_mode -%}
+  <div class="faq-section">
+    <div class="faq-section__inner container">
+      <p class="body-medium-m">
+        {%- if faq_collection == blank -%}
+          Wybierz kolekcję w ustawieniach sekcji lub dodaj sekcję na stronie kolekcji.
+        {%- else -%}
+          Kolekcja "{{ faq_collection.title }}" nie ma uzupełnionego metafielda {{ mf_namespace }}.{{ mf_key }} (lista odwołań do metaobiektu FAQ z polami "question" i "answer").
+        {%- endif -%}
+      </p>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ (metafields)",
+  "tag": "section",
+  "class": "cc-faq",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sekcja pobiera pytania i odpowiedzi z metafielda kolekcji typu \"lista odwołań do metaobiektu\". Metaobiekt musi mieć pola: question (tekst) i answer (rich text)."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Kolekcja",
+      "info": "Jeśli nie wybierzesz kolekcji, sekcja użyje bieżącej kolekcji (na stronie kolekcji)."
+    },
+    {
+      "type": "text",
+      "id": "metafield_namespace",
+      "label": "Namespace metafielda",
+      "default": "custom"
+    },
+    {
+      "type": "text",
+      "id": "metafield_key",
+      "label": "Klucz metafielda",
+      "default": "faqs"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Nagłówek",
+      "default": "MASZ DODATKOWE PYTANIA?"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all",
+      "label": "Pokaż wszystkie pytania od razu",
+      "info": "Gdy zaznaczone: wszystkie FAQ są widoczne natychmiast, a przycisk staje się linkiem. Gdy odznaczone: pierwsze 4 widoczne, przycisk pokazuje pozostałe.",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Etykieta przycisku",
+      "default": "ZOBACZ WSZYSTKIE PYTANIA"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Link przycisku"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Kolor tła",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ (metafields)",
+      "category": "Text"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "aside"]
+  }
+}
+{% endschema %}

@@ -4,10 +4,9 @@
     "target": "cart.validations.generate.run",
     "input": {
       "cart": {
-        "billingIsDifferent": {
-          "value": "false"
-        },
-        "billingPhone": null
+        "buyerIdentity": null,
+        "invoiceCompanyName": null,
+        "invoiceTaxId": null
       }
     },
     "output": {

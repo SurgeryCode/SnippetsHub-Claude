@@ -1,23 +1,10 @@
 query CartValidationsGenerateRunInput {
   cart {
-    billingAddress {
-      address1
-      address2
-      city
-      provinceCode
-      zip
-      countryCode
-      phone
+    billingIsDifferent: metafield(namespace: "custom", key: "billing_is_different") {
+      value
     }
-    deliveryGroups {
-      deliveryAddress {
-        address1
-        address2
-        city
-        provinceCode
-        zip
-        countryCode
-      }
+    billingPhone: metafield(namespace: "custom", key: "billing_phone") {
+      value
     }
   }
 }

@@ -4,10 +4,17 @@
     "target": "cart.validations.generate.run",
     "input": {
       "cart": {
-        "billingIsDifferent": {
-          "value": "true"
+        "buyerIdentity": {
+          "purchasingCompany": {
+            "company": {
+              "id": "gid://shopify/Company/1"
+            }
+          }
         },
-        "billingPhone": {
+        "invoiceCompanyName": {
+          "value": "Acme Sp. z o.o."
+        },
+        "invoiceTaxId": {
           "value": ""
         }
       }
@@ -18,7 +25,7 @@
           "validationAdd": {
             "errors": [
               {
-                "message": "Please enter a billing phone number.",
+                "message": "Please provide your company invoice details (company name and Tax ID) to continue.",
                 "target": "$.cart"
               }
             ]

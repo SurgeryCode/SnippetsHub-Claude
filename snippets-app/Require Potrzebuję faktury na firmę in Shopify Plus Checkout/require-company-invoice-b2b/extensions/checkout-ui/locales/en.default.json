@@ -1,0 +1,7 @@
+{
+  "extensionName": "Company invoice requirement (B2B)",
+  "heading": "Invoice details",
+  "companyNameLabel": "Company name",
+  "taxIdLabel": "Tax ID (NIP)",
+  "banner": "A VAT invoice will be issued using the details below."
+}

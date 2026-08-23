@@ -12,21 +12,21 @@ const NO_ERRORS = { operations: [] };
  * @returns {CartValidationsGenerateRunResult}
  */
 export function cartValidationsGenerateRun(input) {
-  const { billingIsDifferent, billingPhone } = input.cart;
+  const { buyerIdentity, invoiceCompanyName, invoiceTaxId } = input.cart;
 
-  // The Checkout UI Extension writes these metafields. `billing_is_different`
-  // reflects whether the buyer picked "Use a different billing address"
-  // (rather than comparing address field values, which is unreliable: the
-  // billing form can be pre-filled with values identical to shipping).
-  const isDifferentBillingAddress = billingIsDifferent?.value === "true";
+  // `purchasingCompany` is Shopify's native signal for a B2B buyer checking
+  // out as a company contact (Companies feature). It is `null`/absent for
+  // retail buyers, so retail checkout is never touched by this validation.
+  const isB2BBuyer = Boolean(buyerIdentity?.purchasingCompany);
 
-  if (!isDifferentBillingAddress) {
+  if (!isB2BBuyer) {
     return NO_ERRORS;
   }
 
-  const phone = billingPhone?.value ?? "";
+  const companyName = invoiceCompanyName?.value ?? "";
+  const taxId = invoiceTaxId?.value ?? "";
 
-  if (phone.trim() !== "") {
+  if (companyName.trim() !== "" && taxId.trim() !== "") {
     return NO_ERRORS;
   }
 
@@ -36,7 +36,7 @@ export function cartValidationsGenerateRun(input) {
         validationAdd: {
           errors: [
             {
-              message: "Please enter a billing phone number.",
+              message: "Please provide your company invoice details (company name and Tax ID) to continue.",
               target: "$.cart",
             },
           ],

@@ -4,12 +4,15 @@
     "target": "cart.validations.generate.run",
     "input": {
       "cart": {
-        "billingIsDifferent": {
-          "value": "true"
+        "buyerIdentity": {
+          "purchasingCompany": {
+            "company": {
+              "id": "gid://shopify/Company/1"
+            }
+          }
         },
-        "billingPhone": {
-          "value": ""
-        }
+        "invoiceCompanyName": null,
+        "invoiceTaxId": null
       }
     },
     "output": {
@@ -18,7 +21,7 @@
           "validationAdd": {
             "errors": [
               {
-                "message": "Please enter a billing phone number.",
+                "message": "Please provide your company invoice details (company name and Tax ID) to continue.",
                 "target": "$.cart"
               }
             ]

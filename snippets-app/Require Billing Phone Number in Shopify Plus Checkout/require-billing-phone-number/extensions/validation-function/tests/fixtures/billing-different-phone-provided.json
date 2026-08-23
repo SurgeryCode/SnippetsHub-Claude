@@ -4,27 +4,12 @@
     "target": "cart.validations.generate.run",
     "input": {
       "cart": {
-        "billingAddress": {
-          "address1": "2 Invoice Ave",
-          "address2": null,
-          "city": "Krakow",
-          "provinceCode": "MA",
-          "zip": "30-001",
-          "countryCode": "PL",
-          "phone": "+48123456789"
+        "billingIsDifferent": {
+          "value": "true"
         },
-        "deliveryGroups": [
-          {
-            "deliveryAddress": {
-              "address1": "1 Main St",
-              "address2": null,
-              "city": "Warsaw",
-              "provinceCode": "MZ",
-              "zip": "00-001",
-              "countryCode": "PL"
-            }
-          }
-        ]
+        "billingPhone": {
+          "value": "+48123456789"
+        }
       }
     },
     "output": {

@@ -4,19 +4,8 @@
     "target": "cart.validations.generate.run",
     "input": {
       "cart": {
-        "billingAddress": null,
-        "deliveryGroups": [
-          {
-            "deliveryAddress": {
-              "address1": "1 Main St",
-              "address2": null,
-              "city": "Warsaw",
-              "provinceCode": "MZ",
-              "zip": "00-001",
-              "countryCode": "PL"
-            }
-          }
-        ]
+        "billingIsDifferent": null,
+        "billingPhone": null
       }
     },
     "output": {

@@ -1,0 +1,26 @@
+{
+  "payload": {
+    "export": "cart-validations-generate-run",
+    "target": "cart.validations.generate.run",
+    "input": {
+      "cart": {
+        "buyerIdentity": {
+          "purchasingCompany": {
+            "company": {
+              "id": "gid://shopify/Company/1"
+            }
+          }
+        },
+        "invoiceCompanyName": {
+          "value": "Acme Sp. z o.o."
+        },
+        "invoiceTaxId": {
+          "value": "PL1234567890"
+        }
+      }
+    },
+    "output": {
+      "operations": []
+    }
+  }
+}

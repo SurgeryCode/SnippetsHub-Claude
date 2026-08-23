@@ -1,0 +1,10 @@
+1. Problem — współdzielone szablony JSON (collection.json, page.json) powodują, że sekcja dodana raz pokazuje się na wszystkich kolekcjach/stronach, a mnożenie szablonów alternatywnych się nie skaluje.
+2. Cel i terminologia — rozdzielenie dwóch rzeczy: unikalne section.id Shopify nadaje sam, natomiast istotą rozwiązania jest ustawienie przypisania (scoping).
+3. Wzorzec rozwiązania w trzech elementach, z gotowymi fragmentami kodu do wklejenia: ustawienia limit_collection/limit_page w schema, bramka renderowania show_section na początku sekcji (z warunkiem na request.page_type i pełną kompatybilnością wsteczną — brak przypisania = widoczna wszędzie), oraz ramka informacyjna w request.design_mode, żeby ukryta sekcja nie „znikała" merchantowi w edytorze.
+4. Przepływ pracy merchanta — krok po kroku, jak dodać i przypisać sekcję do kolekcji.
+5. Checklista wdrożenia dla dowolnej innej sekcji — 7 punktów: schema, bramka, domknięcie, presety bez limitów, izolacja instancji przez section.id w ID DOM/kluczach storage/selektorach CSS, walidacja theme-checkiem, scenariusze testu ręcznego.
+6. Wnioski z analizy belki SnippetsHub — wzorce wielo-instancyjności warte kopiowania (CSS pod #shopify-section-{{ section.id }}, JS z querySelectorAll + guard + shopify:section:load, IIFE, checkbox enabled na blokach) oraz to, czego belce brakuje, a co ten wzorzec uzupełnia.
+7. Ograniczenia — jedna kolekcja na instancję, limit sekcji w szablonie, pusty wrapper #shopify-section-* na live, możliwość rozszerzenia o product/blog.
+8. Status — dokument jest specyfikacją do wdrożenia; obecne instancje FAQ działają bez zmian.
+
+W razie potrzeby mogę na podstawie tego PRD ponownie wdrożyć wzorzec w faq.liquid albo od razu w kolejnych sekcjach.

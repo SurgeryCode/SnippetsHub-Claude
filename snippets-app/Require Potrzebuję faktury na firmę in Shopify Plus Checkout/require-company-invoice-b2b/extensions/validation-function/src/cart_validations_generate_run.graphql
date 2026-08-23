@@ -1,0 +1,17 @@
+query CartValidationsGenerateRunInput {
+  cart {
+    buyerIdentity {
+      purchasingCompany {
+        company {
+          id
+        }
+      }
+    }
+    invoiceCompanyName: metafield(namespace: "custom", key: "invoice_company_name") {
+      value
+    }
+    invoiceTaxId: metafield(namespace: "custom", key: "invoice_tax_id") {
+      value
+    }
+  }
+}
